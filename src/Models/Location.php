@@ -35,4 +35,14 @@ class Location extends Model
     {
         return $this->belongsTo(Category::class, 'categories', 'category_id');
     }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @return Event
+     */
+    public function events(): Event
+    {
+        return $this->hasMany(Event::class, 'events', 'location_id');
+    }
 }
