@@ -25,4 +25,14 @@ class Event extends Model
     {
         return $this->belongsTo(Location::class, 'locations', 'location_id');
     }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @return Schedule
+     */
+    public function schedules(): Schedule
+    {
+        return $this->hasMany(Schedule::class, 'schedules', 'event_id');
+    }
 }
