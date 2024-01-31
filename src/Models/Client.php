@@ -15,4 +15,14 @@ class Client extends Model
     {
         return $this->hasMany(Event::class, 'events', 'client_id');
     }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @return Protocol
+     */
+    public function protocols(): Protocol
+    {
+        return $this->hasMany(Protocol::class, 'protocols', 'client_id');
+    }
 }

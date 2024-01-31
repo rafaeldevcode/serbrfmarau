@@ -2,7 +2,7 @@
 
 namespace Src\Models;
 
-class Schedule extends Model
+class Time extends Model
 {
     public $table = 'schedules';
 
@@ -14,5 +14,15 @@ class Schedule extends Model
     public function event(): Event
     {
         return $this->belongsTo(Event::class, 'events', 'event_id');
+    }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @return Protocol
+     */
+    public function protocols(): Protocol
+    {
+        return $this->hasMany(Protocol::class, 'protocols', 'time_id');
     }
 }

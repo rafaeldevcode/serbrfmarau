@@ -29,10 +29,20 @@ class Event extends Model
     /**
      * @since 1.7.0
      * 
-     * @return Schedule
+     * @return Time
      */
-    public function schedules(): Schedule
+    public function time(): Time
     {
-        return $this->hasMany(Schedule::class, 'schedules', 'event_id');
+        return $this->hasMany(Time::class, 'schedules', 'event_id');
+    }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @return Protocol
+     */
+    public function protocols(): Protocol
+    {
+        return $this->hasMany(Protocol::class, 'protocols', 'event_id');
     }
 }
