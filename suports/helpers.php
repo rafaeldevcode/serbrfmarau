@@ -126,4 +126,23 @@ if (!function_exists('getIconMessage')):
     }
 endif;
 
+if (!function_exists('generateIdentifier')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $lenght
+     * @return string
+     */
+    function generateIdentifier(int $lenght): string
+    {
+        $number = '';
+
+        for ($i = 0; $i < $lenght; $i++) {
+            $number .= mt_rand(0, 9);
+        }
+
+        return $number;
+    }
+endif;
+
 !defined('SETTINGS') && define('SETTINGS', (array)getSiteSettings());
