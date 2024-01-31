@@ -19,6 +19,12 @@ if(!function_exists('routes')):
             '/admin/posts/create',
             '/admin/posts/update',
             '/admin/posts/delete',
+
+            '/admin/clients',
+            '/admin/clients/create',
+            '/admin/clients/update',
+            '/admin/clients/delete',
+
             '/admin/gallery',
             '/admin/gallery/delete',
             '/admin/settings',
