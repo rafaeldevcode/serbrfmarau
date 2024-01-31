@@ -6,7 +6,7 @@ use Src\Migrations\ExecuteMigrations;
 
 class Events extends ExecuteMigrations
 {
-    public $table = 'categories';
+    public $table = 'events';
 
     /**
      * @since 1.7.0

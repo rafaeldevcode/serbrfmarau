@@ -1,5 +1,7 @@
 <?php
 
+namespace Src\Migrations;
+
 use Src\Migrations\ExecuteMigrations;
 
 class Protocols extends ExecuteMigrations
