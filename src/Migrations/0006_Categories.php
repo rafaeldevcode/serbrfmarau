@@ -17,7 +17,6 @@ class Categories extends ExecuteMigrations
     {
         $this->integer('id')->primaryKey();
         $this->string('name', 50);
-        $this->integer('image_id');
 
         $this->timestamps();
 

@@ -32,7 +32,7 @@
     loadHtml(__DIR__.'/../../resources/admin/layout', [
         'background'        => $background,
         'type'         => $text,
-        'icon'         => 'bi bi-pin-angle-fill',
+        'icon'         => 'bi bi-person-lines-fill',
         'title'        => 'clients',
         'route_delete' => $method == 'read' ? '/admin/clients/delete' : null,
         'route_add'    => $method == 'create' ? null : '/admin/clients?method=create',

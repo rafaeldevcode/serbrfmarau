@@ -199,13 +199,16 @@ class Model
     /**
      * @since 1.2.0
      * 
+     * @param ?array $columns
      * @return array|null
      */
-    public function get(): array|null
+    public function get(?array $columns = null): array|null
     {
+        $columns = ! is_null($columns) ? implode(', ', $columns) : '*';
+
         $where_clause = $this->whereClausure();
 
-        $query = "SELECT * FROM {$this->table}{$where_clause->clausure}";
+        $query = "SELECT $columns FROM {$this->table}{$where_clause->clausure}";
 
         $statement = $this->connection->prepare($query);
 

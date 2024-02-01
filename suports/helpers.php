@@ -145,4 +145,52 @@ if (!function_exists('generateIdentifier')):
     }
 endif;
 
+if (!function_exists('redirectIfTotalEqualsZero')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param string $class
+     * @param string $route
+     * @param string $message
+     * @return bool
+     */
+    function redirectIfTotalEqualsZero(string $class, string $route, string $message): bool
+    {
+        $class = new $class;
+        
+        if($class->count() == 0):
+            session([
+                'message' => $message,
+                'type' => 'info'
+            ]);
+
+            header(route($route, true), true, 302);
+            return true;
+        endif;
+
+        return false;
+    }
+endif;
+
+if (!function_exists('getArraySelect')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param array $object
+     * @param string $key
+     * @param string $value
+     * @return array
+     */
+    function getArraySelect(array $object, string $key, string $value): array
+    {
+        $data = [];
+
+        foreach($object as $object):
+            $data = $data+[$object->{$key} => $object->{$value}];
+        endforeach;
+
+        return $data;
+    }
+endif;
+
 !defined('SETTINGS') && define('SETTINGS', (array)getSiteSettings());
