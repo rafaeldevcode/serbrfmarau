@@ -108,13 +108,16 @@ class Model
     /**
      * @since 1.0.0
      * 
+     * @param ?array $columns
      * @return stdClass|null
      */
-    public function first(): stdClass|null
+    public function first(?array $columns = null): stdClass|null
     {
+        $columns = ! is_null($columns) ? implode(', ', $columns) : '*';
+
         $where_clause = $this->whereClausure();
 
-        $query = "SELECT * FROM {$this->table}{$where_clause->clausure} LIMIT 1";
+        $query = "SELECT {$columns} FROM {$this->table}{$where_clause->clausure} LIMIT 1";
 
         $statement = $this->connection->prepare($query);
 
@@ -137,15 +140,18 @@ class Model
      * @since 1.3.0
      * 
      * @param ?string $order_column
+     * @param ?array $columns
      * @return stdClass|null
      */
-    public function last(?string $order_column = null): stdClass|null
+    public function last(?string $order_column = null, ?array $columns = null): stdClass|null
     {
+        $columns = ! is_null($columns) ? implode(', ', $columns) : '*';
+
         $order_column = isset($order_column) ? $order_column : 'id';
 
         $where_clause = $this->whereClausure();
 
-        $query = "SELECT * FROM {$this->table}{$where_clause->clausure} ORDER BY {$order_column} DESC LIMIT 1";
+        $query = "SELECT {$columns} FROM {$this->table}{$where_clause->clausure} ORDER BY {$order_column} DESC LIMIT 1";
 
         $statement = $this->connection->prepare($query);
 
