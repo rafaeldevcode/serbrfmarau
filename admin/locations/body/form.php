@@ -7,7 +7,7 @@
         <div class='flex justify-between flex-wrap'>
         <div class='w-full md:w-6/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
-                    'icon' => 'bi bi-person-fill',
+                    'icon' => 'bi bi-alphabet-uppercase',
                     'name' => 'name',
                     'label' => 'Nome',
                     'type' => 'text',

@@ -33,6 +33,12 @@ if (!function_exists('menusAdmin')):
                 'icon' => 'bi bi-map-fill',
                 'count' => null
             ],
+            'events' => [
+                'path' => '/admin/events',
+                'title' => 'Locais',
+                'icon' => 'bi bi-calendar-event-fill',
+                'count' => null
+            ],
             'users' => [
                 'path' => '/admin/users',
                 'title' => 'Usuários' ,

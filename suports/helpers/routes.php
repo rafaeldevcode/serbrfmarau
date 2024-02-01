@@ -30,6 +30,11 @@ if(!function_exists('routes')):
             '/admin/categories/update',
             '/admin/categories/delete',
 
+            '/admin/events',
+            '/admin/events/create',
+            '/admin/events/update',
+            '/admin/events/delete',
+
             '/admin/gallery',
             '/admin/gallery/delete',
             '/admin/settings',
