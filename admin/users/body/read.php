@@ -1,7 +1,7 @@
 <section class='p-3 bg-light m-0 sm:m-3 rounded shadow-lg'>
     <section>
         <div class="relative overflow-x-auto max-w-[2000px] mx-auto mb-4 rounded border">
-            <table class="w-full text-xs text-left text-gray-500">
+            <table class="w-full text-xs text-left">
                 <thead class="text-gray-700 uppercase bg-color-main">
                     <tr>
                         <th scope="col" class="p-2">
@@ -34,7 +34,7 @@
                 </thead>
                 <tbody>
                     <?php foreach($users->data as $user): ?>
-                        <tr class="bg-white border-b hover:bg-gray-50">
+                        <tr class="bg-white border-b hover:bg-gray-100 text-gray-900">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input 
@@ -53,10 +53,10 @@
                                     <img class='w-100' src='<?php asset("assets/images/users/{$user->avatar}") ?>' alt='<?php echo $user->name ?>'>
                                 </div>
                             </td>
-                            <td scope="row" class="p-2 font-medium text-gray-900 whitespace-nowrap">
+                            <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $user->name ?>
                             </td>
-                            <td scope="row" class="p-2 font-medium text-gray-900 whitespace-nowrap">
+                            <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $user->email ?>
                             </td>
                             <td class="p-2">

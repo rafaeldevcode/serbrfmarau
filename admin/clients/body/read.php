@@ -1,7 +1,7 @@
 <section class='p-3 bg-light m-0 sm:m-3 rounded shadow-lg'>
     <section>
         <div class="relative overflow-x-auto max-w-[2000px] mx-auto mb-4 rounded border">
-            <table class="w-full text-xs text-left text-gray-500">
+            <table class="w-full text-xs text-left">
                 <thead class="text-gray-700 uppercase bg-color-main">
                     <tr>
                         <th scope="col" class="p-2">
@@ -37,7 +37,7 @@
                 </thead>
                 <tbody>
                     <?php foreach($clients->data as $client): ?>
-                        <tr class="bg-white border-b hover:bg-gray-50">
+                        <tr class="bg-white border-b hover:bg-gray-100 text-gray-900">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input 
@@ -51,19 +51,19 @@
                                     <label for="checkbox-table-search-<?php echo $client->id ?>" class="sr-only">checkbox</label>
                                 </div>
                             </td>
-                            <td scope="row" class="p-2 font-medium text-gray-900 whitespace-nowrap">
+                            <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $client->id ?>
                             </td>
-                            <td scope="row" class="p-2 text-gray-900 whitespace-nowrap">
+                            <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $client->name ?>
                             </td>
-                            <td scope="row" class="p-2 text-gray-900 whitespace-nowrap">
+                            <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $client->phone ?>
                             </td>
-                            <td scope="row" class="p-2 text-gray-900 whitespace-nowrap">
+                            <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $client->type ?>
                             </td>
-                            <td scope="row" class="p-2 text-gray-900 whitespace-nowrap">
+                            <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $client->identifier ?>
                             </td>
                             <td class="flex items-center justify-end p-2 space-x-2 right">
