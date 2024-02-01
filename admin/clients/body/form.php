@@ -75,7 +75,7 @@
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-123',
                     'name' => 'street_number',
-                    'label' => 'Númreo',
+                    'label' => 'Número',
                     'type' => 'number',
                     'value' => isset($client) ? $client->street_number : null,
                     'attributes' => 'required'

@@ -21,6 +21,18 @@ if (!function_exists('menusAdmin')):
                 'icon' => 'bi bi-person-lines-fill',
                 'count' => null
             ],
+            'categories' => [
+                'path' => '/admin/categories',
+                'title' => 'Categorias',
+                'icon' => 'bi bi-bookmarks-fill',
+                'count' => null
+            ],
+            'locations' => [
+                'path' => '/admin/locations',
+                'title' => 'Locais',
+                'icon' => 'bi bi-map-fill',
+                'count' => null
+            ],
             'users' => [
                 'path' => '/admin/users',
                 'title' => 'Usuários' ,

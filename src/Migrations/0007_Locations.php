@@ -22,8 +22,8 @@ class Locations extends ExecuteMigrations
         $this->string('street', 100);
         $this->string('neighborhood', 100);
         $this->integer('street_number');
-        $this->date('start_date');
-        $this->date('end_date');
+        $this->char('start_hour', 5);
+        $this->char('end_hour', 5);
         $this->string('opening', 30);
         $this->char('status', 3)->default('on');
 
