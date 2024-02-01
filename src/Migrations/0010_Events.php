@@ -16,6 +16,7 @@ class Events extends ExecuteMigrations
     public function init()
     {
         $this->integer('id')->primaryKey();
+        $this->string('name', 150);
         $this->char('type', 50);
         $this->string('payment_type', 20);
         // $this->string('event_type', 20);

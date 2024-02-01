@@ -15,10 +15,6 @@ if(!function_exists('routes')):
             '/admin/users/update',
             '/admin/users/create',
             '/admin/users/delete',
-            '/admin/posts',
-            '/admin/posts/create',
-            '/admin/posts/update',
-            '/admin/posts/delete',
             '/admin/clients',
             '/admin/clients/create',
             '/admin/clients/update',
@@ -33,6 +29,11 @@ if(!function_exists('routes')):
             '/admin/categories/create',
             '/admin/categories/update',
             '/admin/categories/delete',
+
+            '/admin/events',
+            '/admin/events/create',
+            '/admin/events/update',
+            '/admin/events/delete',
 
             '/admin/gallery',
             '/admin/gallery/delete',
