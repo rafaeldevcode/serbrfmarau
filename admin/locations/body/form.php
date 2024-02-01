@@ -53,7 +53,7 @@
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-123',
                     'name' => 'street_number',
-                    'label' => 'Númreo',
+                    'label' => 'Número',
                     'type' => 'number',
                     'value' => isset($location) ? $location->street_number : null,
                     'attributes' => 'required'
@@ -64,7 +64,7 @@
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-clock-fill',
                     'name' => 'start_hour',
-                    'label' => 'Númreo',
+                    'label' => 'Hora Inicial',
                     'type' => 'time',
                     'value' => isset($location) ? $location->start_hour : null,
                     'attributes' => 'required'
@@ -75,7 +75,7 @@
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-clock-fill',
                     'name' => 'end_hour',
-                    'label' => 'Número',
+                    'label' => 'Hora Final',
                     'type' => 'time',
                     'value' => isset($location) ? $location->end_hour : null,
                     'attributes' => 'required'
@@ -88,7 +88,8 @@
                     'name' => 'category_id',
                     'label' => 'Categoria',
                     'value' => isset($location) ? $location->category_id : null,
-                    'array' => $categories
+                    'array' => $categories,
+                    'attributes' => 'required'
                 ]) ?>
             </div>
 
@@ -98,6 +99,7 @@
                     'name' => 'opening',
                     'label' => 'Período de abertura',
                     'value' => isset($location) ? $location->opening : null,
+                    'attributes' => 'required',
                     'array' => [
                         '1 Dia' => '1 Dia',
                         '1 Semana' => '1 Semana',
@@ -108,7 +110,7 @@
             </div>
         </div>
 
-        <div class='w-full flex flex-wrap my-4'>
+        <div class='w-full flex flex-wrap px-3'>
             <?php loadHtml(__DIR__.'/../../../resources/partials/form/button-upload', [
                 'name' => 'images',
                 'label' => 'Galeria de imagens',

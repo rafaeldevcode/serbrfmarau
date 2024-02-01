@@ -15,9 +15,10 @@
     endif;
 ?>
 
-<div class='flex flex-col my-4'>
-    <label for="<?php echo $name ?>" class="block mb-2 text-sm font-bold text-secondary">
-        <?php echo $label.$is_required ?>
+<div class='flex flex-col my-3'>
+    <label for="<?php echo $name ?>" class="block mb-1 text-sm font-bold text-secondary">
+        <?php echo $label ?>
+        <span class="text-danger"><?php echo $is_required ?></span>
     </label>
 
     <div class="relative">
@@ -31,7 +32,7 @@
             id="<?php echo $name ?>"
             name="<?php echo $name ?>"
             <?php echo $attr ?>
-            class="ps-8 shadow-sm italic border border-secondary text-secondary text-sm rounded focus:ring-color-main focus:ring-1 focus:border-color-main block w-full py-2"
+            class="ps-8 shadow-sm italic border bg-white focus:outline-none border-secondary text-secondary text-sm rounded focus:ring-color-main focus:ring-1 focus:border-color-main block w-full py-2"
         >
             <?php foreach($array as $indice => $item): ?>
                 <option value='<?php echo $indice ?>' <?php echo isset($value) && $indice == $value ? 'selected' : '' ?>><?php echo $item ?></option>

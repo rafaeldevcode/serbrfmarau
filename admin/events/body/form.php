@@ -25,6 +25,7 @@
                     'name' => 'type',
                     'label' => 'Tipo',
                     'value' => isset($event) ? $event->type : null,
+                    'attributes' => 'required',
                     'array' => [
                         'Normal' => 'Normal',
                         'Fixo' => 'Fixo'
@@ -38,6 +39,7 @@
                     'name' => 'payment_type',
                     'label' => 'Tipo de pagamento',
                     'value' => isset($event) ? $event->payment_type : null,
+                    'attributes' => 'required',
                     'array' => [
                         'Cartão de Crádito' => 'Cartão de Crádito',
                         'Cartão de débito' => 'Cartão de débito',
@@ -64,6 +66,7 @@
                     'name' => 'event',
                     'label' => 'Evento',
                     'value' => isset($event) ? $event->event : null,
+                    'attributes' => 'required',
                     'array' => [
                         'Aniverssário' => 'Aniverssário',
                         'Casamento' => 'Casamento',
@@ -79,6 +82,7 @@
                     'name' => 'period',
                     'label' => 'Período (Somente se for período interiro)',
                     'value' => isset($event) ? $event->period : null,
+                    'attributes' => 'required',
                     'array' => [
                         '' => '----Selecione----',
                         'Manhã' => 'Manhã',
@@ -94,6 +98,7 @@
                     'name' => 'location_id',
                     'label' => 'Local',
                     'value' => isset($event) ? $event->location_id : null,
+                    'attributes' => 'required',
                     'array' => $locations
                 ]) ?>
             </div>
@@ -104,6 +109,7 @@
                     'name' => 'client_id',
                     'label' => 'Cliente',
                     'value' => isset($event) ? $event->client_id : null,
+                    'attributes' => 'required',
                     'array' => $clients
                 ]) ?>
             </div>

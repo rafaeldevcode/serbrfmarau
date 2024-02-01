@@ -33,7 +33,7 @@
         'background'        => $background,
         'type'         => $text,
         'icon'         => 'bi bi-person-lines-fill',
-        'title'        => 'clients',
+        'title'        => 'Clientes',
         'route_delete' => $method == 'read' ? '/admin/clients/delete' : null,
         'route_add'    => $method == 'create' ? null : '/admin/clients?method=create',
         'route_search' => '/admin/clients',
