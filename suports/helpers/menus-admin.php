@@ -39,12 +39,6 @@ if (!function_exists('menusAdmin')):
                 'icon' => 'bi bi-people-fill',
                 'count' => null
             ],
-            'posts' => [
-                'path'  => '/admin/posts',
-                'title' => 'Posts' ,
-                'icon'  => 'bi bi-pin-angle-fill',
-                'count' => null
-            ],
             'gallery' => [
                 'path' => '/admin/gallery',
                 'title' => 'Galeria',
