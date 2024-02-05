@@ -46,53 +46,57 @@ if(isset($argv[1])):
         $gallery = new Gallery();
         $settings = new Setting();
 
-        $name = 'Administrador';
-        $email = 'administrador@example.com';
-        $password = '@Admin4431!';
+        if($user->count() === 0):
+            $name = 'Administrador';
+            $email = 'administrador@example.com';
+            $password = '@Admin4431!';
 
-        $user = $user->create([
-            'name'     => $name,
-            'email'    => $email,
-            'password' => password_hash($password, PASSWORD_BCRYPT)
-        ]);
+            $user = $user->create([
+                'name'     => $name,
+                'email'    => $email,
+                'password' => password_hash($password, PASSWORD_BCRYPT)
+            ]);
 
-        $favicon = $gallery->create([
-            'name' => 'favicon',
-            'file' => 'favicon.svg',
-            'user_id' => $user->id,
-            'size' => 0
-        ]);
+            $favicon = $gallery->create([
+                'name' => 'favicon',
+                'file' => 'favicon.svg',
+                'user_id' => $user->id,
+                'size' => 0
+            ]);
 
-        $logo_main = $gallery->create([
-            'name' => 'logo main',
-            'file' => 'logo_main.svg',
-            'user_id' => $user->id,
-            'size' => 0
-        ]);
+            $logo_main = $gallery->create([
+                'name' => 'logo main',
+                'file' => 'logo_main.svg',
+                'user_id' => $user->id,
+                'size' => 0
+            ]);
 
-        $logo_secondary = $gallery->create([
-            'name' => 'logo secondary',
-            'file' => 'logo_secondary.png',
-            'user_id' => $user->id,
-            'size' => 0
-        ]);
+            $logo_secondary = $gallery->create([
+                'name' => 'logo secondary',
+                'file' => 'logo_secondary.png',
+                'user_id' => $user->id,
+                'size' => 0
+            ]);
 
-        $bg_login = $gallery->create([
-            'name' => 'bg login',
-            'file' => 'bg_login.jpg',
-            'user_id' => $user->id,
-            'size' => 0
-        ]);
+            $bg_login = $gallery->create([
+                'name' => 'bg login',
+                'file' => 'bg_login.jpg',
+                'user_id' => $user->id,
+                'size' => 0
+            ]);
 
-        $settings->create([
-            'site_logo_main' => $logo_main->id,
-            'site_logo_secondary' => $logo_secondary->id,
-            'site_favicon' => $favicon->id,
-            'site_bg_login' => $bg_login->id
-        ]);
+            $settings->create([
+                'site_logo_main' => $logo_main->id,
+                'site_logo_secondary' => $logo_secondary->id,
+                'site_favicon' => $favicon->id,
+                'site_bg_login' => $bg_login->id
+            ]);
 
-        echo "Email: {$email} \n";
-        echo "Senha: {$password} \n";
+            echo "Email: {$email} \n";
+            echo "Senha: {$password} \n";
+        else:
+            echo "Initial setup already executed \n";
+        endif;
     elseif($argv[1] == 'change-color-svg'):
         if(isset($argv[2]) || isset($argv[3])):
             $old_color = strtolower($argv[2]);
