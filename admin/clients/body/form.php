@@ -4,13 +4,24 @@
             <input type="hidden" name="id" value="<?php echo $client->id ?>">
         <?php endif ?>
 
-        <div class='flex justify-between flex-wrap'>
+        <div class='flex flex-wrap'>
             <div class='w-full md:w-6/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-person-fill',
                     'name' => 'name',
                     'label' => 'Nome',
                     'type' => 'text',
+                    'value' => isset($client) ? $client->name : null,
+                    'attributes' => 'required'
+                ]) ?>
+            </div>
+
+            <div class='w-full md:w-6/12 px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
+                    'icon' => 'bi bi-envelope-fill',
+                    'name' => 'email',
+                    'label' => 'Email',
+                    'type' => 'email',
                     'value' => isset($client) ? $client->name : null,
                     'attributes' => 'required'
                 ]) ?>
@@ -38,7 +49,7 @@
                 ]) ?>
             </div>
 
-            <div class='w-full md:w-6/12 px-4'>
+            <div class='w-full md:w-4/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-geo-alt-fill',
                     'name' => 'city',
@@ -49,7 +60,7 @@
                 ]) ?>
             </div>
 
-            <div class='w-full md:w-5/12 px-4'>
+            <div class='w-full md:w-4/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-geo-alt-fill',
                     'name' => 'street',
@@ -60,7 +71,7 @@
                 ]) ?>
             </div>
 
-            <div class='w-full md:w-5/12 px-4'>
+            <div class='w-full md:w-2/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-geo-alt-fill',
                     'name' => 'neighborhood',

@@ -31,7 +31,7 @@ class Event extends Model
      * 
      * @return Time
      */
-    public function time(): Time
+    public function schedules(): Time
     {
         return $this->hasMany(Time::class, 'schedules', 'event_id');
     }

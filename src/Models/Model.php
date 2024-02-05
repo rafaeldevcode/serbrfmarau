@@ -46,10 +46,10 @@ class Model
      * 
      * @param string $column
      * @param string $operator
-     * @param string $value
+     * @param ?string $value
      * @return self
      */
-    public function where(string $column, string $operator, string $value): self
+    public function where(string $column, string $operator, ?string $value): self
     {
         $this->wheres[] = [
             'column' => $column,

@@ -22,6 +22,9 @@
                             Nome
                         </th>
                         <th scope="col" class="p-2">
+                            Email
+                        </th>
+                        <th scope="col" class="p-2">
                             Telefone
                         </th>
                         <th scope="col" class="p-2">
@@ -56,6 +59,9 @@
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $client->name ?>
+                            </td>
+                            <td scope="row" class="p-2 whitespace-nowrap">
+                                <?php echo $client->email ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $client->phone ?>

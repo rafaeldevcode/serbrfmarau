@@ -19,11 +19,11 @@ class Protocols extends ExecuteMigrations
 
         $this->integer('event_id');
         $this->integer('client_id');
-        $this->integer('time_id');
+        $this->string('event_status', 10);
+        $this->string('token', 200)->unique();
 
         $this->foreignKey('event_id')->references('id')->on('events');
         $this->foreignKey('client_id')->references('id')->on('clients');
-        $this->foreignKey('time_id')->references('id')->on('schedules');
 
         $this->timestamps();
 

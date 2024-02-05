@@ -16,6 +16,7 @@ class Clients extends ExecuteMigrations
     public function init()
     {
         $this->integer('id')->primaryKey();
+        $this->string('email', 50)->unique();
         $this->string('identifier', 20)->unique();
         $this->string('name', 100);
         $this->string('cpf', 11);

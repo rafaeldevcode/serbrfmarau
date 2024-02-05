@@ -10,6 +10,7 @@
         
     $client->update([
         'name' => $requests->name,
+        'email' => $requests->email,
         'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
         'cpf' => preg_replace('/[^0-9]/', '', $requests->cpf),
         'city' => $requests->city,

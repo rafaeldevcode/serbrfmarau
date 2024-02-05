@@ -9,6 +9,8 @@
 
     $preloader = isset($requests->preloader) ? $requests->preloader : 'off';
     $cookies = isset($requests->cookies) ? $requests->cookies : 'off';
+    $construction = isset($requests->construction) ? $requests->construction : 'off';
+    $maintenance = isset($requests->maintenance) ? $requests->maintenance : 'off';
 
     $data = [
         'site_name' => $requests->site_name,
@@ -36,7 +38,9 @@
         'site_logo_main' => $requests->site_logo_main ?? null,
         'site_logo_secondary' => $requests->site_logo_secondary ?? null,
         'site_favicon' => $requests->site_favicon ?? null,
-        'site_bg_login' => $requests->site_bg_login ?? null
+        'site_bg_login' => $requests->site_bg_login ?? null,
+        'construction' => $construction,
+        'maintenance' => $maintenance
     ];
 
     if(!isset($current_setting)):

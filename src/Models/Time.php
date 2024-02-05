@@ -25,14 +25,4 @@ class Time extends Model
     {
         return $this->belongsTo(Event::class, 'locations', 'location_id');
     }
-
-    /**
-     * @since 1.7.0
-     * 
-     * @return Protocol
-     */
-    public function protocols(): Protocol
-    {
-        return $this->hasMany(Protocol::class, 'protocols', 'time_id');
-    }
 }

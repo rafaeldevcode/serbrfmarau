@@ -4,7 +4,7 @@ namespace Src\Models;
 
 class Protocol extends Model
 {
-    public $table = 'schedules';
+    public $table = 'protocols';
 
     /**
      * @since 1.7.0
@@ -19,20 +19,20 @@ class Protocol extends Model
     /**
      * @since 1.7.0
      * 
-     * @return Time
-     */
-    public function time(): Time
-    {
-        return $this->belongsTo(Time::class, 'schedules', 'time_id');
-    }
-
-    /**
-     * @since 1.7.0
-     * 
      * @return Client
      */
     public function client(): Client
     {
         return $this->belongsTo(Client::class, 'clients', 'client_id');
+    }
+
+    /**
+     * @since 1.0.0
+     * 
+     * @return string
+     */
+    public function generateToken(): string
+    {
+        return bin2hex(random_bytes(64));
     }
 }

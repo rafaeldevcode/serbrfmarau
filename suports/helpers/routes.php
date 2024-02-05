@@ -49,6 +49,7 @@ if(!function_exists('routes')):
             '/api/gallery',
             '/api/gallery/create',
             '/api/hours',
+            '/events/protocols'
         ];
     }
 endif;
@@ -59,9 +60,10 @@ if(!function_exists('route')):
      * 
      * @param string $path
      * @param bool $redirection
-     * @return string|void
+     * @param bool $print
+     * @return ?string
      */
-    function route(string $path = '', bool $redirection = false)
+    function route(string $path = '', bool $redirection = false, bool $print = true): ?string
     {
         $project_path = env('PROJECT_PATH');
         $path = $project_path . $path;
@@ -70,7 +72,12 @@ if(!function_exists('route')):
             return "Location: $path";
         endif;
 
-        echo $path;
+        if($print):
+            echo $path;
+            return null;
+        endif;
+
+        return $path;
     }
 endif;
 

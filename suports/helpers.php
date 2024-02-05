@@ -223,7 +223,7 @@ if (!function_exists('getHoursEvent')):
 
         if(! is_null($event_id)):
             $event = $event->find($event_id);
-            $event_schedules = getArraySelect($event->time()->data, 'id', 'hour');
+            $event_schedules = getArraySelect($event->schedules()->data, 'id', 'hour');
         endif;
 
         $location = $location->find($location_id);

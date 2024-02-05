@@ -13,22 +13,31 @@
         
         return header(route('/admin/users?method=create', true), true, 302);
     else:
-        $password = password_hash($requests->password, PASSWORD_BCRYPT);
-        $status = isset($requests->status) ? $requests->status : 'off';
-
         $user = new User();
+        
+        if ($user->where('email', '=', $requests->email)->count() > 0) {
+            session([
+                'message' => 'Já existe um usuário com esse endereço de email!',
+                'type'    => 'danger'
+            ]);
+            
+            return header(route('/admin/users?method=create', true), true, 302);
+        } else {
+            $password = password_hash($requests->password, PASSWORD_BCRYPT);
+            $status = isset($requests->status) ? $requests->status : 'off';
 
-        $user->create([
-            'name' => $requests->name,
-            'email' => $requests->email,
-            'password' => $password,
-            'status' => $status
-        ]);
+            $user->create([
+                'name' => $requests->name,
+                'email' => $requests->email,
+                'password' => $password,
+                'status' => $status
+            ]);
 
-        session([
-            'message' => 'Usuário adicionado com sucesso!',
-            'type' => 'success'
-        ]);
+            session([
+                'message' => 'Usuário adicionado com sucesso!',
+                'type' => 'success'
+            ]);
 
-        return header(route('/admin/users', true), true, 302);
+            return header(route('/admin/users', true), true, 302);
+        }
     endif;
