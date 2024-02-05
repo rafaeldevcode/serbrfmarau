@@ -12,6 +12,7 @@ class Model
     public $table;
     public $data = null;
     private $wheres = [];
+    private $orWheres = [];
     private $connection;
     private $foreign_pivot_key = null;
     private $related_pivot_key = null;
@@ -51,6 +52,25 @@ class Model
     public function where(string $column, string $operator, string $value): self
     {
         $this->wheres[] = [
+            'column' => $column,
+            'operator' => $operator,
+            'value' => $value
+        ];
+
+        return $this;
+    }
+
+        /**
+     * @since 1.7.0
+     * 
+     * @param string $column
+     * @param string $operator
+     * @param string $value
+     * @return self
+     */
+    public function orWhere(string $column, string $operator, string $value): self
+    {
+        $this->orWheres[] = [
             'column' => $column,
             'operator' => $operator,
             'value' => $value
@@ -555,6 +575,12 @@ class Model
 
         foreach ($this->wheres as $index => $where):
             $where_clause .= ($index === 0 ? ' WHERE ' : ' AND ');
+            $where_clause .= "{$where['column']} {$where['operator']} :{$where['column']}";
+            $bindings[$where['column']] = $where['value'];
+        endforeach;
+
+        foreach ($this->orWheres as $index => $where):
+            $where_clause .= ' OR ';
             $where_clause .= "{$where['column']} {$where['operator']} :{$where['column']}";
             $bindings[$where['column']] = $where['value'];
         endforeach;

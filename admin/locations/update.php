@@ -18,7 +18,8 @@
         'end_hour' => $requests->end_hour,
         'opening' => $requests->opening,
         'status' => $status,
-        'category_id' => $requests->category_id
+        'category_id' => $requests->category_id,
+        'price' => $requests->price
     ]);
 
     $location->images()->sync($images);

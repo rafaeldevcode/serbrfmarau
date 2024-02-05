@@ -9,7 +9,8 @@
     if($method == 'read'):
         $event = new Event();
         $requests = requests();
-        $events = !isset($requests->search) ? $event->paginate(20) : $event->where('name', 'LIKE', "%{$requests->search}%")->paginate(20);
+        $status = isset($requests->status) ? $requests->status : 'Pendente';
+        $events = !isset($requests->search) ? $event->where('status', '=', $status)->paginate(20) : $event->where('status', '=', $status)->where('name', 'LIKE', "%{$requests->search}%")->paginate(20);
         $background = 'bg-secondary';
         $text  = 'Visualizar';
         $body = __DIR__."/body/read";
@@ -20,7 +21,7 @@
         $location = new Location();
         $client = new Client();
 
-        $locations = getArraySelect($location->get(['id', 'name']), 'id', 'name');
+        $locations = getArraySelect($location->where('status', '=', 'on')->get(['id', 'name']), 'id', 'name');
         $clients = getArraySelect($client->get(['id', 'name']), 'id', 'name');
         $event = $event->find(querys('id'));
         $background = 'bg-success';
@@ -39,7 +40,7 @@
         $location = new Location();
         $client = new Client();
 
-        $locations = getArraySelect($location->get(['id', 'name']), 'id', 'name');
+        $locations = getArraySelect($location->where('status', '=', 'on')->get(['id', 'name']), 'id', 'name');
         $clients = getArraySelect($client->get(['id', 'name']), 'id', 'name');
         $background = 'bg-primary';
         $text  = 'Adicionar';
@@ -61,6 +62,23 @@
     ]);
 
     function loadInFooter(): void
-    {
-        loadHtml(__DIR__.'/../../resources/admin/partials/modal-delete');
-    }
+    { 
+        loadHtml(__DIR__.'/../../resources/admin/partials/modal-delete'); ?>
+        
+        <script type="text/javascript" src="<?php asset('assets/scripts/class/HoursAvailable.js') ?>"></script>
+        <script type="text/javascript">
+            const hoursAvailable = new HoursAvailable();
+            hoursAvailable.selectSeveralHours()
+                .getHours()
+                .changeLocation()
+                .changeDate()
+                .changePeiod()
+                .changeDay()
+                .changeType()
+                .submited();
+
+            $('[data-change="status"]').on('change', (event) => {
+                $('#change-status').submit();
+            });
+        </script>
+    <?php }

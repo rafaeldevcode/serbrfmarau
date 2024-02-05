@@ -21,10 +21,12 @@ class Events extends ExecuteMigrations
         $this->string('payment_type', 20);
         // $this->string('event_type', 20);
         $this->integer('amount_people');
-        $this->string('status', 10);
         $this->string('event', 12);
         $this->text('observation')->nullable();
-        $this->char('period', 5);
+        $this->char('period', 5)->nullable();
+        $this->date('date')->nullable();
+        $this->char('day', 9)->nullable();
+        $this->string('status', 10);
 
         $this->integer('location_id');
         $this->integer('client_id');
