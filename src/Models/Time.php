@@ -19,6 +19,16 @@ class Time extends Model
     /**
      * @since 1.7.0
      * 
+     * @return Event
+     */
+    public function location(): Event
+    {
+        return $this->belongsTo(Event::class, 'locations', 'location_id');
+    }
+
+    /**
+     * @since 1.7.0
+     * 
      * @return Protocol
      */
     public function protocols(): Protocol

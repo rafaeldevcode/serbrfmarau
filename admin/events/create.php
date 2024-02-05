@@ -2,12 +2,14 @@
     verifyMethod(500, 'POST');
 
     use Src\Models\Event;
+    use Src\Models\Time;
 
     $requests = requests();
 
+    $schedules = new Time();
     $event = new Event();
 
-    $event->create([
+    $event = $event->create([
         'name' => $requests->name,
         'type' => $requests->type,
         'payment_type' => $requests->payment_type,
@@ -17,8 +19,20 @@
         'location_id' => $requests->location_id,
         'client_id' => $requests->client_id,
         'observation' => $requests->observation,
-        'status' => 'Solicitado'
+        'status' => $requests->status,
+        'date' => empty($requests->day) ? $requests->date : null,
+        'day' => ! empty($requests->day) ? $requests->day : null
     ]);
+
+    foreach ($requests->hours as $hour) :
+        $schedules->create([
+            'date' => empty($requests->day) ? $requests->date : null,
+            'day' => ! empty($requests->day) ? $requests->day : null,
+            'hour' => $hour,
+            'event_id' => $event->id,
+            'location_id' => $requests->location_id
+        ]);
+    endforeach;
 
     session([
         'message' => 'Evento adicionado com sucesso!',

@@ -4,8 +4,8 @@
             <input type="hidden" name="id" value="<?php echo $location->id ?>">
         <?php endif ?>
 
-        <div class='flex justify-between flex-wrap'>
-        <div class='w-full md:w-6/12 px-4'>
+        <div class='flex flex-wrap'>
+            <div class='w-full md:w-6/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-alphabet-uppercase',
                     'name' => 'name',
@@ -83,6 +83,17 @@
             </div>
 
             <div class='w-full md:w-4/12 px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
+                    'icon' => 'bi bi-currency-dollar',
+                    'name' => 'price',
+                    'label' => 'Preço da meia hora',
+                    'type' => 'text',
+                    'value' => isset($location) ? $location->price : null,
+                    'attributes' => 'required'
+                ]) ?>
+            </div>
+
+            <div class='w-full md:w-4/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
                     'icon' => 'bi bi-hash',
                     'name' => 'category_id',
@@ -101,10 +112,10 @@
                     'value' => isset($location) ? $location->opening : null,
                     'attributes' => 'required',
                     'array' => [
-                        '1 Dia' => '1 Dia',
-                        '1 Semana' => '1 Semana',
-                        '1 Mês' => '1 Mês',
-                        '1 Ano' => '1 Ano'
+                        'P1D' => '1 Dia',
+                        'P1W' => '1 Semana',
+                        'P1M' => '1 Mês',
+                        'P1Y' => '1 Ano'
                     ]
                 ]) ?>
             </div>

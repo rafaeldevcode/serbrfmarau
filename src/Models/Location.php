@@ -45,4 +45,14 @@ class Location extends Model
     {
         return $this->hasMany(Event::class, 'events', 'location_id');
     }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @return Time
+     */
+    public function time(): Time
+    {
+        return $this->hasMany(Time::class, 'schedules', 'location_id');
+    }
 }

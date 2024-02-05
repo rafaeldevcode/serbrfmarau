@@ -1,7 +1,7 @@
 <section class='p-3 bg-light m-0 sm:m-3 rounded shadow-lg'>
-    <form method="POST" action="<?php route($action) ?>">
+    <form method="POST" action="<?php route($action) ?>" id="save-hours">
         <?php if(isset($event)): ?>
-            <input type="hidden" name="id" value="<?php echo $event->id ?>">
+            <input type="hidden" name="id" id="event_id" value="<?php echo $event->id ?>">
         <?php endif ?>
 
         <div class='flex justify-between flex-wrap'>
@@ -15,10 +15,7 @@
                     'attributes' => 'required'
                 ]) ?>
             </div>
-        </div>
 
-
-        <div class='flex justify-between flex-wrap'>
             <div class='w-full md:w-4/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
                     'icon' => 'bi bi-hash',
@@ -32,7 +29,10 @@
                     ]
                 ]) ?>
             </div>
+        </div>
 
+
+        <div class='flex flex-wrap'>
             <div class='w-full md:w-4/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
                     'icon' => 'bi bi-hash',
@@ -79,16 +79,11 @@
             <div class='w-full md:w-4/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
                     'icon' => 'bi bi-hash',
-                    'name' => 'period',
-                    'label' => 'Período (Somente se for período interiro)',
-                    'value' => isset($event) ? $event->period : null,
+                    'name' => 'client_id',
+                    'label' => 'Cliente',
+                    'value' => isset($event) ? $event->client_id : null,
                     'attributes' => 'required',
-                    'array' => [
-                        '' => '----Selecione----',
-                        'Manhã' => 'Manhã',
-                        'Tarde' => 'Tarde',
-                        'Noite' => 'Noite'
-                    ]
+                    'array' => $clients
                 ]) ?>
             </div>
 
@@ -99,18 +94,25 @@
                     'label' => 'Local',
                     'value' => isset($event) ? $event->location_id : null,
                     'attributes' => 'required',
-                    'array' => $locations
+                    'array' => $locations,
+                    'attributes' => [
+                        'data-change' => 'locations'
+                    ]
                 ]) ?>
             </div>
 
             <div class='w-full md:w-4/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
                     'icon' => 'bi bi-hash',
-                    'name' => 'client_id',
-                    'label' => 'Cliente',
-                    'value' => isset($event) ? $event->client_id : null,
+                    'name' => 'status',
+                    'label' => 'Status',
+                    'value' => isset($event) ? $event->status : null,
                     'attributes' => 'required',
-                    'array' => $clients
+                    'array' => [
+                        'Pendente' => 'Pendente',
+                        'Aprovado' => 'Aprovado',
+                        'Reprovado' => 'Reprovado'
+                    ]
                 ]) ?>
             </div>
         </div>
@@ -126,7 +128,19 @@
             </div>
         </div>
 
-        <div class='flex justify-end'>
+        <div class="px-4">
+            <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-button', [
+                'type' => 'button',
+                'style' => 'color-main',
+                'title' => 'Escolher horários',
+                'value' => 'Escolher horários',
+                'attributes' => [
+                    'id' => 'get-hours'
+                ]
+            ]) ?>
+        </div>
+
+        <div class='flex justify-end px-4'>
             <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-button', [
                 'type' => 'submit',
                 'style' => 'color-main',
@@ -134,5 +148,7 @@
                 'value' => 'Salvar'
             ]) ?>
         </div>
+
+        <?php loadHtml(__DIR__.'/../../../resources/partials/modal-hours', ['event' => isset($event) ? $event : null]) ?>
     </form>
 </section>

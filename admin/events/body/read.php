@@ -1,5 +1,28 @@
 <section class='p-3 bg-light m-0 sm:m-3 rounded shadow-lg'>
     <section>
+        <form action="" class="w-full flex justify-end" id="change-status" method="POST">
+            <div class='w-full md:w-4/12'>
+                <?php if(isset(requests()->search)): ?>
+                    <input type="hidden" name="search" value="<?php echo requests()->search ?>">
+                <?php endif ?>
+
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
+                    'icon' => 'bi bi-hash',
+                    'name' => 'status',
+                    'label' => 'Status',
+                    'value' => isset(requests()->status) ? requests()->status : null,
+                    'attributes' => [
+                        'data-change' => 'status',
+                    ],
+                    'array' => [
+                        'Pendente' => 'Pendente',
+                        'Aprovado' => 'Aprovado',
+                        'Reprovado' => 'Reprovado'
+                    ]
+                ]) ?>
+            </div>
+        </form>
+
         <div class="relative overflow-x-auto max-w-[2000px] mx-auto mb-4 rounded border">
             <table class="w-full text-xs text-left">
                 <thead class="text-gray-700 uppercase bg-color-main">
@@ -70,7 +93,9 @@
                                 <?php echo $event->payment_type ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
-                                <?php echo $event->status ?>
+                                <span class="rounded text-xs text-light px-2 py-1 bg-<?php echo getBadgeEventStatus($event->status) ?>">
+                                    <?php echo $event->status ?>
+                                </span>
                             </td>
                             <td class="flex items-center justify-end p-2 space-x-2 right">
                                 <a href="<?php route("/admin/events/?method=edit&id={$event->id}") ?>" title='Editar evento <?php echo $event->name ?>' class='text-xs p-2 rounded btn-primary text-light fw-bold'>

@@ -48,6 +48,7 @@ if(!function_exists('routes')):
             '/login/logout',
             '/api/gallery',
             '/api/gallery/create',
+            '/api/hours',
         ];
     }
 endif;
