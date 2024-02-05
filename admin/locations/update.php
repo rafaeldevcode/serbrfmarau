@@ -19,7 +19,7 @@
         'opening' => $requests->opening,
         'status' => $status,
         'category_id' => $requests->category_id,
-        'price' => $requests->price
+        'price' => str_replace(',', '.', $requests->price)
     ]);
 
     $location->images()->sync($images);

@@ -67,7 +67,10 @@
                     'label' => 'Hora Inicial',
                     'type' => 'time',
                     'value' => isset($location) ? $location->start_hour : null,
-                    'attributes' => 'required'
+                    'attributes' => [
+                        'required' => true,
+                        'data-input' => 'hour'
+                    ]
                 ]) ?>
             </div>
 
@@ -78,7 +81,10 @@
                     'label' => 'Hora Final',
                     'type' => 'time',
                     'value' => isset($location) ? $location->end_hour : null,
-                    'attributes' => 'required'
+                    'attributes' => [
+                        'required' => true,
+                        'data-input' => 'hour'
+                    ]
                 ]) ?>
             </div>
 

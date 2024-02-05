@@ -23,7 +23,7 @@
         'status' => $status,
         'user_id' => $_SESSION['user_id'],
         'category_id' => $requests->category_id,
-        'price' => $requests->price
+        'price' => str_replace(',', '.', $requests->price)
     ]);
 
     $location->find($new_location->id)->images()->sync($images);

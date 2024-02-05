@@ -1,6 +1,14 @@
 'use strict';
 
+/**
+ * Search and manipulate schedules for event management
+ */
 class HoursAvailable {
+    /**
+     * @since 1.7.0
+     * 
+     * @returns void
+     */
     constructor () {
         this.location = $('#location_id');
         this.date = $('#date');
@@ -11,6 +19,11 @@ class HoursAvailable {
         this.price = 0;
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Object}
+     */
     submited () {
         $('#save-hours').on('submit', (event) => {
             if (this.validityHours()) {
@@ -26,6 +39,11 @@ class HoursAvailable {
         return this;
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Object}
+     */
     selectSeveralHours () {
         $(document).ready(function () {
             const checkboxes = $('[data-checked="hour"]');
@@ -51,6 +69,11 @@ class HoursAvailable {
         return this;
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Object}
+     */
     getHours () {
         if (this.getHour) {
             $('#get-hours').on('click', async (event) => {
@@ -85,10 +108,20 @@ class HoursAvailable {
         return this;
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {void}
+     */
     setLocation () {
         $('#location').text(this.location.find(`option[value="${this.location.val()}"]`).text());
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {void}
+     */
     createBlockHour (data, key) {
         const classBlock = data.blocked ? 'border-danger bg-danger text-white opacity-50' : 'border-color-main';
 
@@ -129,10 +162,20 @@ class HoursAvailable {
         this.calculateTotalHourlyValue(input);
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {void}
+     */
     clearBlockHours () {
         $('[data-list="hours"]').html('');
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Object}
+     */
     changeLocation() {
         $('[data-change="locations"]').on('change', (event) => {
             this.clearBlockHours();
@@ -142,6 +185,11 @@ class HoursAvailable {
         return this;
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Object}
+     */
     changeDate () {
         $('#date').on('change', async (event) => {
             this.clearBlockHours();
@@ -162,6 +210,11 @@ class HoursAvailable {
         return this;
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Object}
+     */
     changePeiod () {
         $('#period').on('change', async (event) => {
             this.clearBlockHours();
@@ -196,6 +249,11 @@ class HoursAvailable {
         return this;
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Object}
+     */
     changeDay () {
         $('#day').on('change', async (event) => {
             this.clearBlockHours();
@@ -216,6 +274,11 @@ class HoursAvailable {
         return this;
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Object}
+     */
     changeType () {
         const day = $('#day');
         const type = $('#type');
@@ -253,6 +316,11 @@ class HoursAvailable {
         return this;
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {boolean}
+     */
     validityHours () {
         if (this.eventId.val()) return true;
 
@@ -268,6 +336,12 @@ class HoursAvailable {
         return isValid;
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @param {Object} checkbox 
+     * @returns {void}
+     */
     calculateTotalHourlyValue (checkbox) {
         const checkboxes = $('[data-checked="hour"]');
         let count = 0;
@@ -285,6 +359,11 @@ class HoursAvailable {
         });
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Array}
+     */
     getHoursByPeriod () {
         const hours = [];
         const periods = {
@@ -325,6 +404,10 @@ class HoursAvailable {
         return hours;
     }
 
+    /**
+     * 
+     * @returns {Promise}
+     */
     get() {
         return new Promise((resolve, reject) => {
             $.ajax({
