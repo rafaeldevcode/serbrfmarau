@@ -2,7 +2,7 @@
     <section>
         <div class="relative overflow-x-auto max-w-[2000px] mx-auto mb-4 rounded border">
             <table class="w-full text-xs text-left">
-                <thead class="text-gray-700 uppercase bg-color-main">
+                <thead class="text-white uppercase bg-color-main">
                     <tr>
                         <th scope="col" class="p-2">
                             <div class="flex items-center">
