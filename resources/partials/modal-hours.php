@@ -1,5 +1,5 @@
 <div data-modal="hours" class="z-[99999] fixed top-0 left-0 w-full h-full items-center justify-center hidden z-50">
-    <div class="bg-white overflow-y-auto rounded w-full h-full max-w-[500px]" data-modal-body="popup">
+    <div class="bg-white rounded w-full max-w-[500px]" data-modal-body="popup">
         <div class="p-4 relative bg-color-main rounded-t">
             <button data-modal-close="popup" type="button" title="Fechar modal" class="absolute top-0 right-2 text-white hover:text-gray-800 w-[20px] opacity-50">
                 <i class="bi bi-x text-2xl"></i>
@@ -63,7 +63,7 @@
                     ]) ?>
                 </div>
 
-                <div class="relative w-full min-h-[100px]">
+                <div class="relative w-full h-[300px] overflow-y-auto">
                     <?php loadHtml(__DIR__.'/preloader', ['position' => 'absolute', 'type' => 'hours']) ?>
 
                     <div class="flex justify-center items-center flex-wrap gap-1 max-w-[150px] mx-auto" data-list="hours"></div>
