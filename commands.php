@@ -116,9 +116,9 @@ if(isset($argv[1])):
                 file_put_contents("{$path}{$image}", $new_svg_content);
             endforeach;
 
-            echo "Colors changed successfully!";
+            echo "Colors changed successfully! \n";
         else:
-            echo "It is necessary to inform the old color and the new color!";
+            echo "It is necessary to inform the old color and the new color! \n";
         endif;
     endif;
 endif;

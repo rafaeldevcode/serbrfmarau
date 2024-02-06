@@ -18,10 +18,10 @@
         if(in_array($path, $routes)):
             if(!autenticate() && strpos($path, '/login') === false):
                 if($construction === 'on'):
-                    loadHtml(__DIR__ . '/../resources/clients/construction');
+                    loadHtml(__DIR__ . '/../resources/client/construction');
                     die;
                 elseif($maintenance === 'on'):
-                    loadHtml(__DIR__ . '/../resources/clients/maintenance');
+                    loadHtml(__DIR__ . '/../resources/client/maintenance');
                     die;
                 endif;
             endif;
