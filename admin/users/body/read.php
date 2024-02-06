@@ -1,10 +1,10 @@
 <section class='p-3 bg-light m-0 sm:m-3 rounded shadow-lg'>
-    <section class='custom-table m-auto cm-browser-height'>
-        <div class="relative overflow-x-auto rounded border">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-color-main">
+    <section>
+        <div class="relative overflow-x-auto max-w-[2000px] mx-auto mb-4 rounded border">
+            <table class="w-full text-xs text-left">
+                <thead class="text-gray-700 uppercase bg-color-main">
                     <tr>
-                        <th scope="col" class="p-4">
+                        <th scope="col" class="p-2">
                             <div class="flex items-center">
                                 <input 
                                     data-button="select-several"
@@ -15,27 +15,27 @@
                                 <label for="checkbox-all-search" class="sr-only">checkbox</label>
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="p-2">
                             Thumb
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="p-2">
                             Nome
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="p-2">
                             Email
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="p-2">
                             Status
                         </th>
-                        <th scope="col" class="px-6 py-3 text-right">
+                        <th scope="col" class="p-2 text-right">
                             Ações
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach($users->data as $user): ?>
-                        <tr class="bg-white border-b hover:bg-gray-50">
-                            <td class="w-4 p-4">
+                        <tr class="bg-white border-b hover:bg-gray-100 text-gray-900">
+                            <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input 
                                         value='<?php echo $user->id ?>' 
@@ -53,18 +53,18 @@
                                     <img class='w-100' src='<?php asset("assets/images/users/{$user->avatar}") ?>' alt='<?php echo $user->name ?>'>
                                 </div>
                             </td>
-                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $user->name ?>
                             </td>
-                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $user->email ?>
                             </td>
-                            <td class="px-6 py-4">
+                            <td class="p-2">
                                 <span class="rounded text-xs text-light px-2 py-1 bg-<?php echo (is_null($user->status) || $user->status == 'off') ? 'danger' : 'primary' ?>">
                                     <?php echo (is_null($user->status) || $user->status == 'off') ? 'Inativo' : 'Ativo' ?>
                                 </span>
                             </td>
-                            <td class="flex items-center justify-end px-6 py-4 space-x-2 right">
+                            <td class="flex items-center justify-end p-2 space-x-2 right">
                                 <a href="<?php route("/admin/users/?method=edit&id={$user->id}") ?>" title='Editar usuário <?php echo $user->name ?>' class='text-xs p-2 rounded btn-primary text-light fw-bold'>
                                     <i class='bi bi-pencil-square'></i>
                                 </a>

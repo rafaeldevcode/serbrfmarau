@@ -191,7 +191,23 @@
                 ]) ?>
             </div>
 
-            <div class='w-full'>
+            <div class='w-full px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-checkbox-switch', [
+                    'name' => 'maintenance',
+                    'label' => 'Ativar modo de manutenção (Inativo | Ativo)',
+                    'value' => isset($settings) ? $settings->maintenance : 'off'
+                ]) ?>
+            </div>
+
+            <div class='w-full px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-checkbox-switch', [
+                    'name' => 'construction',
+                    'label' => 'Ativar modo de construção (Inativo | Ativo)',
+                    'value' => isset($settings) ? $settings->construction : 'off'
+                ]) ?>
+            </div>
+
+            <div class='w-full px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-checkbox-switch', [
                     'name' => 'cookies',
                     'label' => 'Ativar aviso de cookies (Inativo | Ativo)',
@@ -199,7 +215,7 @@
                 ]) ?>
             </div>
 
-            <div class="w-full">
+            <div class="w-full px-4">
                 <div class='w-full'>
                     <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-checkbox-switch', [
                         'name' => 'preloader',
@@ -229,7 +245,7 @@
                 </div>
             </div>
 
-            <div class='w-full flex flex-wrap mt-6'>
+            <div class='w-full flex flex-wrap mt-6 px-3'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/button-upload', [
                     'name' => 'site_logo_main',
                     'label' => 'Logo principal (Cor principal)',

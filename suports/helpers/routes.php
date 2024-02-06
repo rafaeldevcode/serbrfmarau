@@ -15,10 +15,26 @@ if(!function_exists('routes')):
             '/admin/users/update',
             '/admin/users/create',
             '/admin/users/delete',
-            '/admin/posts',
-            '/admin/posts/create',
-            '/admin/posts/update',
-            '/admin/posts/delete',
+            '/admin/clients',
+            '/admin/clients/create',
+            '/admin/clients/update',
+            '/admin/clients/delete',
+            
+            '/admin/locations',
+            '/admin/locations/create',
+            '/admin/locations/update',
+            '/admin/locations/delete',
+
+            '/admin/categories',
+            '/admin/categories/create',
+            '/admin/categories/update',
+            '/admin/categories/delete',
+
+            '/admin/events',
+            '/admin/events/create',
+            '/admin/events/update',
+            '/admin/events/delete',
+
             '/admin/gallery',
             '/admin/gallery/delete',
             '/admin/settings',
@@ -32,6 +48,8 @@ if(!function_exists('routes')):
             '/login/logout',
             '/api/gallery',
             '/api/gallery/create',
+            '/api/hours',
+            '/events/protocols'
         ];
     }
 endif;
@@ -42,9 +60,10 @@ if(!function_exists('route')):
      * 
      * @param string $path
      * @param bool $redirection
-     * @return string|void
+     * @param bool $print
+     * @return ?string
      */
-    function route(string $path = '', bool $redirection = false)
+    function route(string $path = '', bool $redirection = false, bool $print = true): ?string
     {
         $project_path = env('PROJECT_PATH');
         $path = $project_path . $path;
@@ -53,7 +72,12 @@ if(!function_exists('route')):
             return "Location: $path";
         endif;
 
-        echo $path;
+        if($print):
+            echo $path;
+            return null;
+        endif;
+
+        return $path;
     }
 endif;
 

@@ -12,6 +12,7 @@ class Model
     public $table;
     public $data = null;
     private $wheres = [];
+    private $orWheres = [];
     private $connection;
     private $foreign_pivot_key = null;
     private $related_pivot_key = null;
@@ -45,12 +46,31 @@ class Model
      * 
      * @param string $column
      * @param string $operator
+     * @param ?string $value
+     * @return self
+     */
+    public function where(string $column, string $operator, ?string $value): self
+    {
+        $this->wheres[] = [
+            'column' => $column,
+            'operator' => $operator,
+            'value' => $value
+        ];
+
+        return $this;
+    }
+
+        /**
+     * @since 1.7.0
+     * 
+     * @param string $column
+     * @param string $operator
      * @param string $value
      * @return self
      */
-    public function where(string $column, string $operator, string $value): self
+    public function orWhere(string $column, string $operator, string $value): self
     {
-        $this->wheres[] = [
+        $this->orWheres[] = [
             'column' => $column,
             'operator' => $operator,
             'value' => $value
@@ -108,13 +128,16 @@ class Model
     /**
      * @since 1.0.0
      * 
+     * @param ?array $columns
      * @return stdClass|null
      */
-    public function first(): stdClass|null
+    public function first(?array $columns = null): stdClass|null
     {
+        $columns = ! is_null($columns) ? implode(', ', $columns) : '*';
+
         $where_clause = $this->whereClausure();
 
-        $query = "SELECT * FROM {$this->table}{$where_clause->clausure} LIMIT 1";
+        $query = "SELECT {$columns} FROM {$this->table}{$where_clause->clausure} LIMIT 1";
 
         $statement = $this->connection->prepare($query);
 
@@ -137,15 +160,18 @@ class Model
      * @since 1.3.0
      * 
      * @param ?string $order_column
+     * @param ?array $columns
      * @return stdClass|null
      */
-    public function last(?string $order_column = null): stdClass|null
+    public function last(?string $order_column = null, ?array $columns = null): stdClass|null
     {
+        $columns = ! is_null($columns) ? implode(', ', $columns) : '*';
+
         $order_column = isset($order_column) ? $order_column : 'id';
 
         $where_clause = $this->whereClausure();
 
-        $query = "SELECT * FROM {$this->table}{$where_clause->clausure} ORDER BY {$order_column} DESC LIMIT 1";
+        $query = "SELECT {$columns} FROM {$this->table}{$where_clause->clausure} ORDER BY {$order_column} DESC LIMIT 1";
 
         $statement = $this->connection->prepare($query);
 
@@ -199,13 +225,16 @@ class Model
     /**
      * @since 1.2.0
      * 
+     * @param ?array $columns
      * @return array|null
      */
-    public function get(): array|null
+    public function get(?array $columns = null): array|null
     {
+        $columns = ! is_null($columns) ? implode(', ', $columns) : '*';
+
         $where_clause = $this->whereClausure();
 
-        $query = "SELECT * FROM {$this->table}{$where_clause->clausure}";
+        $query = "SELECT $columns FROM {$this->table}{$where_clause->clausure}";
 
         $statement = $this->connection->prepare($query);
 
@@ -546,6 +575,12 @@ class Model
 
         foreach ($this->wheres as $index => $where):
             $where_clause .= ($index === 0 ? ' WHERE ' : ' AND ');
+            $where_clause .= "{$where['column']} {$where['operator']} :{$where['column']}";
+            $bindings[$where['column']] = $where['value'];
+        endforeach;
+
+        foreach ($this->orWheres as $index => $where):
+            $where_clause .= ' OR ';
             $where_clause .= "{$where['column']} {$where['operator']} :{$where['column']}";
             $bindings[$where['column']] = $where['value'];
         endforeach;

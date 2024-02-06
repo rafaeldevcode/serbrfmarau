@@ -35,7 +35,7 @@ module.exports = {
         },
         extend: {
             colors: {
-                "color-main": "#3695FF",
+                "color-main": "#1E3E87",
                 "primary": "#0062FF",
                 "secondary": "#6C757D",
                 "success": "#008000",
@@ -85,13 +85,13 @@ module.exports = {
                     },
                 },
                 '.btn-color-main': {
-                    backgroundColor: '#3695FF',
-                    border: '1px solid #3695FF',
+                    backgroundColor: '#1E3E87',
+                    border: '1px solid #1E3E87',
                     color: '#fff',
                     transition: '.4s all',
                     '&:hover': {
                         backgroundColor: '#fff',
-                        color: '#3695FF',
+                        color: '#1E3E87',
                     },
                 },
                 '.btn-secondary': {

@@ -15,7 +15,9 @@
     endif;
 ?>
 
-<div class="my-4">
+<div class="my-3">
+    <label class="text-secondary text-sm font-bold" for="<?php echo $name ?>"><?php echo $label ?><span class="text-danger"><?php echo $is_required ?></span></label>
+
     <label class="relative block">
         <span class="sr-only">
             <?php echo $label.$is_required ?>

@@ -27,6 +27,8 @@ class Settings extends ExecuteMigrations
         $this->integer('site_bg_login')->nullable();
         $this->char('preloader', 3)->default('off');
         $this->char('cookies', 3)->default('off');
+        $this->char('maintenance', 3)->default('off');
+        $this->char('construction', 3)->default('off');
         $this->string('preloader_image', 21)->default('preloader_default.gif');
         $this->string('facebook_pixel', 20)->nullable();
         $this->string('tiktok_pixel', 25)->nullable();

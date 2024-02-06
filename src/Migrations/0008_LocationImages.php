@@ -4,18 +4,18 @@ namespace Src\Migrations;
 
 use Src\Migrations\ExecuteMigrations;
 
-class PostImages extends ExecuteMigrations
+class LocationImages extends ExecuteMigrations
 {
-    public $table = 'post_images';
+    public $table = 'location_images';
 
     /**
-     * @since 1.3.0
+     * @since 1.7.0
      * 
      * @return void
      */
     public function init()
     {
-        $this->integer('post_id');
+        $this->integer('location_id');
         $this->integer('image_id');
 
         $this->create();

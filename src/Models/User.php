@@ -77,13 +77,13 @@ class User extends Model
     }
 
     /**
-     * @since 1.3.1
+     * @since 1.7.0
      * 
-     * @return Posts
+     * @return Location
      */
-    public function posts(): Posts
+    public function locations(): Location
     {
-        return $this->hasMany(Posts::class, 'posts', 'user_id');
+        return $this->hasMany(Location::class, 'locations', 'user_id');
     }
 
     /**

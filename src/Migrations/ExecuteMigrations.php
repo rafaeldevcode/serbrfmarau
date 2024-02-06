@@ -290,6 +290,10 @@ class ExecuteMigrations
                 return "LONGTEXT";
             case 'boolean':
                 return "BOOLEAN";
+            case 'decimal':
+                return "DECIMAL";
+            case 'double':
+                return "DOUBLE";
             default:
                 throw new Exception("Tipo de coluna inválido: $method");
         endswitch;
