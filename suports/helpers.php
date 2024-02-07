@@ -333,4 +333,24 @@ if (!function_exists('getBadgeEventStatus')):
     }
 endif;
 
+if (!function_exists('pickDaysOfTheWeek')):
+    /**
+     * @since 1.7.0
+     * 
+     * @return array
+     */
+    function pickDaysOfTheWeek(): array
+    {
+        return [
+            'Domingo',
+            'Segunda',
+            'Terça',
+            'Quarta',
+            'Quinta',
+            'Sexta', 
+            'Sábado'
+        ];
+    }
+endif;
+
 !defined('SETTINGS') && define('SETTINGS', (array)getSiteSettings());

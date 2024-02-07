@@ -88,6 +88,10 @@
         <!-- Tinymce end -->
     <?php endif ?>
 
+    <?php if(isset($plugins) && in_array('select2', $plugins)): ?>
+        <script type="text/javascript" src="<?php asset('libs/select2/select2.full.min.js?ver='.APP_VERSION)?>"></script>
+    <?php endif ?>
+
     <?php if(function_exists('loadInFooter')) loadInFooter(); ?>
 </body>
 </html>

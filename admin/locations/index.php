@@ -55,6 +55,7 @@
         'route_search' => '/admin/locations',
         'body' => $body,
         'data' => $data,
+        'plugins' => ['select2']
     ]);
 
     function loadInFooter(): void
@@ -69,5 +70,7 @@
             gallery.openModalSelect($('[data-upload=images]'), 'checkbox');
 
             NormalizeHour.init();
+
+            $('[name="opening_days[]"]').select2({placeholder: '----Selecione----'});
         </script>
     <?php }

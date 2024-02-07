@@ -10,20 +10,21 @@
 
     $status = isset($requests->status) ? $requests->status : 'off';
     $images = isset($requests->images) ? $requests->images : null;
+    $prices = array_map(function($value) {
+        return ($value === "") ? '0.00' : $value;
+    }, $requests->prices);
 
     $new_location = $location->create([
         'name' => $requests->name,
-        'city' => $requests->city,
-        'street' => $requests->street,
-        'neighborhood' => $requests->neighborhood,
-        'street_number' => $requests->street_number,
         'start_hour' => $requests->start_hour,
         'end_hour' => $requests->end_hour,
         'opening' => $requests->opening,
         'status' => $status,
         'user_id' => $_SESSION['user_id'],
         'category_id' => $requests->category_id,
-        'price' => str_replace(',', '.', $requests->price)
+        'type' => $requests->type,
+        'prices' => json_encode(array_combine(pickDaysOfTheWeek(), $prices)),
+        'opening_days' => json_encode($requests->opening_days)
     ]);
 
     $location->find($new_location->id)->images()->sync($images);

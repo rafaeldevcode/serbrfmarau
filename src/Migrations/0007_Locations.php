@@ -18,14 +18,12 @@ class Locations extends ExecuteMigrations
         $this->integer('id')->primaryKey();
 
         $this->string('name', 255);
-        $this->string('city', 50);
-        $this->string('street', 100);
-        $this->string('neighborhood', 100);
-        $this->integer('street_number');
         $this->char('start_hour', 5);
         $this->char('end_hour', 5);
         $this->char('opening', 3);
-        $this->decimal('price');
+        $this->text('prices');
+        $this->string('opening_days', 255);
+        $this->char('type', 6)->nullable();
         $this->char('status', 3)->default('on');
 
         $this->integer('user_id');

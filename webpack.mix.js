@@ -9,6 +9,9 @@ Mix
 
     .scripts('node_modules/jquery/dist/jquery.min.js', 'public/libs/jquery/jquery.js')
     .scripts('node_modules/jquery-mask-plugin/dist/jquery.mask.min.js', 'public/libs/jquery/jquery.mask.min.js')
+    
+    .css('node_modules/select2/dist/css/select2.min.css', 'public/libs/select2/select2.min.css')
+    .scripts('node_modules/select2/dist/js/select2.full.min.js', 'public/libs/select2/select2.full.min.js')
 
     .scripts('node_modules/bootstrap/dist/js/bootstrap.bundle.js', 'public/libs/bootstrap/bootstrap.js')
     .scripts('node_modules/bootstrap/dist/js/bootstrap.bundle.js.map', 'public/libs/bootstrap/bootstrap.js.map')

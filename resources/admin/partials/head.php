@@ -18,6 +18,11 @@
         <!-- Tinymce end -->
     <?php endif ?>
 
+    <?php if(isset($plugins) && in_array('select2', $plugins)): ?>
+        <link href="<?php asset('libs/select2/select2.min.css?ver='.APP_VERSION)?>" />
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <?php endif ?>
+
     <link rel='stylesheet' href='<?php asset('libs/tailwind/admin/style.css?ver='.APP_VERSION) ?>' />
     <link rel='stylesheet' href='<?php asset('assets/css/globals.css?ver='.APP_VERSION) ?>' />
     
