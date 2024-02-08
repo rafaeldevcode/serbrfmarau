@@ -11,7 +11,7 @@
     $status = isset($requests->status) ? $requests->status : 'off';
     $images = isset($requests->images) ? $requests->images : null;
     $prices = array_map(function($value) {
-        return ($value === "") ? '0.00' : $value;
+        return ($value === "") ? '0.00' : str_replace(',', '.', $value);
     }, $requests->prices);
 
     $new_location = $location->create([

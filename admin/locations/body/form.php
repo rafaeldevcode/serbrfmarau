@@ -1,5 +1,5 @@
 <section class='p-3 bg-light m-0 sm:m-3 rounded shadow-lg'>
-    <form method="POST" action="<?php route($action) ?>">
+    <form method="POST" action="<?php route($action) ?>" id="save-location">
         <?php if(isset($location)): ?>
             <input type="hidden" name="id" value="<?php echo $location->id ?>">
         <?php endif ?>
@@ -102,7 +102,7 @@
                         'Monday' => 'Segunda',
                         'Tuesday' => 'Terça',
                         'Wednesday' => 'Quarta',
-                        'Thursday' => 'Terça',
+                        'Thursday' => 'Quinta',
                         'Friday' => 'Sexta',
                         'Saturday' => 'Sábado'
                     ]

@@ -49,6 +49,7 @@ if(!function_exists('routes')):
             '/api/gallery',
             '/api/gallery/create',
             '/api/hours',
+            '/api/locations',
             '/events/protocols'
         ];
     }

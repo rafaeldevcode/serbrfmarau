@@ -174,12 +174,36 @@ class HoursAvailable {
     /**
      * @since 1.7.0
      * 
+     * @param {*}
+     * @returns {void}
+     */
+    async togglePeriod(id) {
+        const response = await this.getLocationType(id);
+
+        if(response.success){
+            if(response.data.type == 'period') {
+                this.period.attr('disabled', false);
+                this.period.parent().parent().parent().show()
+            } else {
+                this.period.attr('disabled', true);
+                this.period.parent().parent().parent().hide()
+            }
+        }
+    }
+
+    /**
+     * @since 1.7.0
+     * 
      * @returns {Object}
      */
     changeLocation() {
-        $('[data-change="locations"]').on('change', (event) => {
+        if(this.location.length > 0) this.togglePeriod(this.location.val())
+
+        this.location.on('change', async (event) => {
             this.clearBlockHours();
             this.getHour = true;
+
+            this.togglePeriod(event.target.value);
         });
 
         return this;
@@ -191,7 +215,7 @@ class HoursAvailable {
      * @returns {Object}
      */
     changeDate () {
-        $('#date').on('change', async (event) => {
+        this.date.on('change', async (event) => {
             this.clearBlockHours();
             Preloader.show('hours');
 
@@ -216,7 +240,7 @@ class HoursAvailable {
      * @returns {Object}
      */
     changePeiod () {
-        $('#period').on('change', async (event) => {
+        this.period.on('change', async (event) => {
             this.clearBlockHours();
 
             this.clearBlockHours();
@@ -255,7 +279,7 @@ class HoursAvailable {
      * @returns {Object}
      */
     changeDay () {
-        $('#day').on('change', async (event) => {
+        this.day.on('change', async (event) => {
             this.clearBlockHours();
             Preloader.show('hours');
 
@@ -347,6 +371,8 @@ class HoursAvailable {
         let count = 0;
 
         checkbox.on('click', (event) => {
+            if(this.period.val().length !== 0) event.preventDefault();
+
             setTimeout(() => {
                 checkboxes.each(function (index, checkbox) {
                     if (checkbox.checked) {
@@ -405,6 +431,7 @@ class HoursAvailable {
     }
 
     /**
+     * @since 1.7.0
      * 
      * @returns {Promise}
      */
@@ -422,6 +449,7 @@ class HoursAvailable {
                     day: this.day.attr('disabled') === 'disabled' ? null : this.day.val()
                 },
                 success: function(response) {
+                    console.log(response)
                     resolve(response);
                 },
                 error: function(xhr, status, error) {
@@ -430,4 +458,30 @@ class HoursAvailable {
             });
         });
     }
+
+        /**
+         * @since 1.7.0
+         * 
+         * @param {*}
+         * @returns {Promise}
+         */
+        getLocationType(id) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: route('/api/locations'),
+                    type: 'GET',
+                    processData: true,
+                    contentType: false,
+                    data: {
+                        id: id
+                    },
+                    success: function(response) {
+                        resolve(response);
+                    },
+                    error: function(xhr, status, error) {
+                        reject(error);
+                    }
+                });
+            });
+        }
 }

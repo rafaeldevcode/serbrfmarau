@@ -237,10 +237,20 @@ if (!function_exists('getHoursEvent')):
         $schedules = getArraySelect($schedules, 'id', 'hour');
 
         if ($location->data):
-            $opening_date = getOpeningDate($location->data->opening);
-            $active_hours = generateTimeBlocks($location->data->start_hour, $location->data->end_hour);
+            $opening_days = json_decode($location->data->opening_days, true);
 
-            $data['price'] = $location->data->price;
+            if(in_array($day, $opening_days) || in_array(date('l', strtotime($date)), $opening_days)):
+                $opening_date = getOpeningDate($location->data->opening);
+                $active_hours = generateTimeBlocks($location->data->start_hour, $location->data->end_hour);
+            else:
+                $active_hours = [];
+            endif;
+
+            $price = empty($day) 
+                ? json_decode($location->data->prices, true)[translateDayWeek(date('l', strtotime($date)))] 
+                : json_decode($location->data->prices, true)[translateDayWeek($day)];
+
+            $data['price'] = $location->data->type == 'period' ? number_format($price / count(getHoursByPeriod('Tarde')), 2, '.') : $price;
         else:
             $opening_date = date('Y-m-d');
             $active_hours = [];
@@ -350,6 +360,76 @@ if (!function_exists('pickDaysOfTheWeek')):
             'Sexta', 
             'Sábado'
         ];
+    }
+endif;
+
+if (!function_exists('translateDayWeek')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param string $day
+     * @return string
+     */
+    function translateDayWeek(string $status): string
+    {
+        return match ($status) {
+            'Sunday' => 'Domingo',
+            'Monday' => 'Segunda',
+            'Tuesday' => 'Terça',
+            'Wednesday' => 'Quarta',
+            'Thursday' => 'Quinta',
+            'Friday' => 'Sexta',
+            'Saturday' => 'Sábado'
+        };
+    }
+endif;
+
+if (!function_exists('getHoursByPeriod')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param string $period
+     * @return array
+     */
+    function getHoursByPeriod(string $period): array
+    {
+        $hours = [];
+        $periods = [
+            'Manhã' => [
+                'start' => 8,
+                'end' => 13
+            ],
+            'Tarde' => [
+                'start' => 13,
+                'end' => 18
+            ],
+            'Noite' => [
+                'start' => 18,
+                'end' => 23
+            ]
+        ];
+
+        for ($i = 0; $i < 24; $i++):
+            if($i >= $periods[$period]['start'] && $i <= $periods[$period]['end']):
+                $hour_one = '';
+                $hour_two = '';
+
+                if ($i < 10) {
+                    $hour_one = "0{$i}:00";
+                    $hour_two = "0{$i}:30";
+                } else {
+                    $hour_one = "{$i}:00";
+                    $hour_two = "{$i}:30";
+                }
+
+                array_push($hours, $hour_one);
+                array_push($hours, $hour_two);
+            endif;
+        endfor;
+
+        // hours.pop();
+
+        return $hours;
     }
 endif;
 
