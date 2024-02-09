@@ -18,4 +18,14 @@ class Category extends Model
     {
         return $this->hasMany(Location::class, 'locations', 'category_id');
     }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @return Gallery
+     */
+    public function thumbnail(): Gallery
+    {
+        return $this->belongsTo(User::class, 'gallery', 'thumbnail');
+    }
 }

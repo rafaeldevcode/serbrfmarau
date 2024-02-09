@@ -23,50 +23,16 @@
 
             <div class="w-full md:w-6/12 pl-2">
                 <ul>
-                    <li class="flex items-center gap-4 mb-4">
-                        <i class="bi bi-1-circle-fill text-5xl text-color-main"></i>
+                    <?php foreach($categories as $indice => $category): ?>
+                        <li class="flex items-center gap-4 mb-4">
+                            <i class="bi bi-<?php echo $indice+1 ?>-circle-fill text-5xl text-color-main"></i>
 
-                        <div>
-                            <p class="font-bold text-color-main">Campos Verdes</p>
-                            <p> Explore Nossos Campos Bem-Cuidados para Momentos de Esporte e Diversão ao Ar Livre</p>
-                        </div>
-                    </li>
-
-                    <li class="flex items-center gap-4 mb-4">
-                        <i class="bi bi-2-circle-fill text-5xl text-color-main"></i>
-
-                        <div>
-                            <p class="font-bold text-color-main">Quadras Dinâmicas</p>
-                            <p>Desafie-se em Nossas Quadras Versáteis e Desfrute de Momentos de Esporte e Energia</p>
-                        </div>
-                    </li>
-
-                    <li class="flex items-center gap-4 mb-4">
-                        <i class="bi bi-3-circle-fill text-5xl text-color-main"></i>
-
-                        <div>
-                            <p class="font-bold text-color-main">Casas Aconchegantes</p>
-                            <p>Descubra Nossas Casas Charmosas e Crie Memórias Inesquecíveis em um Ambiente Acolhedor</p>
-                        </div>
-                    </li>
-
-                    <li class="flex items-center gap-4 mb-4">
-                        <i class="bi bi-4-circle-fill text-5xl text-color-main"></i>
-
-                        <div>
-                            <p class="font-bold text-color-main">Quiosques Relaxantes</p>
-                            <p>Desfrute de Momentos de Descontração em Nossos Quiosques Charmosos e Bem-Equipados</p>
-                        </div>
-                    </li>
-
-                    <li class="flex items-center gap-4 mb-4">
-                        <i class="bi bi-5-circle-fill text-5xl text-color-main"></i>
-
-                        <div>
-                            <p class="font-bold text-color-main">Salões de Festas Elegantes</p>
-                            <p>Celebre Momentos Especiais em Nossos Salões Exclusivos, Combinando Luxo, Conforto e Sofisticação</p>
-                        </div>
-                    </li>
+                            <div>
+                                <p class="font-bold text-color-main"><?php echo $category->name ?></p>
+                                <p><?php echo $category->description ?></p>
+                            </div>
+                        </li>
+                    <?php endforeach ?>
                 </ul>
             </div>
         </div>
@@ -84,8 +50,11 @@
             <?php foreach($categories as $category): ?>
                 <div class="p-2">
                     <a href="#" class="block rounded w-[200px] h-[200px] relative hover:scale-105 transition duration-150 ease-in-out">
-                        <img class="w-[200px] h-[200px] rounded object-cover absolute top-0 left-0 z-[1]" src="http://localhost:9090/assets/images/uploads/2024/02/1ca41cf0c7c19ea10432ead79564040f4601de74a54e7f823d.jpeg" alt="<?php echo $category->name ?>">
-                    
+                        <?php loadHtml(__DIR__ . '/../resources/client/partials/thumbnail', [
+                            'class' => 'w-[200px] h-[200px] rounded object-cover absolute top-0 left-0 z-[1]',
+                            'id' => $category->thumbnail
+                        ]) ?>
+
                         <p class="bg-[#00000085] flex items-end z-[2] w-full h-full rounded relative text-white text-2xl font-bold p-2"><?php echo $category->name ?></p>
                     </a>
                 </div>

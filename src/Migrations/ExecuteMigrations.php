@@ -294,6 +294,8 @@ class ExecuteMigrations
                 return "DECIMAL";
             case 'double':
                 return "DOUBLE";
+            case 'mediumtext':
+                return "MEDIUMTEXT";
             default:
                 throw new Exception("Tipo de coluna inválido: $method");
         endswitch;

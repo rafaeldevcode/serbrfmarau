@@ -15,6 +15,26 @@
                     'attributes' => 'required'
                 ]) ?>
             </div>
+
+            <div class='w-full md:w-6/12 px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
+                    'icon' => 'bi bi-alphabet-uppercase',
+                    'name' => 'description',
+                    'label' => 'Descrição',
+                    'type' => 'text',
+                    'value' => isset($category) ? $category->description : null
+                ]) ?>
+            </div>
+        </div>
+
+        <div class='w-full flex flex-wrap px-3'>
+            <?php loadHtml(__DIR__.'/../../../resources/partials/form/button-upload', [
+                'name' => 'thumbnail',
+                'label' => 'Imagem de destaque',
+                'value' => isset($category) ? $category->thumbnail : null,
+                'type' => 'radio',
+                'attributes' => 'required'
+            ]) ?>
         </div>
 
         <div class='flex justify-end'>
