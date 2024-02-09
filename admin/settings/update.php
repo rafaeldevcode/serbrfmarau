@@ -16,6 +16,7 @@
         'site_name' => $requests->site_name,
         'site_description' => $requests->site_description,
         'andress' => $requests->andress,
+        'map_location' => $requests->map_location,
         'phone' => $requests->phone,
         'email' => $requests->email,
         'whatsapp' => $requests->whatsapp,

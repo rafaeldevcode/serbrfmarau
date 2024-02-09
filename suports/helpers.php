@@ -1,6 +1,7 @@
 <?php
 
 use Src\Models\Event;
+use Src\Models\Gallery;
 use Src\Models\Location;
 use Src\Models\Time;
 
@@ -330,6 +331,38 @@ if (!function_exists('getBadgeEventStatus')):
             'Aprovado' => 'success',
             'Reprovado' => 'danger'
         };
+    }
+endif;
+
+if (!function_exists('getImagePath')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $id
+     * @return ?string
+     */
+    function getImagePath(int $id): ?string
+    {
+        $gallery = new Gallery();
+        $thumbnail = $gallery->find($id);
+
+        return $thumbnail->data?->file;
+    }
+endif;
+
+if (!function_exists('getImagesLocation')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $id
+     * @return ?array
+     */
+    function getImagesLocation(int $id): ?array
+    {
+        $location = new Location();
+        $location = $location->find($id);
+
+        return $location->images()->data;
     }
 endif;
 

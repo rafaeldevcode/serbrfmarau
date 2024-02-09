@@ -9,6 +9,7 @@ module.exports = {
         "./resources/errors/*.php",
         "./resources/partials/**/*.php",
         "./policies/*.php",
+        "./body/*.php",
         "./*.php"
     ],
     theme: {

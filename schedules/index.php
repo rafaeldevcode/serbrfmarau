@@ -7,8 +7,8 @@
     $category = new Category();
     $categories = $category->get();
 
-    loadHtml(__DIR__.'/resources/client/layout', [
-        'title' => 'Inicio',
+    loadHtml(__DIR__.'/../resources/client/layout', [
+        'title' => 'Agendamentos',
         'body' => __DIR__ . '/body/read',
         'data' => [
             'categories' => $categories
