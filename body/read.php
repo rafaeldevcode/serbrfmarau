@@ -156,7 +156,7 @@
         <div class="flex flex-wrap items-center justify-center mt-12">
             <iframe 
                 class="bg-white p-2"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14888.683874268138!2d-49.07701396507003!3d-26.917094800206073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94df191fa4e44e2d%3A0x681516ae1b6e6938!2sDra.%20Tatiana%20Schmidt!5e0!3m2!1spt-BR!2sbr!4v1707483983191!5m2!1spt-BR!2sbr" 
+                src="<?php echo SETTINGS['map_location'] ?>" 
                 width="100%" 
                 height="450" 
                 style="border:0;" 

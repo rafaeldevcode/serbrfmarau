@@ -44,6 +44,7 @@ class Settings extends ExecuteMigrations
         $this->string('phone', 20)->nullable(0);
         $this->string('email', 50)->nullable();
         $this->string('andress', 120)->nullable();
+        $this->string('map_location', 255)->nullable();
         $this->timestamps();
 
         $this->create();
