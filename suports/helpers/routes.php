@@ -46,10 +46,10 @@ if(!function_exists('routes')):
             '/login',
             '/login/create',
             '/login/logout',
+            '/contact/create',
             '/api/gallery',
             '/api/gallery/create',
-            '/api/hours',
-            '/events/protocols'
+            '/api/hours'
         ];
     }
 endif;

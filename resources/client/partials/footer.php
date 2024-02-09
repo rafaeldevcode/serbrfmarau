@@ -3,11 +3,11 @@
         <nav>
             <ul class="flex items-center gap-4">
                 <li>
-                    <a href="/" class="text-white hover:text-secondary font-bold text-xl" title="Inicio">Inicio</a>
+                    <a href="<?php route('/') ?>" class="text-white hover:text-secondary font-bold text-xl" title="Inicio">Inicio</a>
                 </li>
 
                 <li>
-                    <a href="/agendamentos" class="text-white hover:text-secondary font-bold text-xl" title="Agendamentos">Agendamentos</a>
+                    <a href="<?php route('/agendamentos') ?>" class="text-white hover:text-secondary font-bold text-xl" title="Agendamentos">Agendamentos</a>
                 </li>
             </ul>
         </nav>

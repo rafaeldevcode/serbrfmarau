@@ -3,7 +3,7 @@
         <div class="max-w-[500px]">
             <h1 class="text-white font-bold text-5xl"><?php echo !is_null(SETTINGS) && !empty(SETTINGS['site_description']) ? SETTINGS['site_description'] : '' ?></h1>
 
-            <a href="/agendamentos" class="btn-color-main text-center py-3 rounded max-w-[300px] mt-4 px-6 text-2xl font-bold block mx-auto" title="Agendamentos">Agendamentos</a>
+            <a href="<?php route('/agendamentos') ?>" class="btn-color-main text-center py-3 rounded max-w-[300px] mt-4 px-6 text-2xl font-bold block mx-auto" title="Agendamentos">Agendamentos</a>
         </div>
     </div>
 </section>
@@ -71,7 +71,7 @@
         </div>
 
         <div class="max-w-[800px] mx-auto mt-12">
-            <form action="/cantact/send" method="POST">
+            <form action="<?php route('/contact/create') ?>" method="POST">
                 <div class='flex justify-between flex-wrap'>
                     <div class='w-full md:w-6/12 px-4'>
                         <?php loadHtml(__DIR__.'/../resources/partials/form/input-default', [

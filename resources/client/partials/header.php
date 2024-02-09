@@ -2,7 +2,7 @@
     <section class="container flex flex-row justify-between">
         <div class="flex items-center">
             <div class="h-[40px] mr-4">
-                <a href="/" title="<?php echo !is_null(SETTINGS) && !empty(SETTINGS['site_name']) ? SETTINGS['site_name'] : env('APP_NAME') ?>">
+                <a href="<?php route('/') ?>" title="<?php echo !is_null(SETTINGS) && !empty(SETTINGS['site_name']) ? SETTINGS['site_name'] : env('APP_NAME') ?>">
                     <img class="h-full" src="<?php !is_null(SETTINGS) && !empty(SETTINGS['site_logo_main']) ? asset('assets/images/'.SETTINGS['site_logo_main'].'') : asset('assets/images/logo_main.png') ?>" alt="Logo <?php echo !is_null(SETTINGS) && !empty(SETTINGS['site_name']) ? SETTINGS['site_name'] : env('APP_NAME') ?>">
                 </a>
             </div>
@@ -14,11 +14,11 @@
             <nav>
                 <ul class="flex flex-col md:flex-row gap-4 items-start md:items-center">
                     <li>
-                        <a href="/" class="text-secondary font-bold hover:text-color-main" title="Inicio">Inicio</a>
+                        <a href="<?php route('/') ?>" class="text-secondary font-bold hover:text-color-main" title="Inicio">Inicio</a>
                     </li>
 
                     <li>
-                        <a href="/agendamentos" class="text-secondary font-bold hover:text-color-main" title="Agendamentos">Agendamentos</a>
+                        <a href="<?php route('/agendamentos') ?>" class="text-secondary font-bold hover:text-color-main" title="Agendamentos">Agendamentos</a>
                     </li>
                 </ul>
             </nav>
