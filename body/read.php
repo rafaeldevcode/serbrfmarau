@@ -97,7 +97,8 @@
                         <?php loadHtml(__DIR__.'/../resources/partials/form/text-area', [
                             'icon' => 'bi bi-card-text',
                             'name' => 'message',
-                            'label' => 'Sua mensagem'
+                            'label' => 'Sua mensagem',
+                            'attributes' => 'required'
                         ]) ?>
                     </div>
                 </div>

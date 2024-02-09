@@ -56,6 +56,22 @@
         });
 
         Modal.init();
+
+        // Open and closed menu client
+        const button = $('#button-menu-client');
+        button.on('click', (event) => {
+            const menu = $('#menu-client');
+
+            if(button.attr('data-menu') == 'close'){
+                menu.removeClass('hidden');
+
+                button.attr('data-menu', 'open');
+            } else {
+                menu.addClass('hidden');
+
+                button.attr('data-menu', 'close');
+            }
+        });
     </script>
 </body>
 </html>

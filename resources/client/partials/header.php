@@ -10,9 +10,9 @@
             <p class="text-xl text-secondary font-bold hidden md:block"><?php echo !is_null(SETTINGS) && !empty(SETTINGS['site_name']) ? SETTINGS['site_name'] : env('APP_NAME') ?></p>
         </div>
 
-        <div class="flex items-center gap-4">
+        <div id="menu-client" class="hidden md:flex flex-col md:flex-row items-start md:items-center gap-4 fixed bg-white md:relative md:top-0 md:right-0 top-20 right-2 rounded p-4 md:p-0">
             <nav>
-                <ul class="flex gap-4 items-center">
+                <ul class="flex flex-col md:flex-row gap-4 items-start md:items-center">
                     <li>
                         <a href="/" class="text-secondary font-bold hover:text-color-main" title="Inicio">Inicio</a>
                     </li>
@@ -73,5 +73,9 @@
                 <?php endif ?>
             </ul>
         </div>
+
+        <button id="button-menu-client" data-menu="close" class="border-none bg-transparent block md:hidden">
+            <i class="bi bi-list text-4xl"></i>
+        </button>
     </section>
 </header>
