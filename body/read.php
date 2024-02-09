@@ -10,10 +10,10 @@
 
 <section class="px-4 py-8">
     <div class="container">
-        <div class="text-center font-bold">
-            <h2 class="text-color-main text-4xl">Quem Somos</h2>
-            <p class="text-secondary">Conheça a Nossa História: Paixão, Compromisso e Excelência</p>
-        </div>
+        <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
+            'title' => 'Quem Somos',
+            'subtitle' => 'Conheça a Nossa História: Paixão, Compromisso e Excelência'
+        ]) ?>
 
         <div class="flex flex-wrap items-center mt-12">
             <div class="w-full md:w-6/12 font-semibold text-gray-800 text-xl pr-2">
@@ -41,15 +41,15 @@
 
 <section class="px-4 py-8 bg-gray-200">
     <div class="container">
-        <div class="text-center font-bold">
-            <h2 class="text-color-main text-4xl">Nossos Locais</h2>
-            <p class="text-secondary">Conheça a Nossa História: Paixão, Compromisso e Excelência</p>
-        </div>
+        <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
+            'title' => 'Nossos Locais',
+            'subtitle' => 'Conheça a Nossa História: Paixão, Compromisso e Excelência'
+        ]) ?>
 
         <div class="flex flex-wrap items-center justify-center mt-12">
             <?php foreach($categories as $category): ?>
                 <div class="p-2">
-                    <a href="#" class="block rounded w-[200px] h-[200px] relative hover:scale-105 transition duration-150 ease-in-out">
+                    <a href="<?php route("/category/{$category->id}") ?>" class="block rounded w-[200px] h-[200px] relative hover:scale-105 transition duration-150 ease-in-out">
                         <?php loadHtml(__DIR__ . '/../resources/client/partials/thumbnail', [
                             'class' => 'w-[200px] h-[200px] rounded object-cover absolute top-0 left-0 z-[1]',
                             'id' => $category->thumbnail
@@ -65,10 +65,10 @@
 
 <section class="px-4 py-8">
     <div class="container">
-        <div class="text-center font-bold">
-            <h2 class="text-color-main text-4xl">Entre em Contato</h2>
-            <p class="text-secondary">Conecte-se Conosco: Estamos Aqui para Atender às suas Necessidades e Responder às suas Perguntas</p>
-        </div>
+        <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
+            'title' => 'Entre em Contato',
+            'subtitle' => 'Conecte-se Conosco: Estamos Aqui para Atender às suas Necessidades e Responder às suas Perguntas'
+        ]) ?>
 
         <div class="max-w-[800px] mx-auto mt-12">
             <form action="<?php route('/contact/create') ?>" method="POST">
@@ -118,10 +118,10 @@
 
 <section class="px-4 py-8 bg-gray-200">
     <div class="container">
-        <div class="text-center font-bold">
-            <h2 class="text-color-main text-4xl">Onde Estamos</h2>
-            <p class="text-secondary">Encontre-nos no Mapa: Descubra Como Chegar até Nós e Explore Nossa Localização Privilegiada</p>
-        </div>
+        <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
+            'title' => 'Onde Estamos',
+            'subtitle' => 'Encontre-nos no Mapa: Descubra Como Chegar até Nós e Explore Nossa Localização Privilegiada'
+        ]) ?>
 
         <div class="flex flex-wrap items-center justify-center mt-12">
             <iframe 

@@ -15,7 +15,7 @@
     <body class="antialiased">
         <main class='w-screen h-screen flex justify-center items-center custom-<?php echo $error ?>'>
             <div class='container flex flex-col justify-center items-center border rounded border-<?php echo $type ?> m-2 custom-<?php echo $error ?>-mirror'>
-                <ul class='flex flex-nowrap text-<?php echo $type ?> list-unstyled'>
+                <ul class='flex text-secondary flex-nowrap text-<?php echo $type ?> list-unstyled'>
                     <li class='font-bold text-4xl'><?php echo $error ?></li>
                     <li class='text-4xl mx-4'>|</li>
                     <li class='text-4xl'><?php echo $message ?></li>
