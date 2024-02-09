@@ -18,7 +18,7 @@
                     </li>
 
                     <li>
-                        <a href="<?php route('/agendamentos') ?>" class="text-secondary font-bold hover:text-color-main" title="Agendamentos">Agendamentos</a>
+                        <a href="<?php route('/schedules') ?>" class="text-secondary font-bold hover:text-color-main" title="Agendamentos">Agendamentos</a>
                     </li>
                 </ul>
             </nav>

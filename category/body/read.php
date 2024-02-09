@@ -1,10 +1,7 @@
-<section class="w-full h-[500px] md:h-[800px]" style="background: url(<?php asset("assets/images/".getImagePath($category->thumbnail)) ?>) no-repeat; background-size: cover;">
-    <div class="bg-[#00000085] w-full h-full flex-col p-4 flex justify-center">
-        <div class="max-w-[500px]">
-            <h1 class="text-white font-bold text-5xl"><?php echo !is_null(SETTINGS) && !empty(SETTINGS['site_description']) ? SETTINGS['site_description'] : '' ?></h1>
-        </div>
-    </div>
-</section>
+<?php loadHtml(__DIR__ . '/../../resources/client/partials/block-one', [
+    'image' => getImagePath($category->thumbnail),
+    'title' => !is_null(SETTINGS) && !empty(SETTINGS['site_description']) ? SETTINGS['site_description'] : ''
+]) ?>
 
 <section class="px-4 py-8">
     <div class="container">

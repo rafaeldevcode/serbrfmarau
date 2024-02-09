@@ -1,12 +1,9 @@
-<section class="w-full h-[500px] md:h-[800px]" style="background: url(<?php !is_null(SETTINGS) && !empty(SETTINGS['site_bg_login']) ? asset('assets/images/'.SETTINGS['site_bg_login'].'') : asset('assets/images/login_bg.jpg') ?>) no-repeat; background-size: cover;">
-    <div class="bg-[#00000085] w-full h-full flex-col p-4 flex justify-center">
-        <div class="max-w-[500px]">
-            <h1 class="text-white font-bold text-5xl"><?php echo !is_null(SETTINGS) && !empty(SETTINGS['site_description']) ? SETTINGS['site_description'] : '' ?></h1>
-
-            <a href="<?php route('/agendamentos') ?>" class="btn-color-main text-center py-3 rounded max-w-[300px] mt-4 px-6 text-2xl font-bold block mx-auto" title="Agendamentos">Agendamentos</a>
-        </div>
-    </div>
-</section>
+<?php loadHtml(__DIR__ . '/../resources/client/partials/block-one', [
+    'image' => !is_null(SETTINGS) && !empty(SETTINGS['site_bg_login']) ? SETTINGS['site_bg_login'] : 'login_bg.jpg',
+    'title' => !is_null(SETTINGS) && !empty(SETTINGS['site_description']) ? SETTINGS['site_description'] : '',
+    'text' => 'Agendamentos',
+    'link' => '/schedules'
+]) ?>
 
 <section class="px-4 py-8">
     <div class="container">

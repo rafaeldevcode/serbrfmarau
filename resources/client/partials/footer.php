@@ -7,7 +7,7 @@
                 </li>
 
                 <li>
-                    <a href="<?php route('/agendamentos') ?>" class="text-white hover:text-secondary font-bold text-xl" title="Agendamentos">Agendamentos</a>
+                    <a href="<?php route('/schedules') ?>" class="text-white hover:text-secondary font-bold text-xl" title="Agendamentos">Agendamentos</a>
                 </li>
             </ul>
         </nav>
