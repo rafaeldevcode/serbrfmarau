@@ -7,6 +7,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <?php if(in_array('slick', $plugins)): ?>
+        <link rel='stylesheet' href='<?php asset('libs/slick/slick.css?ver='.APP_VERSION) ?>' />
+        <link rel='stylesheet' href='<?php asset('libs/slick/slick-theme.css?ver='.APP_VERSION) ?>' />
+    <?php endif ?>
+
     <link rel='stylesheet' href='<?php asset('libs/bootstrap-icons/bootstrap-icons.min.css?ver='.APP_VERSION) ?>' />
     <link rel='stylesheet' href='<?php asset('libs/tailwind/client/style.css?ver='.APP_VERSION) ?>' />
     <link rel='stylesheet' href='<?php asset('assets/css/globals.css?ver='.APP_VERSION) ?>' />
@@ -43,6 +48,10 @@
     <script type="text/javascript" src="<?php asset('assets/scripts/class/Preloader.js?ver='.APP_VERSION) ?>"></script>
     <script type="text/javascript" src="<?php asset('assets/scripts/class/Message.js?ver='.APP_VERSION) ?>"></script>
     <script type="text/javascript" src="<?php asset('assets/scripts/class/ValidateForm.js?ver='.APP_VERSION) ?>"></script>
+
+    <?php if(in_array('slick', $plugins)): ?>
+        <script type="text/javascript" src="<?php asset('libs/slick/slick.min.js?ver='.APP_VERSION)?>"></script>
+    <?php endif ?>
     
     <script type="text/javascript">
         Message.hide('[data-message]');
@@ -73,5 +82,7 @@
             }
         });
     </script>
+
+    <?php if(function_exists('loadInFooter')) loadInFooter(); ?>
 </body>
 </html>

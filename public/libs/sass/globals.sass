@@ -478,5 +478,25 @@ input[type="checkbox"]
     [data-modal-body]
         animation: openPopupScale .3s ease-in-out reverse
 
+// Slick Carouse
+.slick-next
+    transform: translateX(-25px)
+    width: 65px
+    height: 100%
+    top: 0
+
+    &::before
+        font-size: 35px
+
+.slick-prev
+    transform: translateX(25px)
+    z-index: 1
+    width: 65px
+    height: 100%
+    top: 0
+
+    &::before
+        font-size: 35px
+
 @import  ./_mediaqueries
 @import ./_keyframes

@@ -9,7 +9,7 @@
     $location = new Location();
     $category = $category->find(slug(2));
 
-    if(is_null($category->data)) abort(404, 'Category not found!', 'error');
+    if(is_null($category->data)) abort(404, 'Category not found!', 'danger');
 
     $locations = $category->locations();
 

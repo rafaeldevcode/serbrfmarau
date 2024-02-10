@@ -8,7 +8,7 @@ if(!function_exists('routes')):
      */
     function routes(): array
     {
-        $slug_category = slug(2);
+        $slug_one = slug(2);
 
         return [
             '/',
@@ -46,7 +46,8 @@ if(!function_exists('routes')):
             '/login/create',
             '/login/logout',
             '/contact/create',
-            "/category/{$slug_category}",
+            "/category/{$slug_one}",
+            "/location/{$slug_one}",
             "/schedules",
 
             '/api/gallery',

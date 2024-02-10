@@ -9,7 +9,7 @@
 
     $protocol = $protocol->where('token', '=', $hash)->first();
 
-    if(! $protocol) abort(404, 'Protocol not found!', 'error');
+    if(! $protocol) abort(404, 'Protocol not found!', 'danger');
 
     $client = new Client();
     $event = new Event();
