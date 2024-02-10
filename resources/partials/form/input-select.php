@@ -1,4 +1,5 @@
 <?php 
+    $values = is_array($value) ? $value : [$value];
     $is_required = null;
     $attr = null;
 
@@ -35,7 +36,7 @@
             class="ps-8 shadow-sm italic border bg-white focus:outline-none border-secondary text-secondary text-sm rounded focus:ring-color-main focus:ring-1 focus:border-color-main block w-full py-2"
         >
             <?php foreach($array as $indice => $item): ?>
-                <option value='<?php echo $indice ?>' <?php echo isset($value) && $indice == $value ? 'selected' : '' ?>><?php echo $item ?></option>
+                <option value='<?php echo $indice ?>' <?php echo isset($value) && in_array($indice, $values) ? 'selected' : '' ?>><?php echo $item ?></option>
             <?php endforeach ?>
         </select>
 

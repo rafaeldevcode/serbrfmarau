@@ -55,6 +55,7 @@
         'route_search' => '/admin/locations',
         'body' => $body,
         'data' => $data,
+        'plugins' => ['select2']
     ]);
 
     function loadInFooter(): void
@@ -69,5 +70,24 @@
             gallery.openModalSelect($('[data-upload=images]'), 'checkbox');
 
             NormalizeHour.init();
+
+            $('[name="opening_days[]"]').select2({placeholder: '----Selecione----'});
+
+            $('#save-location').on('submit', (event) => {
+                let validiti = true;
+
+                $('[name="prices[]"]').each((key, input) => {
+                    if(input.value.length == 0){
+                        validiti = false;
+                    }
+                });
+
+                if(!validiti){
+                    event.preventDefault();
+
+                    Message.create('É necessário preencher os preços dos horário/período!', 'danger');
+                    Modal.open('prices');
+                }
+            });
         </script>
     <?php }
