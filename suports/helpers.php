@@ -431,6 +431,8 @@ if (!function_exists('getHoursByPeriod')):
         // hours.pop();
 
         return $hours;
+    }
+endif;
 
 if (!function_exists('getImagePath')):
     /**

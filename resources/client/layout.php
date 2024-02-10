@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <?php if(in_array('slick', $plugins)): ?>
+    <?php if(isset($plugins) && in_array('slick', $plugins)): ?>
         <link rel='stylesheet' href='<?php asset('libs/slick/slick.css?ver='.APP_VERSION) ?>' />
         <link rel='stylesheet' href='<?php asset('libs/slick/slick-theme.css?ver='.APP_VERSION) ?>' />
     <?php endif ?>
@@ -49,7 +49,7 @@
     <script type="text/javascript" src="<?php asset('assets/scripts/class/Message.js?ver='.APP_VERSION) ?>"></script>
     <script type="text/javascript" src="<?php asset('assets/scripts/class/ValidateForm.js?ver='.APP_VERSION) ?>"></script>
 
-    <?php if(in_array('slick', $plugins)): ?>
+    <?php if(isset($plugins) && in_array('slick', $plugins)): ?>
         <script type="text/javascript" src="<?php asset('libs/slick/slick.min.js?ver='.APP_VERSION)?>"></script>
     <?php endif ?>
     
