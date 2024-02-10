@@ -8,7 +8,9 @@
     $category = new Category();
 
     $category->create([
-        'name' => $requests->name
+        'name' => $requests->name,
+        'description' => $requests->description,
+        'thumbnail' => $requests->thumbnail
     ]);
 
     session([

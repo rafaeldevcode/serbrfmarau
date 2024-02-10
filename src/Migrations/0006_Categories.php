@@ -17,6 +17,10 @@ class Categories extends ExecuteMigrations
     {
         $this->integer('id')->primaryKey();
         $this->string('name', 50);
+        $this->text('description', 255)->nullable();
+        $this->integer('thumbnail')->nullable();
+
+        $this->foreignKey('thumbnail')->references('id')->on('gallery');
 
         $this->timestamps();
 

@@ -8,6 +8,8 @@ if(!function_exists('routes')):
      */
     function routes(): array
     {
+        $slug_one = slug(2);
+
         return [
             '/',
             '/admin/dashboard',
@@ -19,22 +21,18 @@ if(!function_exists('routes')):
             '/admin/clients/create',
             '/admin/clients/update',
             '/admin/clients/delete',
-            
             '/admin/locations',
             '/admin/locations/create',
             '/admin/locations/update',
             '/admin/locations/delete',
-
             '/admin/categories',
             '/admin/categories/create',
             '/admin/categories/update',
             '/admin/categories/delete',
-
             '/admin/events',
             '/admin/events/create',
             '/admin/events/update',
             '/admin/events/delete',
-
             '/admin/gallery',
             '/admin/gallery/delete',
             '/admin/settings',
@@ -42,10 +40,16 @@ if(!function_exists('routes')):
             '/admin/profile',
             '/admin/profile/update',
             '/admin/profile/update-avatar',
+
             '/policies',
             '/login',
             '/login/create',
             '/login/logout',
+            '/contact/create',
+            "/category/{$slug_one}",
+            "/location/{$slug_one}",
+            "/schedules",
+
             '/api/gallery',
             '/api/gallery/create',
             '/api/hours',
@@ -97,13 +101,63 @@ if(!function_exists('getFileName')):
         $file = in_array($file, $method_posts) ? $file : 'index';
 
         if(in_array($file, $method_posts)): 
-            unset($array[$count-1]);
+            $count--;
+            unset($array[$count]);
         endif;
 
-        array_push($array, $file);
+        $array = verifySlug($array, $count, $file);
 
         $path = implode('/', $array);
 
         return $path;
+    }
+endif;
+
+if(!function_exists('slug')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $indice
+     * @return string
+     */
+    function slug(int $indice): string
+    {
+        $path = path();
+        $paths = explode('/', $path);
+        
+        if(isset($paths[$indice])):
+            return $paths[$indice];
+        endif;
+
+        return '';
+    }
+endif;
+
+if(!function_exists('verifySlug')):
+    /**
+     * @since 1.6.0
+     * @param array $path
+     * @param int $count
+     * @param string $file
+     * @return array
+     */
+    function verifySlug(array $array, int $count, string $file): array 
+    {
+        $last_path = $array[$count-1];
+
+        unset($array[$count-1]);
+        
+        $path = implode('/', $array).'/show.php';
+
+        if(is_file(__DIR__."/../..{$path}")):
+            array_push($array, 'show');
+
+            return $array;
+        endif;
+
+        array_push($array, $last_path);
+        array_push($array, $file);
+
+        return $array;
     }
 endif;

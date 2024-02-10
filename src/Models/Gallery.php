@@ -15,4 +15,14 @@ class Gallery extends Model
     {
         return $this->belongsToMany(Location::class, 'location_images', 'image_id', 'location_id');
     }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @return Category
+     */
+    public function categories(): Category
+    {
+        return $this->hasMany(Category::class, 'posts', 'thumbnail');
+    }
 }
