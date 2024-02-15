@@ -104,26 +104,26 @@
     </div>
 </section>
 
-<section class="px-4 py-8 bg-gray-200">
-    <div class="container">
-        <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
-            'title' => 'Onde Estamos',
-            'subtitle' => 'Encontre-nos no Mapa: Descubra Como Chegar até Nós e Explore Nossa Localização Privilegiada'
-        ]) ?>
+<?php if(!is_null(SETTINGS) && !empty(SETTINGS['map_location'])): ?>
+    <section class="px-4 py-8 bg-gray-200">
+        <div class="container">
+            <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
+                'title' => 'Onde Estamos',
+                'subtitle' => 'Encontre-nos no Mapa: Descubra Como Chegar até Nós e Explore Nossa Localização Privilegiada'
+            ]) ?>
 
-        <div class="flex flex-wrap items-center justify-center mt-12">
-            <iframe 
-                class="bg-white p-2"
-                src="<?php echo SETTINGS['map_location'] ?>" 
-                width="100%" 
-                height="450" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+            <div class="flex flex-wrap items-center justify-center mt-12">
+                <iframe 
+                    class="bg-white p-2"
+                    src="<?php echo SETTINGS['map_location'] ?>" 
+                    width="100%" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
         </div>
-    </div>
-</section>
-
-<!-- relative after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-[#00000085] -->
+    </section>
+<?php endif ?>
