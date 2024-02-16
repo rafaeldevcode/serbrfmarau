@@ -47,7 +47,8 @@ if(!function_exists('routes')):
             '/login/logout',
             '/contact/create',
             "/category/{$slug_one}",
-            "/location/{$slug_one}",
+            "/location",
+            "/location/create",
             "/schedules",
 
             '/api/gallery',

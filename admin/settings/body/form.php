@@ -293,7 +293,7 @@
             <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-button', [
                 'type' => 'submit',
                 'style' => 'color-main',
-                'title' => 'Savar configurações',
+                'title' => 'Salvar configurações',
                 'value' => 'Salvar'
             ]) ?>
         </div>

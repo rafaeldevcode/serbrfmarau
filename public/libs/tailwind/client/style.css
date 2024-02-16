@@ -709,6 +709,10 @@ video {
   margin-bottom: 0.25rem;
 }
 
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -967,6 +971,11 @@ video {
   border-style: none;
 }
 
+.border-blue-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(37 99 235 / var(--tw-border-opacity));
+}
+
 .border-color-main {
   --tw-border-opacity: 1;
   border-color: rgb(30 62 135 / var(--tw-border-opacity));
@@ -1013,6 +1022,16 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-blue-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 246 255 / var(--tw-bg-opacity));
+}
+
+.bg-blue-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(219 234 254 / var(--tw-bg-opacity));
 }
 
 .object-cover {
@@ -1074,6 +1093,11 @@ video {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .py-8 {
@@ -1266,6 +1290,18 @@ video {
   color: #1E3E87;
 }
 
+.btn-secondary {
+  background-color: #6C757D;
+  border: 1px solid #6C757D;
+  color: #fff;
+  transition: .4s all;
+}
+
+.btn-secondary:hover {
+  background-color: #fff;
+  color: #6C757D;
+}
+
 .placeholder\:italic::-moz-placeholder {
   font-style: italic;
 }
@@ -1289,11 +1325,6 @@ video {
   position: absolute;
 }
 
-.after\:left-0::after {
-  content: var(--tw-content);
-  left: 0px;
-}
-
 .after\:left-\[2px\]::after {
   content: var(--tw-content);
   left: 2px;
@@ -1314,19 +1345,9 @@ video {
   height: 1.25rem;
 }
 
-.after\:h-full::after {
-  content: var(--tw-content);
-  height: 100%;
-}
-
 .after\:w-5::after {
   content: var(--tw-content);
   width: 1.25rem;
-}
-
-.after\:w-full::after {
-  content: var(--tw-content);
-  width: 100%;
 }
 
 .after\:rounded-full::after {
@@ -1343,11 +1364,6 @@ video {
   content: var(--tw-content);
   --tw-border-opacity: 1;
   border-color: rgb(108 117 125 / var(--tw-border-opacity));
-}
-
-.after\:bg-\[\#00000085\]::after {
-  content: var(--tw-content);
-  background-color: #00000085;
 }
 
 .after\:bg-white::after {
@@ -1461,6 +1477,14 @@ video {
 
   .md\:h-\[800px\] {
     height: 800px;
+  }
+
+  .md\:w-2\/12 {
+    width: 16.666667%;
+  }
+
+  .md\:w-4\/12 {
+    width: 33.333333%;
   }
 
   .md\:w-6\/12 {

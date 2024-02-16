@@ -13,7 +13,19 @@
         ]) ?>
 
         <div class="flex flex-wrap justify-center items-center mt-12">
-
+            <?php loadHtml(__DIR__.'/../../resources/partials/form/input-button', [
+                'type' => 'button',
+                'style' => 'color-main',
+                'title' => 'Agendar horário',
+                'value' => 'Agendar horário',
+                'attributes' => [
+                    'data-toggle' => 'search-user'
+                ]
+            ]) ?>
         </div>
     </div>
 </section>
+
+<?php loadHtml(__DIR__.'/partials/modal-search-user', [
+    'location_id' => $location->id
+]) ?>

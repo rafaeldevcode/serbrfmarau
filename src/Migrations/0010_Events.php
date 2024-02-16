@@ -26,7 +26,7 @@ class Events extends ExecuteMigrations
         $this->char('period', 5)->nullable();
         $this->date('date')->nullable();
         $this->char('day', 9)->nullable();
-        $this->string('status', 10);
+        $this->string('status', 10)->defautl('Pendente');
 
         $this->integer('location_id');
         $this->integer('client_id');

@@ -466,4 +466,20 @@ if (!function_exists('getImagesLocation')):
     }
 endif;
 
+if (!function_exists('getPrice')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param ?string $prices
+     * @return float
+     */
+    function getPrice(?string $prices, ?string $date, ?string $day): float
+    {
+        $prices = json_decode($prices, true);
+        $day = is_null($day) ? date('l', strtotime($date)) : $day;
+
+        return floatval($prices[translateDayWeek($day)]);
+    }
+endif;
+
 !defined('SETTINGS') && define('SETTINGS', (array)getSiteSettings());

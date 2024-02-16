@@ -46,12 +46,12 @@ class BodyEmail
             : "Olá <strong>{$name}</strong>, aqui é da equipe da <strong>{$site}</strong>, este email é para comunicar que seu horário foi atualizado para: <strong>{$status}</strong>.";
 
         $message = <<<EOT
-            <div style="padding: 1rem; background: #ffffff; border-radius: 5px; color: #585857;">
+            <div style="padding: 1rem; background: #ffffff; border-radius: 5px; color: #1E3E87;">
                 <p>{$text}</p>
                 <p><strong>Protocolo: </strong><a href="{$protocol}">Acessar link</a></p>
             </div>
 
-            <div style="padding: 1rem; background: #585857; margin-top: 20px; color: #ffffff; text-align: center;">
+            <div style="padding: 1rem; background: #1E3E87; margin-top: 20px; color: #ffffff; text-align: center;">
                 <p>{$copy}</p>
             </div>
         EOT;
@@ -85,7 +85,7 @@ class BodyEmail
 
                 {$slot}
 
-                <div style="padding: 1rem; background: #585857; margin-top: 20px; color: #ffffff; text-align: center;">
+                <div style="padding: 1rem; background: #1E3E87; margin-top: 20px; color: #ffffff; text-align: center;">
                     <p>{$copy}</p>
                 </div>
             </body>

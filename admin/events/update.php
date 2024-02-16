@@ -49,14 +49,12 @@
     endif;
 
     if ($current_status !== $requests->status):
-        $protocol = $protocol->create([
-            'client_id' => $client->data->id,
-            'event_id' => $requests->id,
-            'event_status' => $requests->status,
-            'token' => $protocol->generateToken()
+        $protocol = $protocol->find($event->protocols()->data[0]->id);
+        $protocol->update([
+            'event_status' => $requests->status
         ]);
 
-        $email = new EmailServices(BodyEmail::protocol($client->data->name, $requests->status, $protocol->token, $title, 'update'), $title, $client->data->email);
+        $email = new EmailServices(BodyEmail::protocol($client->data->name, $requests->status, $protocol->data->token, $title, 'update'), $title, $client->data->email);
         $email->send();
     endif;
 

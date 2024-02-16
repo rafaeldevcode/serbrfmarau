@@ -18,7 +18,7 @@
             <?php else: ?>
                 <?php foreach($locations->data as $location): ?>
                     <div class="p-2">
-                        <a href="<?php route("/location/{$location->id}") ?>" class="block rounded w-[400px] h-[400px] relative hover:scale-105 transition duration-150 ease-in-out">
+                        <a href="<?php route("/location?location={$location->id}") ?>" class="block rounded w-[400px] h-[400px] relative hover:scale-105 transition duration-150 ease-in-out">
                             <img class="'w-[400px] h-[400px] rounded object-cover absolute top-0 left-0 z-[1]'" 
                                 src="<?php asset("assets/images/".getImagesLocation($location->id)[0]?->file) ?>" 
                                 alt="<?php echo $location->name ?>"

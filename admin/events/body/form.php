@@ -31,7 +31,6 @@
             </div>
         </div>
 
-
         <div class='flex flex-wrap'>
             <div class='w-full md:w-4/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
@@ -144,7 +143,7 @@
             <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-button', [
                 'type' => 'submit',
                 'style' => 'color-main',
-                'title' => 'Savar usuário',
+                'title' => 'Salvar evento',
                 'value' => 'Salvar'
             ]) ?>
         </div>
