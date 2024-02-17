@@ -7,21 +7,6 @@
     $location = new Location();
     $client = new Client();
 
-    function getBodySchedules(?string $email, ?stdClass $client): string
-    {
-        if(isset($email)):
-            if(isset($client)):
-                $body = __DIR__ . '/body/form-schedules';
-            else:
-                $body = __DIR__ . '/body/form-client';
-            endif;
-        else:
-            $body = __DIR__ . '/body/read';
-        endif;
-
-        return $body;
-    }
-
     $requests = requests();
 
     if(is_null($requests->location)) abort(404, 'Location not found!', 'danger');

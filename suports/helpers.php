@@ -482,4 +482,28 @@ if (!function_exists('getPrice')):
     }
 endif;
 
+if (!function_exists('getBodySchedules')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param ?string $email
+     * @param ?stdClass $client
+     * @return string
+     */
+    function getBodySchedules(?string $email, ?stdClass $client): string
+    {
+        if(isset($email)):
+            if(isset($client)):
+                $body = __DIR__ . '/body/form-schedules';
+            else:
+                $body = __DIR__ . '/body/form-client';
+            endif;
+        else:
+            $body = __DIR__ . '/body/read';
+        endif;
+
+        return $body;
+    }
+endif;
+
 !defined('SETTINGS') && define('SETTINGS', (array)getSiteSettings());
