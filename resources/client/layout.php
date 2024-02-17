@@ -40,6 +40,9 @@
     <!-- Include Preloader -->
     <?php !is_null(SETTINGS) && SETTINGS['preloader'] == 'on' && loadHtml(__DIR__.'/../partials/preloader', ['position' => 'fixed', 'type' => 'body']) ?>
 
+    <!-- Cookies -->
+    <?php !is_null(SETTINGS) && SETTINGS['cookies'] == 'on' && loadHtml(__DIR__.'/../client/partials/alert-cookies') ?>
+
     <script type="text/javascript" src="<?php asset('libs/jquery/jquery.js?ver='.APP_VERSION)?>"></script>
     <script type="text/javascript" src="<?php asset('assets/scripts/main.js?ver='.APP_VERSION) ?>"></script>
     <script type="text/javascript" src="<?php asset('assets/scripts/class/Modal.js?ver='.APP_VERSION) ?>"></script>
@@ -55,6 +58,24 @@
     
     <script type="text/javascript">
         Message.hide('[data-message]');
+
+        if(!Cookies.get('accept_cookies')){
+            $('#accept-cookies').removeClass('hidden');
+            $('#accept-cookies').addClass('flex');
+
+            $('#accept-cookies').attr('data-cookies-show', true);
+        }
+
+        $('#accept-cookies').find('button').click(() => {
+            Cookies.set('accept_cookies', true, 3000, '/');
+
+            $('#accept-cookies').attr('data-cookies-show', false);
+
+            setInterval(() => {
+                $('#accept-cookies').addClass('hidden');
+                $('#accept-cookies').removeClass('flex');
+            }, 400);
+        });
 
         // Validate the form
         const validate = new ValidateForm();

@@ -498,5 +498,13 @@ input[type="checkbox"]
     &::before
         font-size: 35px
 
+// Cookies alerts
+[data-cookies-show="false"]
+    animation: toRecalldAlertCookies .4s linear forwards
+
+[data-cookies-show="true"]
+    animation: expandAlertCookies .4s linear forwards
+    z-index: 100
+
 @import  ./_mediaqueries
 @import ./_keyframes
