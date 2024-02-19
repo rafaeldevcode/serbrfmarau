@@ -23,6 +23,6 @@ class Gallery extends Model
      */
     public function categories(): Category
     {
-        return $this->hasMany(Category::class, 'posts', 'thumbnail');
+        return $this->hasMany(Category::class, 'categories', 'thumbnail');
     }
 }

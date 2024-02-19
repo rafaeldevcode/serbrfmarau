@@ -7,15 +7,24 @@
     $images = new LocationImages();
     $location = new Location();
     $requests = requests();
+    $message = 'Local(is) removido(s) com sucesso!';
+    $type = 'success';
 
     foreach($requests->ids as $ID):
-        $location->find($ID)->delete();
-        $images->where('location_id', '=', $ID)->delete();;
+        $location->find($ID);
+
+        if($location->events()):
+            $message = 'Locais que possuem eventos registrados, não podem ser removidos!';
+            $type = 'info';
+        else:
+            $location->delete();
+            $images->where('location_id', '=', $ID)->delete();
+        endif;
     endforeach;
 
     session([
-        'message' => 'Local(is) removido(s) com sucesso!',
-        'type' => 'success'
+        'message' => $message,
+        'type' => $type
     ]);
 
     return header(route('/admin/locations', true), true, 302);
