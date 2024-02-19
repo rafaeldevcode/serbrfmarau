@@ -478,5 +478,33 @@ input[type="checkbox"]
     [data-modal-body]
         animation: openPopupScale .3s ease-in-out reverse
 
+// Slick Carouse
+.slick-next
+    transform: translateX(-25px)
+    width: 65px
+    height: 100%
+    top: 0
+
+    &::before
+        font-size: 35px
+
+.slick-prev
+    transform: translateX(25px)
+    z-index: 1
+    width: 65px
+    height: 100%
+    top: 0
+
+    &::before
+        font-size: 35px
+
+// Cookies alerts
+[data-cookies-show="false"]
+    animation: toRecalldAlertCookies .4s linear forwards
+
+[data-cookies-show="true"]
+    animation: expandAlertCookies .4s linear forwards
+    z-index: 100
+
 @import  ./_mediaqueries
 @import ./_keyframes

@@ -9,7 +9,9 @@
     $category = $category->find($requests->id);
 
     $category->update([
-        'name' => $requests->name
+        'name' => $requests->name,
+        'description' => $requests->description,
+        'thumbnail' => $requests->thumbnail
     ]);
 
     session([

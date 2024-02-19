@@ -22,7 +22,7 @@
                     'name' => 'email',
                     'label' => 'Email',
                     'type' => 'email',
-                    'value' => isset($client) ? $client->name : null,
+                    'value' => isset($client) ? $client->email : null,
                     'attributes' => 'required'
                 ]) ?>
             </div>
@@ -111,7 +111,7 @@
             <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-button', [
                 'type' => 'submit',
                 'style' => 'color-main',
-                'title' => 'Savar cliente',
+                'title' => 'Salvar cliente',
                 'value' => 'Salvar'
             ]) ?>
         </div>

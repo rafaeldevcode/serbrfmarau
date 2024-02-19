@@ -1,6 +1,7 @@
 <?php
 
 use Src\Models\Event;
+use Src\Models\Gallery;
 use Src\Models\Location;
 use Src\Models\Time;
 
@@ -237,10 +238,20 @@ if (!function_exists('getHoursEvent')):
         $schedules = getArraySelect($schedules, 'id', 'hour');
 
         if ($location->data):
-            $opening_date = getOpeningDate($location->data->opening);
-            $active_hours = generateTimeBlocks($location->data->start_hour, $location->data->end_hour);
+            $opening_days = json_decode($location->data->opening_days, true);
 
-            $data['price'] = $location->data->price;
+            if(in_array($day, $opening_days) || in_array(date('l', strtotime($date)), $opening_days)):
+                $opening_date = getOpeningDate($location->data->opening);
+                $active_hours = generateTimeBlocks($location->data->start_hour, $location->data->end_hour);
+            else:
+                $active_hours = [];
+            endif;
+
+            $price = empty($day) 
+                ? json_decode($location->data->prices, true)[translateDayWeek(date('l', strtotime($date)))] 
+                : json_decode($location->data->prices, true)[translateDayWeek($day)];
+
+            $data['price'] = $location->data->type == 'period' ? number_format($price / count(getHoursByPeriod('Tarde')), 2, '.') : $price;
         else:
             $opening_date = date('Y-m-d');
             $active_hours = [];
@@ -330,6 +341,168 @@ if (!function_exists('getBadgeEventStatus')):
             'Aprovado' => 'success',
             'Reprovado' => 'danger'
         };
+    }
+endif;
+
+if (!function_exists('pickDaysOfTheWeek')):
+    /**
+     * @since 1.7.0
+     * 
+     * @return array
+     */
+    function pickDaysOfTheWeek(): array
+    {
+        return [
+            'Domingo',
+            'Segunda',
+            'Terça',
+            'Quarta',
+            'Quinta',
+            'Sexta', 
+            'Sábado'
+        ];
+    }
+endif;
+
+if (!function_exists('translateDayWeek')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param string $day
+     * @return string
+     */
+    function translateDayWeek(string $status): string
+    {
+        return match ($status) {
+            'Sunday' => 'Domingo',
+            'Monday' => 'Segunda',
+            'Tuesday' => 'Terça',
+            'Wednesday' => 'Quarta',
+            'Thursday' => 'Quinta',
+            'Friday' => 'Sexta',
+            'Saturday' => 'Sábado'
+        };
+    }
+endif;
+
+if (!function_exists('getHoursByPeriod')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param string $period
+     * @return array
+     */
+    function getHoursByPeriod(string $period): array
+    {
+        $hours = [];
+        $periods = [
+            'Manhã' => [
+                'start' => 8,
+                'end' => 13
+            ],
+            'Tarde' => [
+                'start' => 13,
+                'end' => 18
+            ],
+            'Noite' => [
+                'start' => 18,
+                'end' => 23
+            ]
+        ];
+
+        for ($i = 0; $i < 24; $i++):
+            if($i >= $periods[$period]['start'] && $i <= $periods[$period]['end']):
+                $hour_one = '';
+                $hour_two = '';
+
+                if ($i < 10) {
+                    $hour_one = "0{$i}:00";
+                    $hour_two = "0{$i}:30";
+                } else {
+                    $hour_one = "{$i}:00";
+                    $hour_two = "{$i}:30";
+                }
+
+                array_push($hours, $hour_one);
+                array_push($hours, $hour_two);
+            endif;
+        endfor;
+
+        // hours.pop();
+
+        return $hours;
+    }
+endif;
+
+if (!function_exists('getImagePath')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $id
+     * @return ?string
+     */
+    function getImagePath(int $id): ?string
+    {
+        $gallery = new Gallery();
+        $thumbnail = $gallery->find($id);
+
+        return $thumbnail->data?->file;
+    }
+endif;
+
+if (!function_exists('getImagesLocation')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $id
+     * @return ?array
+     */
+    function getImagesLocation(int $id): ?array
+    {
+        $location = new Location();
+        $location = $location->find($id);
+
+        return $location->images()->data;
+    }
+endif;
+
+if (!function_exists('getPrice')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param ?string $prices
+     * @return float
+     */
+    function getPrice(?string $prices, ?string $date, ?string $day): float
+    {
+        $prices = json_decode($prices, true);
+        $day = is_null($day) ? date('l', strtotime($date)) : $day;
+
+        return floatval($prices[translateDayWeek($day)]);
+    }
+endif;
+
+if (!function_exists('getBodySchedules')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param ?string $email
+     * @param ?stdClass $client
+     * @return string
+     */
+    function getBodySchedules(?string $email, ?stdClass $client): string
+    {
+        if(isset($email)):
+            if(isset($client)):
+                $body = __DIR__ . '/body/form-schedules';
+            else:
+                $body = __DIR__ . '/body/form-client';
+            endif;
+        else:
+            $body = __DIR__ . '/body/read';
+        endif;
+
+        return $body;
     }
 endif;
 

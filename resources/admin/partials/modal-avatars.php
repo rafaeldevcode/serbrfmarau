@@ -27,7 +27,7 @@
                 <?php loadHtml(__DIR__.'/../../partials/form/input-button', [
                     'type' => 'submit',
                     'style' => 'color-main',
-                    'title' => 'Savar usuário',
+                    'title' => 'Salvar avatar',
                     'value' => 'Salvar'
                 ]) ?>
             </div>

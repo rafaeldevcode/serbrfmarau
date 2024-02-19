@@ -33,6 +33,19 @@
 
             <div class='w-full md:w-6/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
+                    'icon' => 'bi bi-map-fill',
+                    'name' => 'map_location',
+                    'label' => 'Localização da empresa (Incorporação do google maps)',
+                    'type' => 'url',
+                    'value' => isset($settings) ? $settings->map_location : '',
+                    'attributes' => [
+                        'onkeyup' => 'ChangeLocationMaps.init(event)'
+                    ]
+                ]) ?>
+            </div>
+
+            <div class='w-full md:w-6/12 px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-telephone-fill',
                     'name' => 'phone',
                     'label' => 'Telefone da empresa (adicionar DDD)',
@@ -280,7 +293,7 @@
             <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-button', [
                 'type' => 'submit',
                 'style' => 'color-main',
-                'title' => 'Savar configurações',
+                'title' => 'Salvar configurações',
                 'value' => 'Salvar'
             ]) ?>
         </div>

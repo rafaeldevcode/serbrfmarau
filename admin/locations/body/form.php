@@ -1,5 +1,5 @@
 <section class='p-3 bg-light m-0 sm:m-3 rounded shadow-lg'>
-    <form method="POST" action="<?php route($action) ?>">
+    <form method="POST" action="<?php route($action) ?>" id="save-location">
         <?php if(isset($location)): ?>
             <input type="hidden" name="id" value="<?php echo $location->id ?>">
         <?php endif ?>
@@ -16,51 +16,7 @@
                 ]) ?>
             </div>
 
-            <div class='w-full md:w-6/12 px-4'>
-                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
-                    'icon' => 'bi bi-geo-alt-fill',
-                    'name' => 'city',
-                    'label' => 'Cidade',
-                    'type' => 'text',
-                    'value' => isset($location) ? $location->city : null,
-                    'attributes' => 'required'
-                ]) ?>
-            </div>
-
-            <div class='w-full md:w-5/12 px-4'>
-                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
-                    'icon' => 'bi bi-geo-alt-fill',
-                    'name' => 'street',
-                    'label' => 'Rua',
-                    'type' => 'text',
-                    'value' => isset($location) ? $location->street : null,
-                    'attributes' => 'required'
-                ]) ?>
-            </div>
-
-            <div class='w-full md:w-5/12 px-4'>
-                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
-                    'icon' => 'bi bi-geo-alt-fill',
-                    'name' => 'neighborhood',
-                    'label' => 'Bairro',
-                    'type' => 'text',
-                    'value' => isset($location) ? $location->neighborhood : null,
-                    'attributes' => 'required'
-                ]) ?>
-            </div>
-
-            <div class='w-full md:w-2/12 px-4'>
-                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
-                    'icon' => 'bi bi-123',
-                    'name' => 'street_number',
-                    'label' => 'Número',
-                    'type' => 'number',
-                    'value' => isset($location) ? $location->street_number : null,
-                    'attributes' => 'required'
-                ]) ?>
-            </div>
-
-            <div class='w-full md:w-4/12 px-4'>
+            <div class='w-full md:w-3/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-clock-fill',
                     'name' => 'start_hour',
@@ -74,7 +30,7 @@
                 ]) ?>
             </div>
 
-            <div class='w-full md:w-4/12 px-4'>
+            <div class='w-full md:w-3/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-clock-fill',
                     'name' => 'end_hour',
@@ -85,17 +41,6 @@
                         'required' => true,
                         'data-input' => 'hour'
                     ]
-                ]) ?>
-            </div>
-
-            <div class='w-full md:w-4/12 px-4'>
-                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
-                    'icon' => 'bi bi-currency-dollar',
-                    'name' => 'price',
-                    'label' => 'Preço da meia hora',
-                    'type' => 'text',
-                    'value' => isset($location) ? $location->price : null,
-                    'attributes' => 'required'
                 ]) ?>
             </div>
 
@@ -125,6 +70,44 @@
                     ]
                 ]) ?>
             </div>
+
+            <div class='w-full md:w-4/12 px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
+                    'icon' => 'bi bi-hash',
+                    'name' => 'type',
+                    'label' => 'Tipo de locação',
+                    'value' => isset($location) ? $location->type : null,
+                    'attributes' => 'required',
+                    'array' => [
+                        '' => '----Selecione----',
+                        'period' => 'Por período',
+                        'hour' => 'Por hora'
+                    ]
+                ]) ?>
+            </div>
+
+            <div class='w-full md:w-4/12 px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
+                    'icon' => 'bi bi-hash',
+                    'name' => 'opening_days[]',
+                    'label' => 'Dias de abertura',
+                    'value' => isset($location) ? json_decode($location->opening_days, true) : null,
+                    'attributes' => [
+                        'required' => 'required',
+                        'multiple' => 'multiple',
+                    ],
+                    'array' => [
+                        '' => '----Selecione----',
+                        'Sunday' => 'Domingo',
+                        'Monday' => 'Segunda',
+                        'Tuesday' => 'Terça',
+                        'Wednesday' => 'Quarta',
+                        'Thursday' => 'Quinta',
+                        'Friday' => 'Sexta',
+                        'Saturday' => 'Sábado'
+                    ]
+                ]) ?>
+            </div>
         </div>
 
         <div class='w-full flex flex-wrap px-3'>
@@ -144,13 +127,27 @@
             ]) ?>
         </div>
 
+        <div class="px-4">
+            <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-button', [
+                'type' => 'button',
+                'style' => 'color-main',
+                'title' => 'Definir preço',
+                'value' => 'Definir preço',
+                'attributes' => [
+                    'data-toggle' => 'prices'
+                ]
+            ]) ?>
+        </div>
+
         <div class='flex justify-end'>
             <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-button', [
                 'type' => 'submit',
                 'style' => 'color-main',
-                'title' => 'Savar local',
+                'title' => 'Salvar local',
                 'value' => 'Salvar'
             ]) ?>
         </div>
+
+        <?php loadHtml(__DIR__.'/partials/modal-prices', ['days' => isset($location) ? json_decode($location->prices, true) : null]) ?>
     </form>
 </section>
