@@ -19,7 +19,7 @@ class Protocols extends ExecuteMigrations
 
         $this->integer('event_id');
         $this->integer('client_id');
-        $this->string('event_status', 10)->defautl('Pendente');
+        $this->string('event_status', 10)->default('Pendente');
         $this->string('token', 200)->unique();
 
         $this->foreignKey('event_id')->references('id')->on('events');
