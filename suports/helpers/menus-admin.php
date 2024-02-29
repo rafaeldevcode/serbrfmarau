@@ -35,7 +35,7 @@ if (!function_exists('menusAdmin')):
             ],
             'events' => [
                 'path' => '/admin/events',
-                'title' => 'Locais',
+                'title' => 'Eventos',
                 'icon' => 'bi bi-calendar-event-fill',
                 'count' => null
             ],
