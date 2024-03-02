@@ -494,12 +494,12 @@ if (!function_exists('getBodySchedules')):
     {
         if(isset($email)):
             if(isset($client)):
-                $body = __DIR__ . '/body/form-schedules';
+                $body = __DIR__ . '/../location/body/form-schedules';
             else:
-                $body = __DIR__ . '/body/form-client';
+                $body = __DIR__ . '/../location/body/form-client';
             endif;
         else:
-            $body = __DIR__ . '/body/read';
+            $body = __DIR__ . '/../location/body/read';
         endif;
 
         return $body;
