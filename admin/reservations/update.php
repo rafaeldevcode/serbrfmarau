@@ -13,7 +13,7 @@
 
     $requests = requests();
     $reservation = $reservation->find($requests->id);
-    $title = 'Status do horário atulalizado!';
+    $title = 'Status do horário atualizado!';
     $current_status = $reservation->data->status;
 
     $reservation->update([
