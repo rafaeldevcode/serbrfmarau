@@ -8,8 +8,9 @@
     if($method == 'read'):
         $reservation = new Reservation();
         $requests = requests();
-        $status = isset($requests->status) ? $requests->status : 'Pendente';
-        $reservations = !isset($requests->search) ? $reservation->where('status', '=', $status)->paginate(20) : $reservation->where('status', '=', $status)->where('name', 'LIKE', "%{$requests->search}%")->paginate(20);
+        $status = isset($requests->status) ? $requests->status : '';
+        $operator = empty($status) ? '!=' : '=';
+        $reservations = !isset($requests->search) ? $reservation->where('status', $operator, $status)->paginate(20) : $reservation->where('status', $operator, $status)->where('name', 'LIKE', "%{$requests->search}%")->paginate(20);
         $background = 'bg-secondary';
         $text  = 'Visualizar';
         $body = __DIR__."/body/read";

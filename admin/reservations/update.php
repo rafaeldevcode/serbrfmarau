@@ -36,15 +36,18 @@
     if($requests->hours):
         $schedules->where('reservation_id', '=', $requests->id)->delete();
     
-        foreach ($requests->hours as $hour) :
-            $schedules->create([
-                'date' => empty($requests->day) ? $requests->date : null,
-                'day' => ! empty($requests->day) ? $requests->day : null,
-                'hour' => $hour,
-                'reservation_id' => $requests->id,
-                'location_id' => $requests->location_id
-            ]);
-        endforeach;
+        if($requests->status !== 'Cancelado'):
+            foreach ($requests->hours as $hour) :
+                $schedules->create([
+                    'date' => empty($requests->day) ? $requests->date : null,
+                    'day' => ! empty($requests->day) ? $requests->day : null,
+                    'hour' => $hour,
+                    'status' => $requests->status,
+                    'reservation_id' => $requests->id,
+                    'location_id' => $requests->location_id
+                ]);
+            endforeach;
+        endif;
     endif;
 
     if ($current_status !== $requests->status):
@@ -52,6 +55,10 @@
         $protocol->update([
             'reservation_status' => $requests->status
         ]);
+
+        foreach($reservation->schedules()->data as $item):
+            $schedules->find($item->id)->update(['status' => $requests->status]);
+        endforeach;
 
         $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->data->token, $title, 'create'), $title, $requests->email);
         $email->send();

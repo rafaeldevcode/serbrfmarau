@@ -151,15 +151,17 @@
         </div>
 
         <div class="px-4">
-            <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-button', [
-                'type' => 'button',
-                'style' => 'color-main',
-                'title' => 'Escolher horários',
-                'value' => 'Escolher horários',
-                'attributes' => [
-                    'id' => 'get-hours'
-                ]
-            ]) ?>
+            <?php if(!isset($reservation) || $reservation->status !== 'Reprovado'):
+                loadHtml(__DIR__.'/../../../resources/partials/form/input-button', [
+                    'type' => 'button',
+                    'style' => 'color-main',
+                    'title' => 'Escolher horários',
+                    'value' => 'Escolher horários',
+                    'attributes' => [
+                        'id' => 'get-hours',
+                    ]
+                ]);
+            endif ?>
         </div>
 
         <div class='flex justify-end px-4'>

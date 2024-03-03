@@ -19,6 +19,7 @@ class Schedules extends ExecuteMigrations
         $this->date('date')->nullable();
         $this->char('day', 9)->nullable();
         $this->char('hour', 5);
+        $this->string('status', 10)->default('Pendente');
 
         $this->integer('reservation_id');
         $this->integer('location_id');

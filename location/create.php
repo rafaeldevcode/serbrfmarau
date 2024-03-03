@@ -40,6 +40,7 @@
                 'date' => empty($requests->day) ? $requests->date : null,
                 'day' => ! empty($requests->day) ? $requests->day : null,
                 'hour' => $hour,
+                'status' => $status,
                 'reservation_id' => $reservation->id,
                 'location_id' => $requests->location_id
             ]);

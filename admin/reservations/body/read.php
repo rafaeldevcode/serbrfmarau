@@ -15,9 +15,11 @@
                         'data-change' => 'status',
                     ],
                     'array' => [
+                        'Status' => '',
                         'Pendente' => 'Pendente',
                         'Aprovado' => 'Aprovado',
-                        'Reprovado' => 'Reprovado'
+                        'Reprovado' => 'Reprovado',
+                        'Finalizado' => 'Finalizado'
                     ]
                 ]) ?>
             </div>

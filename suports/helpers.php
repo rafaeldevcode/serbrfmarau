@@ -224,15 +224,15 @@ if (!function_exists('getHoursReservation')):
 
         if(! is_null($reservation_id)):
             $reservation = $reservation->find($reservation_id);
-            $reservation_schedules = getArraySelect($reservation->schedules()->data, 'id', 'hour');
+            $reservation_schedules = $reservation->data->date == $date ? getArraySelect($reservation->schedules()->data, 'id', 'hour') : [];
         endif;
 
         $location = $location->find($location_id);
 
         if(empty($date)):
-            $schedules = $schedules->where('location_id', '=', $location_id)->where('day', '=', $day)->get(['id', 'hour']);
+            $schedules = $schedules->where('location_id', '=', $location_id)->where('day', '=', $day)->where('status', '!=', 'Reprovado')->get(['id', 'hour']);
         else:
-            $schedules = $schedules->where('date', '=', $date)->where('location_id', '=', $location_id)->orWhere('day', '=', date('l', strtotime($date)))->get(['id', 'hour']);
+            $schedules = $schedules->where('date', '=', $date)->where('location_id', '=', $location_id)->where('status', '!=', 'Reprovado')->orWhere('day', '=', date('l', strtotime($date)))->get(['id', 'hour']);
         endif;
 
         $schedules = getArraySelect($schedules, 'id', 'hour');
@@ -258,7 +258,7 @@ if (!function_exists('getHoursReservation')):
         endif;
 
         $schedules = array_diff($schedules, $reservation_schedules);
-        $active_hours = (! empty($date) && $opening_date > $date) ? [] : array_diff($active_hours, $schedules);
+        $active_hours = (! empty($date) && $opening_date > $date && date('Y-m-d') <= $date) ? array_diff($active_hours, $schedules) : [];
 
         for ($i = 0; $i < 24; $i++) :
             $hour_one = strlen($i) == 1 ? "0{$i}:00" : "{$i}:00";
@@ -269,6 +269,9 @@ if (!function_exists('getHoursReservation')):
 
             $checked_one = in_array($hour_one, $reservation_schedules) ? true : false;
             $checked_two = in_array($hour_two, $reservation_schedules) ? true : false;
+
+            $blocked_one = $checked_one && $location->data->type == 'period' ? true : $blocked_one;
+            $blocked_two = $checked_two && $location->data->type == 'period' ? true : $blocked_two;
 
             array_push($data['hours'], [
                 'hour' => $hour_one,
@@ -339,7 +342,8 @@ if (!function_exists('getBadgeReservationStatus')):
         return match ($status) {
             'Pendente' => 'secondary',
             'Aprovado' => 'success',
-            'Reprovado' => 'danger'
+            'Reprovado' => 'danger',
+            'Finalizado' => 'info'
         };
     }
 endif;
