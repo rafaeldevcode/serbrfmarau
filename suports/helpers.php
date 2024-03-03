@@ -486,4 +486,22 @@ if (!function_exists('getPrice')):
     }
 endif;
 
+if (!function_exists('getLabelOpeningDay')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param string $openingDay
+     * @return string
+     */
+    function getLabelOpeningDay(string $openingDay): string
+    {
+        return match ($openingDay) {
+            'P1D' => '1 Dia',
+            'P1W' => '1 Semana',
+            'P1M' => '1 Mês',
+            'P1Y' => '1 Ano'
+        };
+    }
+endif;
+
 !defined('SETTINGS') && define('SETTINGS', (array)getSiteSettings());

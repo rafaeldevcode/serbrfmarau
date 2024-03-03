@@ -61,7 +61,7 @@
                                 <?php echo $location->end_hour ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
-                                <?php echo $location->opening ?>
+                                <?php echo getLabelOpeningDay($location->opening) ?>
                             </td>
                             <td class="p-2">
                                 <span class="rounded text-xs text-light px-2 py-1 bg-<?php echo (is_null($location->status) || $location->status == 'off') ? 'danger' : 'primary' ?>">
