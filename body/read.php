@@ -14,8 +14,8 @@
 
         <div class="flex flex-wrap items-center mt-12">
             <div class="w-full md:w-6/12 font-semibold text-gray-800 text-xl pr-2">
-                <p class="mb-6">Bem-vindo à <?php echo !is_null(SETTINGS) && !empty(SETTINGS['site_name']) ? SETTINGS['site_name'] : env('APP_NAME') ?>, onde a excelência e a diversão se encontram! Desde a nossa fundação, nos dedicamos a proporcionar experiências memoráveis e momentos inesquecíveis para nossos clientes. Com uma vasta gama de opções de lazer, incluindo campos, quadras esportivas, casas, quiosques e salões de festas, somos o destino ideal para celebrações, eventos esportivos e encontros sociais.</p>
-                <p>Nossa equipe apaixonada e experiente está empenhada em oferecer um serviço impecável e instalações de alta qualidade para atender às necessidades de todos os nossos clientes. Seja você um amante dos esportes, um organizador de eventos ou alguém em busca de momentos de descontração, estamos aqui para tornar sua experiência conosco verdadeiramente especial.</p>
+                <p class="mb-6">Bem-vindo à <?php echo !is_null(SETTINGS) && !empty(SETTINGS['site_name']) ? SETTINGS['site_name'] : env('APP_NAME') ?>, um espaço multifuncional para tornar cada momento único e inesquecível. Com uma vasta gama de opções de lazer, incluindo, parque infantil, campos, quadras esportivas, cancha de bocha, academia, casas, quiosques e salões de festas. Local ideal para celebrações, eventos sociais e esportivos, local com amplo estacionamento.</p>
+                <p>Seja para celebrações sociais, eventos esportivos ou momentos de lazer, a <?php echo !is_null(SETTINGS) && !empty(SETTINGS['site_name']) ? SETTINGS['site_name'] : env('APP_NAME') ?> está comprometida em proporcionar uma experiência especial a todos que frequentarem nossas instalações. Venha fazer parte da nossa história e desfrute de um espaço que une diversão e bem-estar.</p>
             </div>
 
             <div class="w-full md:w-6/12 pl-2">
