@@ -1,6 +1,5 @@
 <?php
 
-    use Src\Models\Client;
     use Src\Models\Event;
     use Src\Models\Location;
 
@@ -19,10 +18,8 @@
     elseif($method == 'edit'):
         $event = new Event();
         $location = new Location();
-        $client = new Client();
 
         $locations = getArraySelect($location->where('status', '=', 'on')->get(['id', 'name']), 'id', 'name');
-        $clients = getArraySelect($client->get(['id', 'name']), 'id', 'name');
         $event = $event->find(querys('id'));
         $background = 'bg-success';
         $text  = 'Editar';
@@ -31,22 +28,19 @@
         $data = [
             'event' => $event->data, 
             'action' => '/admin/events/update',
-            'locations' => $locations, 
-            'clients' => $clients
+            'locations' => $locations
         ];
     elseif($method == 'create'):
         if(redirectIfTotalEqualsZero('Src\Models\Location', '/admin/locations', 'Para adicionar um evento, primeiro adicione um local!')) die;
 
         $location = new Location();
-        $client = new Client();
 
         $locations = getArraySelect($location->where('status', '=', 'on')->get(['id', 'name']), 'id', 'name');
-        $clients = getArraySelect($client->get(['id', 'name']), 'id', 'name');
         $background = 'bg-primary';
         $text  = 'Adicionar';
         $body = __DIR__."/body/form";
 
-        $data = ['action' => '/admin/events/create', 'locations' => $locations, 'clients' => $clients];
+        $data = ['action' => '/admin/events/create', 'locations' => $locations];
     endif;
 
     loadHtml(__DIR__.'/../../resources/admin/layout', [

@@ -9,16 +9,6 @@ class Event extends Model
     /**
      * @since 1.7.0
      * 
-     * @return Client
-     */
-    public function client(): Client
-    {
-        return $this->belongsTo(Client::class, 'clients', 'client_id');
-    }
-
-    /**
-     * @since 1.7.0
-     * 
      * @return Location
      */
     public function location(): Location

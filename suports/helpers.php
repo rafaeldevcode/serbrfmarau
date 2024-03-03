@@ -487,17 +487,12 @@ if (!function_exists('getBodySchedules')):
      * @since 1.7.0
      * 
      * @param ?string $email
-     * @param ?stdClass $client
      * @return string
      */
-    function getBodySchedules(?string $email, ?stdClass $client): string
+    function getBodySchedules(?string $email): string
     {
         if(isset($email)):
-            if(isset($client)):
-                $body = __DIR__ . '/../location/body/form-schedules';
-            else:
-                $body = __DIR__ . '/../location/body/form-client';
-            endif;
+            $body = __DIR__ . '/../location/body/form-schedules';
         else:
             $body = __DIR__ . '/../location/body/read';
         endif;

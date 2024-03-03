@@ -29,10 +29,8 @@ class Events extends ExecuteMigrations
         $this->string('status', 10)->default('Pendente');
 
         $this->integer('location_id');
-        $this->integer('client_id');
 
         $this->foreignKey('location_id')->references('id')->on('locations');
-        $this->foreignKey('client_id')->references('id')->on('clients');
 
         $this->timestamps();
 

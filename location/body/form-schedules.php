@@ -13,16 +13,11 @@
         ]) ?>
 
         <div class="text-center py-6">
-            <?php if(isset($client)): ?>
-                <h2 class="text-secondary text-xl font-bold">Verifique seus dados e clique em continuar</h2>
-            <?php else: ?>
-                <h2 class="text-secondary text-xl font-bold">Para proseguir preencha seus dados pessoais e clique em continuar</h2>
-            <?php endif ?>
+            <h2 class="text-secondary text-xl font-bold">Para proseguir preencha seus dados pessoais e clique em continuar</h2>
         </div>
 
         <form method="POST" action="<?php route('/location/create') ?>" id="save-hours">
             <input type="hidden" id="location_id" name="location_id" value="<?php echo $location->id ?>">
-            <input type="hidden" id="client_id" name="client_id" value="<?php echo $client->id ?>">
             <input type="hidden" name="create_type" value="schedule">
 
             <div class='flex justify-between flex-wrap'>

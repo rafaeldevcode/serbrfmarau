@@ -1,18 +1,15 @@
 <?php
     verifyMethod(405, 'GET');
 
-    use Src\Models\Client;
     use Src\Models\Location;
 
     $location = new Location();
-    $client = new Client();
 
     $requests = requests();
 
     if(is_null($requests->location)) abort(404, 'Location not found!', 'danger');
 
     $location = $location->find($requests->location);
-    $client = $client->where('email', '=', $requests->email)->first();
 
     if(is_null($location->data)) abort(404, 'Location not found!', 'danger');
 
@@ -20,11 +17,10 @@
 
     loadHtml(__DIR__.'/../resources/client/layout', [
         'title' => "Local - {$location->data->name}",
-        'body' => getBodySchedules($requests->email, $client),
+        'body' => getBodySchedules($requests->email),
         'plugins' => ['slick'],
         'data' => [
             'location' => $location->data,
-            'client' => $client,
             'images' => $images->data,
             'email' => $requests->email
         ]

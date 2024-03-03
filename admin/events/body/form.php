@@ -78,17 +78,6 @@
             <div class='w-full md:w-4/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
                     'icon' => 'bi bi-hash',
-                    'name' => 'client_id',
-                    'label' => 'Cliente',
-                    'value' => isset($event) ? $event->client_id : null,
-                    'attributes' => 'required',
-                    'array' => $clients
-                ]) ?>
-            </div>
-
-            <div class='w-full md:w-4/12 px-4'>
-                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
-                    'icon' => 'bi bi-hash',
                     'name' => 'location_id',
                     'label' => 'Local',
                     'value' => isset($event) ? $event->location_id : null,

@@ -22,7 +22,6 @@
             <section class='w-screen h-screen flex justify-center items-center' style="background: url(<?php asset($image) ?>)no-repeat; background-size: cover;">
                 <div class='container text-secondary flex p-4 border rounded border-color-main m-2 custom-construction-mirror flex flex-col justify-between'>
                     <div class='text-secondary'>
-                        <h2 class="text-3xl mb-2"><strong class="text-3xl">Cliente:</strong> <?php echo $client->name ?></h2>
                         <h2 class="text-3xl mb-2"><strong class="text-3xl">Local:</strong> <?php echo $location->name ?></h2>
                         <h2 class="text-3xl mb-2"><strong class="text-3xl">Evento:</strong> <?php echo $event->name ?></h2>
                         <h2 class="text-3xl mb-2"><strong class="text-3xl">Horário:</strong> Das <?php echo $schedules[0]->hour ?> às <?php echo $schedules[$total_schedules-1]->hour ?></h2>

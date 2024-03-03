@@ -3,7 +3,6 @@
 
     use Src\Email\BodyEmail;
     use Src\Email\EmailServices;
-    use Src\Models\Client;
     use Src\Models\Event;
     use Src\Models\Protocol;
     use Src\Models\Time;
@@ -11,11 +10,9 @@
     $schedules = new Time();
     $event = new Event();
     $protocol = new Protocol();
-    $client = new Client();
 
     $requests = requests();
     $event = $event->find($requests->id);
-    $client = $client->find($requests->client_id);
     $title = 'Status do horário atulalizado!';
     $current_status = $event->data->status;
 
@@ -27,7 +24,6 @@
         'event' => $requests->event,
         'period' => $requests->period,
         'location_id' => $requests->location_id,
-        'client_id' => $requests->client_id,
         'observation' => $requests->observation,
         'status' => $requests->status,
         'date' => empty($requests->day) ? $requests->date : null,
@@ -54,7 +50,7 @@
             'event_status' => $requests->status
         ]);
 
-        $email = new EmailServices(BodyEmail::protocol($client->data->name, $requests->status, $protocol->data->token, $title, 'update'), $title, $client->data->email);
+        $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->data->token, $title, 'update'), $title);
         $email->send();
     endif;
 

@@ -15,12 +15,6 @@ if (!function_exists('menusAdmin')):
                 'icon' => 'bi bi-speedometer',
                 'count' => null      
             ],
-            'clients' => [
-                'path' => '/admin/clients',
-                'title' => 'Clientes',
-                'icon' => 'bi bi-person-lines-fill',
-                'count' => null
-            ],
             'categories' => [
                 'path' => '/admin/categories',
                 'title' => 'Categorias',

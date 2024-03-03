@@ -3,7 +3,6 @@
 
     use Src\Email\BodyEmail;
     use Src\Email\EmailServices;
-    use Src\Models\Client;
     use Src\Models\Event;
     use Src\Models\Protocol;
     use Src\Models\Time;
@@ -12,10 +11,8 @@
 
     $schedules = new Time();
     $event = new Event();
-    $client = new Client();
     $protocol = new Protocol();
 
-    $client = $client->find($requests->client_id);
     $title = 'Horário reservado!';
 
     $event = $event->create([
@@ -26,7 +23,6 @@
         'event' => $requests->event,
         'period' => $requests->period,
         'location_id' => $requests->location_id,
-        'client_id' => $requests->client_id,
         'observation' => $requests->observation,
         'status' => $requests->status,
         'date' => empty($requests->day) ? $requests->date : null,
@@ -44,13 +40,12 @@
     endforeach;
 
     $protocol = $protocol->create([
-        'client_id' => $client->data->id,
         'event_id' => $event->id,
         'event_status' => $requests->status,
         'token' => $protocol->generateToken()
     ]);
 
-    $email = new EmailServices(BodyEmail::protocol($client->data->name, $requests->status, $protocol->token, $title, 'create'), $title, $client->data->email);
+    $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->token, $title, 'create'), $title);
     $email->send();
 
     session([
