@@ -9,21 +9,11 @@ class Protocol extends Model
     /**
      * @since 1.7.0
      * 
-     * @return Event
+     * @return Reservation
      */
-    public function event(): Event
+    public function reservation(): Reservation
     {
-        return $this->belongsTo(Event::class, 'events', 'event_id');
-    }
-
-    /**
-     * @since 1.7.0
-     * 
-     * @return Client
-     */
-    public function client(): Client
-    {
-        return $this->belongsTo(Client::class, 'clients', 'client_id');
+        return $this->belongsTo(Reservation::class, 'reservations', 'reservation_id');
     }
 
     /**

@@ -15,12 +15,6 @@ if (!function_exists('menusAdmin')):
                 'icon' => 'bi bi-speedometer',
                 'count' => null      
             ],
-            'clients' => [
-                'path' => '/admin/clients',
-                'title' => 'Clientes',
-                'icon' => 'bi bi-person-lines-fill',
-                'count' => null
-            ],
             'categories' => [
                 'path' => '/admin/categories',
                 'title' => 'Categorias',
@@ -33,9 +27,9 @@ if (!function_exists('menusAdmin')):
                 'icon' => 'bi bi-map-fill',
                 'count' => null
             ],
-            'events' => [
-                'path' => '/admin/events',
-                'title' => 'Eventos',
+            'reservations' => [
+                'path' => '/admin/reservations',
+                'title' => 'Reservas',
                 'icon' => 'bi bi-calendar-event-fill',
                 'count' => null
             ],

@@ -13,16 +13,11 @@
         ]) ?>
 
         <div class="text-center py-6">
-            <?php if(isset($client)): ?>
-                <h2 class="text-secondary text-xl font-bold">Verifique seus dados e clique em continuar</h2>
-            <?php else: ?>
-                <h2 class="text-secondary text-xl font-bold">Para proseguir preencha seus dados pessoais e clique em continuar</h2>
-            <?php endif ?>
+            <h2 class="text-secondary text-xl font-bold">Para proseguir preencha seus dados pessoais e clique em continuar</h2>
         </div>
 
         <form method="POST" action="<?php route('/location/create') ?>" id="save-hours">
             <input type="hidden" id="location_id" name="location_id" value="<?php echo $location->id ?>">
-            <input type="hidden" id="client_id" name="client_id" value="<?php echo $client->id ?>">
             <input type="hidden" name="create_type" value="schedule">
 
             <div class='flex justify-between flex-wrap'>
@@ -36,23 +31,42 @@
                         'attributes' => 'required'
                     ]) ?>
                 </div>
-
-                <div class='w-full md:w-4/12 px-4'>
-                    <?php loadHtml(__DIR__.'/../../resources/partials/form/input-select', [
-                        'icon' => 'bi bi-hash',
-                        'name' => 'type',
-                        'label' => 'Tipo',
-                        'value' => null,
-                        'attributes' => 'required',
-                        'array' => [
-                            'Normal' => 'Normal',
-                            'Fixo' => 'Fixo'
-                        ]
-                    ]) ?>
-                </div>
             </div>
 
             <div class='flex flex-wrap'>
+                <div class='w-full md:w-4/12 px-4'>
+                    <?php loadHtml(__DIR__.'/../../resources/partials/form/input-default', [
+                        'icon' => 'bi bi-envelope-fill',
+                        'name' => 'email',
+                        'label' => 'Email',
+                        'type' => 'text',
+                        'value' => null,
+                        'attributes' => 'required'
+                    ]) ?>
+                </div>
+
+                <div class='w-full md:w-4/12 px-4'>
+                    <?php loadHtml(__DIR__.'/../../resources/partials/form/input-default', [
+                        'icon' => 'bi bi-telephone-fill',
+                        'name' => 'phone',
+                        'label' => 'Telefone',
+                        'type' => 'text',
+                        'value' => null,
+                        'attributes' => 'required'
+                    ]) ?>
+                </div>
+
+                <div class='w-full md:w-4/12 px-4'>
+                    <?php loadHtml(__DIR__.'/../../resources/partials/form/input-default', [
+                        'icon' => 'bi bi-123',
+                        'name' => 'identifier',
+                        'label' => 'CPF',
+                        'type' => 'text',
+                        'value' => null,
+                        'attributes' => 'required'
+                    ]) ?>
+            </div>
+
                 <div class='w-full md:w-4/12 px-4'>
                     <?php loadHtml(__DIR__.'/../../resources/partials/form/input-select', [
                         'icon' => 'bi bi-hash',
@@ -103,7 +117,7 @@
                         'icon' => 'bi bi-card-text',
                         'name' => 'observation',
                         'label' => 'Observação (Descreva aqui caso o evento for "Outros")',
-                        'value' => isset($event) ? $event->observation : null
+                        'value' => isset($reservation) ? $reservation->observation : null
                     ]) ?>
                 </div>
             </div>
@@ -129,11 +143,7 @@
                 ]) ?>
             </div>
 
-            <?php loadHtml(__DIR__.'/../../resources/partials/modal-hours', ['event' => null]) ?>
+            <?php loadHtml(__DIR__.'/../../resources/partials/modal-hours', ['reservation' => null]) ?>
         </form>
     </div>
 </section>
-
-<?php loadHtml(__DIR__.'/partials/modal-search-user', [
-    'location_id' => $location->id
-]) ?>

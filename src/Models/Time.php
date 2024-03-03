@@ -9,20 +9,20 @@ class Time extends Model
     /**
      * @since 1.7.0
      * 
-     * @return Event
+     * @return Reservation
      */
-    public function event(): Event
+    public function reservation(): Reservation
     {
-        return $this->belongsTo(Event::class, 'events', 'event_id');
+        return $this->belongsTo(Reservation::class, 'reservations', 'reservation_id');
     }
 
     /**
      * @since 1.7.0
      * 
-     * @return Event
+     * @return Location
      */
-    public function location(): Event
+    public function location(): Location
     {
-        return $this->belongsTo(Event::class, 'locations', 'location_id');
+        return $this->belongsTo(Location::class, 'locations', 'location_id');
     }
 }

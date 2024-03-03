@@ -12,7 +12,7 @@ class HoursAvailable {
     constructor () {
         this.location = $('#location_id');
         this.date = $('#date');
-        this.eventId = $('#event_id');
+        this.reservetionId = $('#reservation_id');
         this.day = $('#day');
         this.period = $('#period');
         this.getHour = true;
@@ -122,7 +122,30 @@ class HoursAvailable {
      * 
      * @returns {void}
      */
+    setPrice () {
+        let count = 0;
+        const checkboxes = $('[data-checked="hour"]');
+
+        if(!this.period.attr('disabled')) event.preventDefault();
+
+        setTimeout(() => {
+            checkboxes.each(function (index, checkbox) {
+                if (checkbox.checked) {
+                    count++;
+                }
+            });
+
+            $('#total-value').text(`R$ ${this.price * count}`);
+        }, 200);
+    }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {void}
+     */
     createBlockHour (data, key) {
+        if(data.blocked && !data.checked) return;
         const classBlock = data.blocked ? 'border-danger bg-danger text-white opacity-50' : 'border-color-main';
 
         const block = $('<div />');
@@ -136,6 +159,7 @@ class HoursAvailable {
             class: 'hidden',
             id: `hour_${key}`
         });
+
         if (data.blocked) {
             input.attr('disabled', 'disabled');
         }
@@ -221,7 +245,7 @@ class HoursAvailable {
 
             const response = await this.get();
 
-            this.priceprice;
+            this.price = response.price;
         
             Object.keys(response.hours).forEach((key) => {
                 this.createBlockHour(response.hours[key], key); 
@@ -248,7 +272,7 @@ class HoursAvailable {
 
             const response = await this.get();
 
-            this.priceprice;
+            this.price = response.price;
         
             Object.keys(response.hours).forEach((key) => {
                 this.createBlockHour(response.hours[key], key); 
@@ -268,6 +292,8 @@ class HoursAvailable {
                     }
                 });
             }
+
+            this.setPrice();
         });
 
         return this;
@@ -285,7 +311,7 @@ class HoursAvailable {
 
             const response = await this.get();
 
-            this.priceprice;
+            this.price = response.price;
         
             Object.keys(response.hours).forEach((key) => {
                 this.createBlockHour(response.hours[key], key); 
@@ -346,7 +372,7 @@ class HoursAvailable {
      * @returns {boolean}
      */
     validityHours () {
-        if (this.eventId.val()) return true;
+        if (this.reservetionId.val()) return true;
 
         const checkboxes = $('[data-checked="hour"]');
         let isValid = false;
@@ -367,21 +393,8 @@ class HoursAvailable {
      * @returns {void}
      */
     calculateTotalHourlyValue (checkbox) {
-        const checkboxes = $('[data-checked="hour"]');
-        let count = 0;
-
         checkbox.on('click', (event) => {
-            if(this.period.val().length !== 0) event.preventDefault();
-
-            setTimeout(() => {
-                checkboxes.each(function (index, checkbox) {
-                    if (checkbox.checked) {
-                        count++;
-                    }
-                });
-
-                $('#total-value').text(`R$ ${this.price * count}`);
-            }, 100);
+            this.setPrice();
         });
     }
 
@@ -444,7 +457,7 @@ class HoursAvailable {
                 contentType: false,
                 data: {
                     date: this.date.attr('disabled') === 'disabled' ? null : this.date.val(),
-                    event_id: this.eventId.val(),
+                    reservation_id: this.reservetionId.val(),
                     location_id: this.location.val(),
                     day: this.day.attr('disabled') === 'disabled' ? null : this.day.val()
                 },

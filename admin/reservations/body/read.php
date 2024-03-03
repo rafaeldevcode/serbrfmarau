@@ -1,5 +1,30 @@
 <section class='p-3 bg-light m-0 sm:m-3 rounded shadow-lg'>
     <section>
+        <form action="" class="w-full flex justify-end" id="change-status" method="POST">
+            <div class='w-full md:w-4/12'>
+                <?php if(isset(requests()->search)): ?>
+                    <input type="hidden" name="search" value="<?php echo requests()->search ?>">
+                <?php endif ?>
+
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
+                    'icon' => 'bi bi-hash',
+                    'name' => 'status',
+                    'label' => 'Status',
+                    'value' => isset(requests()->status) ? requests()->status : null,
+                    'attributes' => [
+                        'data-change' => 'status',
+                    ],
+                    'array' => [
+                        'Status' => '',
+                        'Pendente' => 'Pendente',
+                        'Aprovado' => 'Aprovado',
+                        'Reprovado' => 'Reprovado',
+                        'Finalizado' => 'Finalizado'
+                    ]
+                ]) ?>
+            </div>
+        </form>
+
         <div class="relative overflow-x-auto max-w-[2000px] mx-auto mb-4 rounded border">
             <table class="w-full text-xs text-left">
                 <thead class="text-white uppercase bg-color-main">
@@ -16,22 +41,22 @@
                             </div>
                         </th>
                         <th scope="col" class="p-2">
-                            ID
-                        </th>
-                        <th scope="col" class="p-2">
                             Nome
-                        </th>
-                        <th scope="col" class="p-2">
-                            Email
-                        </th>
-                        <th scope="col" class="p-2">
-                            Telefone
                         </th>
                         <th scope="col" class="p-2">
                             Tipo
                         </th>
                         <th scope="col" class="p-2">
-                            Identificador
+                            Evento
+                        </th>
+                        <th scope="col" class="p-2">
+                            Quantidade de pessoas
+                        </th>
+                        <th scope="col" class="p-2">
+                            Pagamento
+                        </th>
+                        <th scope="col" class="p-2">
+                            Status
                         </th>
                         <th scope="col" class="p-2 text-right">
                             Ações
@@ -39,52 +64,54 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($clients->data as $client): ?>
+                    <?php foreach($reservations->data as $reservation): ?>
                         <tr class="bg-white border-b hover:bg-gray-100 text-gray-900">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input 
-                                        value='<?php echo $client->id ?>' 
-                                        data-message-delete='Esta ação irá remover todos os clientes selecionados!'
+                                        value='<?php echo $reservation->id ?>' 
+                                        data-message-delete='Esta ação irá remover todas as reservas selecionados!'
                                         type='checkbox'
                                         data-button="delete-enable"
-                                        id="checkbox-table-search-<?php echo $client->id ?>" 
+                                        id="checkbox-table-search-<?php echo $reservation->id ?>" 
                                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                                     >
-                                    <label for="checkbox-table-search-<?php echo $client->id ?>" class="sr-only">checkbox</label>
+                                    <label for="checkbox-table-search-<?php echo $reservation->id ?>" class="sr-only">checkbox</label>
                                 </div>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
-                                <?php echo $client->id ?>
+                                <?php echo $reservation->name ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
-                                <?php echo $client->name ?>
+                                <?php echo $reservation->type ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
-                                <?php echo $client->email ?>
+                                <?php echo $reservation->event ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
-                                <?php echo $client->phone ?>
+                                <?php echo $reservation->amount_people ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
-                                <?php echo $client->type ?>
+                                <?php echo $reservation->payment_type ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
-                                <?php echo $client->identifier ?>
+                                <span class="rounded text-xs text-light px-2 py-1 bg-<?php echo getBadgeReservationStatus($reservation->status) ?>">
+                                    <?php echo $reservation->status ?>
+                                </span>
                             </td>
                             <td class="flex items-center justify-end p-2 space-x-2 right">
-                                <a href="<?php route("/admin/clients/?method=edit&id={$client->id}") ?>" title='Editar cliente <?php echo $client->name ?>' class='text-xs p-2 rounded btn-primary text-light fw-bold'>
+                                <a href="<?php route("/admin/reservations/?method=edit&id={$reservation->id}") ?>" title='Editar reserva <?php echo $reservation->name ?>' class='text-xs p-2 rounded btn-primary text-light fw-bold'>
                                     <i class='bi bi-pencil-square'></i>
                                 </a>
 
                                 <button
                                     data-button="delete"
-                                    data-route='<?php route('/admin/clients/delete') ?>'
-                                    data-delete-id='<?php echo $client->id ?>'
-                                    data-message-delete='Esta ação irá remover o cliente "<?php echo $client->name ?>"!'
+                                    data-route='<?php route('/admin/reservations/delete') ?>'
+                                    data-delete-id='<?php echo $reservation->id ?>'
+                                    data-message-delete='Esta ação irá remover a reserva "<?php echo $reservation->name ?>"!'
                                     type='button'
-                                    title='Remover cliente <?php echo $client->name ?>'
-                                    class='p-2 rounded btn-danger text-light fw-bold'
+                                    title='Remover reserva <?php echo $reservation->name ?>'
+                                    class='p-2 text-xs rounded btn-danger text-light fw-bold'
                                 >
                                     <i class='bi bi-trash-fill'></i>
                                 </button>
@@ -95,21 +122,20 @@
             </table>
         </div>
 
-
-        <?php if(count($clients->data) == 0): ?>
+        <?php if(count($reservations->data) == 0): ?>
             <div class="p-2 empty-collections flex justify-center items-center">
                 <img class="h-full" src="<?php asset('assets/images/empty.svg') ?>" alt="Nenhum dado encontrado">
             </div>
         <?php endif; ?>
     </section>
 
-    <?php if(isset($clients->page)):
+    <?php if(isset($reservations->page)):
         loadHtml(__DIR__.'/../../../resources/admin/partials/pagination', [
-            'page'   => $clients->page,
-            'count'  => $clients->count,
-            'next'   => $clients->next,
-            'prev'   => $clients->prev,
-            'search' => $clients->search
+            'page' => $reservations->page,
+            'count' => $reservations->count,
+            'next' => $reservations->next,
+            'prev' => $reservations->prev,
+            'search' => $reservations->search
         ]);
     endif; ?>
 </section>
