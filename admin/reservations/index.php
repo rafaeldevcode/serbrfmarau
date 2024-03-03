@@ -1,37 +1,37 @@
 <?php
 
-    use Src\Models\Event;
+    use Src\Models\Reservation;
     use Src\Models\Location;
 
     $method = empty(querys('method')) ? 'read' : querys('method');
 
     if($method == 'read'):
-        $event = new Event();
+        $reservation = new Reservation();
         $requests = requests();
         $status = isset($requests->status) ? $requests->status : 'Pendente';
-        $events = !isset($requests->search) ? $event->where('status', '=', $status)->paginate(20) : $event->where('status', '=', $status)->where('name', 'LIKE', "%{$requests->search}%")->paginate(20);
+        $reservations = !isset($requests->search) ? $reservation->where('status', '=', $status)->paginate(20) : $reservation->where('status', '=', $status)->where('name', 'LIKE', "%{$requests->search}%")->paginate(20);
         $background = 'bg-secondary';
         $text  = 'Visualizar';
         $body = __DIR__."/body/read";
 
-        $data = ['events' => $events];
+        $data = ['reservations' => $reservations];
     elseif($method == 'edit'):
-        $event = new Event();
+        $reservation = new Reservation();
         $location = new Location();
 
         $locations = getArraySelect($location->where('status', '=', 'on')->get(['id', 'name']), 'id', 'name');
-        $event = $event->find(querys('id'));
+        $reservation = $reservation->find(querys('id'));
         $background = 'bg-success';
         $text  = 'Editar';
         $body = __DIR__."/body/form";
 
         $data = [
-            'event' => $event->data, 
-            'action' => '/admin/events/update',
+            'reservation' => $reservation->data, 
+            'action' => '/admin/reservations/update',
             'locations' => $locations
         ];
     elseif($method == 'create'):
-        if(redirectIfTotalEqualsZero('Src\Models\Location', '/admin/locations', 'Para adicionar um evento, primeiro adicione um local!')) die;
+        if(redirectIfTotalEqualsZero('Src\Models\Location', '/admin/locations', 'Para adicionar uma reserva, primeiro adicione um local!')) die;
 
         $location = new Location();
 
@@ -40,17 +40,17 @@
         $text  = 'Adicionar';
         $body = __DIR__."/body/form";
 
-        $data = ['action' => '/admin/events/create', 'locations' => $locations];
+        $data = ['action' => '/admin/reservations/create', 'locations' => $locations];
     endif;
 
     loadHtml(__DIR__.'/../../resources/admin/layout', [
         'background' => $background,
         'type' => $text,
         'icon' => 'bi bi-calendar-event-fill',
-        'title' => 'Eventos',
-        'route_delete' => $method == 'read' ? '/admin/events/delete' : null,
-        'route_add' => $method == 'create' ? null : '/admin/events?method=create',
-        'route_search' => '/admin/events',
+        'title' => 'Reservas',
+        'route_delete' => $method == 'read' ? '/admin/reservations/delete' : null,
+        'route_add' => $method == 'create' ? null : '/admin/reservations?method=create',
+        'route_search' => '/admin/reservations',
         'body' => $body,
         'data' => $data,
     ]);

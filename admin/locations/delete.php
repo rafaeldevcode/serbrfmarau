@@ -13,8 +13,8 @@
     foreach($requests->ids as $ID):
         $location->find($ID);
 
-        if($location->events()):
-            $message = 'Locais que possuem eventos registrados, não podem ser removidos!';
+        if($location->reservations()):
+            $message = 'Locais que possuem reservas registradas, não podem ser removidos!';
             $type = 'info';
         else:
             $location->delete();

@@ -39,11 +39,11 @@ class Location extends Model
     /**
      * @since 1.7.0
      * 
-     * @return Event
+     * @return Reservation
      */
-    public function events(): Event
+    public function reservations(): Reservation
     {
-        return $this->hasMany(Event::class, 'events', 'location_id');
+        return $this->hasMany(Reservation::class, 'reservations', 'location_id');
     }
 
     /**

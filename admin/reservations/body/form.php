@@ -1,7 +1,7 @@
 <section class='p-3 bg-light m-0 sm:m-3 rounded shadow-lg'>
     <form method="POST" action="<?php route($action) ?>" id="save-hours">
-        <?php if(isset($event)): ?>
-            <input type="hidden" name="id" id="event_id" value="<?php echo $event->id ?>">
+        <?php if(isset($reservation)): ?>
+            <input type="hidden" name="id" id="reservation_id" value="<?php echo $reservation->id ?>">
         <?php endif ?>
 
         <div class='flex justify-between flex-wrap'>
@@ -11,7 +11,7 @@
                     'name' => 'name',
                     'label' => 'Nome',
                     'type' => 'text',
-                    'value' => isset($event) ? $event->name : null,
+                    'value' => isset($reservation) ? $reservation->name : null,
                     'attributes' => 'required'
                 ]) ?>
             </div>
@@ -21,7 +21,7 @@
                     'icon' => 'bi bi-hash',
                     'name' => 'type',
                     'label' => 'Tipo',
-                    'value' => isset($event) ? $event->type : null,
+                    'value' => isset($reservation) ? $reservation->type : null,
                     'attributes' => 'required',
                     'array' => [
                         'Normal' => 'Normal',
@@ -37,7 +37,7 @@
                     'icon' => 'bi bi-hash',
                     'name' => 'payment_type',
                     'label' => 'Tipo de pagamento',
-                    'value' => isset($event) ? $event->payment_type : null,
+                    'value' => isset($reservation) ? $reservation->payment_type : null,
                     'attributes' => 'required',
                     'array' => [
                         'Cartão de Crádito' => 'Cartão de Crádito',
@@ -54,7 +54,7 @@
                     'name' => 'amount_people',
                     'label' => 'Quantidade de Pessoas',
                     'type' => 'number',
-                    'value' => isset($event) ? $event->amount_people : null,
+                    'value' => isset($reservation) ? $reservation->amount_people : null,
                     'attributes' => 'required'
                 ]) ?>
             </div>
@@ -64,7 +64,7 @@
                     'icon' => 'bi bi-hash',
                     'name' => 'event',
                     'label' => 'Evento',
-                    'value' => isset($event) ? $event->event : null,
+                    'value' => isset($reservation) ? $reservation->event : null,
                     'attributes' => 'required',
                     'array' => [
                         'Aniverssário' => 'Aniverssário',
@@ -80,7 +80,7 @@
                     'icon' => 'bi bi-hash',
                     'name' => 'location_id',
                     'label' => 'Local',
-                    'value' => isset($event) ? $event->location_id : null,
+                    'value' => isset($reservation) ? $reservation->location_id : null,
                     'attributes' => 'required',
                     'array' => $locations,
                     'attributes' => [
@@ -94,7 +94,7 @@
                     'icon' => 'bi bi-hash',
                     'name' => 'status',
                     'label' => 'Status',
-                    'value' => isset($event) ? $event->status : null,
+                    'value' => isset($reservation) ? $reservation->status : null,
                     'attributes' => 'required',
                     'array' => [
                         'Pendente' => 'Pendente',
@@ -111,7 +111,7 @@
                     'icon' => 'bi bi-card-text',
                     'name' => 'observation',
                     'label' => 'Observação (Descreva aqui caso o evento for "Outros")',
-                    'value' => isset($event) ? $event->observation : null
+                    'value' => isset($reservation) ? $reservation->observation : null
                 ]) ?>
             </div>
         </div>
@@ -132,11 +132,11 @@
             <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-button', [
                 'type' => 'submit',
                 'style' => 'color-main',
-                'title' => 'Salvar evento',
+                'title' => 'Salvar reserva',
                 'value' => 'Salvar'
             ]) ?>
         </div>
 
-        <?php loadHtml(__DIR__.'/../../../resources/partials/modal-hours', ['event' => isset($event) ? $event : null]) ?>
+        <?php loadHtml(__DIR__.'/../../../resources/partials/modal-hours', ['reservation' => isset($reservation) ? $reservation : null]) ?>
     </form>
 </section>

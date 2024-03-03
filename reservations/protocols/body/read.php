@@ -23,10 +23,10 @@
                 <div class='container text-secondary flex p-4 border rounded border-color-main m-2 custom-construction-mirror flex flex-col justify-between'>
                     <div class='text-secondary'>
                         <h2 class="text-3xl mb-2"><strong class="text-3xl">Local:</strong> <?php echo $location->name ?></h2>
-                        <h2 class="text-3xl mb-2"><strong class="text-3xl">Evento:</strong> <?php echo $event->name ?></h2>
+                        <h2 class="text-3xl mb-2"><strong class="text-3xl">Reserva:</strong> <?php echo $reservation->name ?></h2>
                         <h2 class="text-3xl mb-2"><strong class="text-3xl">Horário:</strong> Das <?php echo $schedules[0]->hour ?> às <?php echo $schedules[$total_schedules-1]->hour ?></h2>
-                        <h2 class="text-3xl mb-2"><strong class="text-3xl">Valor:</strong> R$ <?php echo number_format($total_schedules * getPrice($location->prices, $event->date, $event->day), 2, ',', ',') ?></h2>
-                        <h2 class="text-3xl mb-2"><strong class="text-3xl">Status:</strong> <?php echo $event->status ?></h2>
+                        <h2 class="text-3xl mb-2"><strong class="text-3xl">Valor:</strong> R$ <?php echo number_format($total_schedules * getPrice($location->prices, $reservation->date, $reservation->day), 2, ',', ',') ?></h2>
+                        <h2 class="text-3xl mb-2"><strong class="text-3xl">Status:</strong> <?php echo $reservation->status ?></h2>
                     </div>
 
                     <div class="p-4 rounded border bg-blue-100 text-center border-blue-600">

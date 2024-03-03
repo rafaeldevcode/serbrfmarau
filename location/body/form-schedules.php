@@ -98,7 +98,7 @@
                         'icon' => 'bi bi-card-text',
                         'name' => 'observation',
                         'label' => 'Observação (Descreva aqui caso o evento for "Outros")',
-                        'value' => isset($event) ? $event->observation : null
+                        'value' => isset($reservation) ? $event->observation : null
                     ]) ?>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                 ]) ?>
             </div>
 
-            <?php loadHtml(__DIR__.'/../../resources/partials/modal-hours', ['event' => null]) ?>
+            <?php loadHtml(__DIR__.'/../../resources/partials/modal-hours', ['reservation' => null]) ?>
         </form>
     </div>
 </section>

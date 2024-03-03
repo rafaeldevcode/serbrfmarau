@@ -3,20 +3,20 @@
 
     use Src\Email\BodyEmail;
     use Src\Email\EmailServices;
-    use Src\Models\Event;
+    use Src\Models\Reservation;
     use Src\Models\Protocol;
     use Src\Models\Time;
 
     $schedules = new Time();
-    $event = new Event();
+    $reservation = new Reservation();
     $protocol = new Protocol();
 
     $requests = requests();
-    $event = $event->find($requests->id);
+    $reservation = $reservation->find($requests->id);
     $title = 'Status do horário atulalizado!';
-    $current_status = $event->data->status;
+    $current_status = $reservation->data->status;
 
-    $event->update([
+    $reservation->update([
         'name' => $requests->name,
         'type' => $requests->type,
         'payment_type' => $requests->payment_type,
@@ -31,23 +31,23 @@
     ]);
 
     if($requests->hours):
-        $schedules->where('event_id', '=', $requests->id)->delete();
+        $schedules->where('reservation_id', '=', $requests->id)->delete();
     
         foreach ($requests->hours as $hour) :
             $schedules->create([
                 'date' => empty($requests->day) ? $requests->date : null,
                 'day' => ! empty($requests->day) ? $requests->day : null,
                 'hour' => $hour,
-                'event_id' => $requests->id,
+                'reservation_id' => $requests->id,
                 'location_id' => $requests->location_id
             ]);
         endforeach;
     endif;
 
     if ($current_status !== $requests->status):
-        $protocol = $protocol->find($event->protocols()->data[0]->id);
+        $protocol = $protocol->find($reservation->protocols()->data[0]->id);
         $protocol->update([
-            'event_status' => $requests->status
+            'reservation_status' => $requests->status
         ]);
 
         $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->data->token, $title, 'update'), $title);
@@ -55,8 +55,8 @@
     endif;
 
     session([
-        'message' => 'Evento editado com sucesso!',
+        'message' => 'Reserva editada com sucesso!',
         'type' => 'success'
     ]);
 
-    return header(route('/admin/events', true), true, 302);
+    return header(route('/admin/reservations', true), true, 302);

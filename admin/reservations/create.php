@@ -3,19 +3,19 @@
 
     use Src\Email\BodyEmail;
     use Src\Email\EmailServices;
-    use Src\Models\Event;
     use Src\Models\Protocol;
+    use Src\Models\Reservation;
     use Src\Models\Time;
 
     $requests = requests();
 
     $schedules = new Time();
-    $event = new Event();
+    $reservation = new Reservation();
     $protocol = new Protocol();
 
     $title = 'Horário reservado!';
 
-    $event = $event->create([
+    $reservation = $reservation->create([
         'name' => $requests->name,
         'type' => $requests->type,
         'payment_type' => $requests->payment_type,
@@ -34,14 +34,14 @@
             'date' => empty($requests->day) ? $requests->date : null,
             'day' => ! empty($requests->day) ? $requests->day : null,
             'hour' => $hour,
-            'event_id' => $event->id,
+            'reservation_id' => $reservation->id,
             'location_id' => $requests->location_id
         ]);
     endforeach;
 
     $protocol = $protocol->create([
-        'event_id' => $event->id,
-        'event_status' => $requests->status,
+        'reservation_id' => $reservation->id,
+        'reservation_status' => $requests->status,
         'token' => $protocol->generateToken()
     ]);
 
@@ -49,8 +49,8 @@
     $email->send();
 
     session([
-        'message' => 'Evento adicionado com sucesso!',
+        'message' => 'Reserva Realizada com sucesso!',
         'type' => 'success'
     ]);
 
-    return header(route('/admin/events', true), true, 302);
+    return header(route('/admin/reservations', true), true, 302);

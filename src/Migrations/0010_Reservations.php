@@ -4,9 +4,9 @@ namespace Src\Migrations;
 
 use Src\Migrations\ExecuteMigrations;
 
-class Events extends ExecuteMigrations
+class Reservations extends ExecuteMigrations
 {
-    public $table = 'events';
+    public $table = 'reservations';
 
     /**
      * @since 1.7.0
@@ -17,6 +17,9 @@ class Events extends ExecuteMigrations
     {
         $this->integer('id')->primaryKey();
         $this->string('name', 150);
+        $this->string('email', 50);
+        $this->string('phone', 14);
+        $this->string('identifier')->nullable();
         $this->char('type', 50);
         $this->string('payment_type', 20);
         // $this->string('event_type', 20);

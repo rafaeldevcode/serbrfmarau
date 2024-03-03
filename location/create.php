@@ -3,22 +3,22 @@
 
     use Src\Email\BodyEmail;
     use Src\Email\EmailServices;
-    use Src\Models\Event;
+    use Src\Models\Reservation;
     use Src\Models\Protocol;
     use Src\Models\Time;
 
     $schedules = new Time();
-    $event = new Event();
+    $reservation = new Reservation();
     $protocol = new Protocol();
 
     $requests = requests();
 
-    // Create Event
+    // Create reservation
     if($requests->create_type == 'schedule'):
         $title = 'Horário reservado!';
         $status = 'Pendente';
 
-        $event = $event->create([
+        $reservation = $reservation->create([
             'name' => $requests->name,
             'type' => $requests->type,
             'payment_type' => $requests->payment_type,
@@ -37,14 +37,14 @@
                 'date' => empty($requests->day) ? $requests->date : null,
                 'day' => ! empty($requests->day) ? $requests->day : null,
                 'hour' => $hour,
-                'event_id' => $event->id,
+                'reservation_id' => $reservation->id,
                 'location_id' => $requests->location_id
             ]);
         endforeach;
 
         $protocol = $protocol->create([
-            'event_id' => $event->id,
-            'event_status' => $status,
+            'reservation_id' => $reservation->id,
+            'reservation_status' => $status,
             'token' => $protocol->generateToken()
         ]);
 
@@ -52,11 +52,11 @@
         $email->send();
 
         session([
-            'message' => 'Evento adicionado com sucesso!',
+            'message' => 'Reserva adicionada com sucesso!',
             'type' => 'success'
         ]);
 
-        return header(route("/events/protocols?protocol={$protocol->token}", true), true, 302);
+        return header(route("/reservations/protocols?protocol={$protocol->token}", true), true, 302);
         die;
     endif;
 

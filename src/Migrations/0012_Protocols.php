@@ -17,11 +17,11 @@ class Protocols extends ExecuteMigrations
     {
         $this->integer('id')->primaryKey();
 
-        $this->integer('event_id');
-        $this->string('event_status', 10)->default('Pendente');
+        $this->integer('reservation_id');
+        $this->string('reservation_status', 10)->default('Pendente');
         $this->string('token', 200)->unique();
 
-        $this->foreignKey('event_id')->references('id')->on('events');
+        $this->foreignKey('reservation_id')->references('id')->on('reservations');
 
         $this->timestamps();
 

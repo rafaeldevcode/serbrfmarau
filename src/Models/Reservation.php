@@ -2,9 +2,9 @@
 
 namespace Src\Models;
 
-class Event extends Model
+class Reservation extends Model
 {
-    public $table = 'events';
+    public $table = 'reservations';
 
     /**
      * @since 1.7.0
@@ -23,7 +23,7 @@ class Event extends Model
      */
     public function schedules(): Time
     {
-        return $this->hasMany(Time::class, 'schedules', 'event_id');
+        return $this->hasMany(Time::class, 'schedules', 'reservation_id');
     }
 
     /**
@@ -33,6 +33,6 @@ class Event extends Model
      */
     public function protocols(): Protocol
     {
-        return $this->hasMany(Protocol::class, 'protocols', 'event_id');
+        return $this->hasMany(Protocol::class, 'protocols', 'reservation_id');
     }
 }

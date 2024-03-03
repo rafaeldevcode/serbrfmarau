@@ -38,7 +38,7 @@ class BodyEmail
      */
     public static function protocol(string $name, string $status, string $hash, string $title = '', string $type = 'create'): string
     {
-        $protocol = route("/events/protocol?protocol={$hash}", false, false);
+        $protocol = route("/reservations/protocol?protocol={$hash}", false, false);
         $copy = !is_null(SETTINGS) && !empty(SETTINGS['copyright']) ? SETTINGS['copyright'] : '';
         $site = !is_null(SETTINGS) && !empty(SETTINGS['site_name']) ? SETTINGS['site_name'] : '';
         $text = $type === 'create'

@@ -19,7 +19,7 @@
                         'name' => 'date',
                         'label' => 'Data',
                         'type' => 'date',
-                        'value' => isset($event) ? $event->date : date('Y-m-d')
+                        'value' => isset($reservation) ? $reservation->date : date('Y-m-d')
                     ]) ?>
                 </div>
 
@@ -28,7 +28,7 @@
                         'icon' => 'bi bi-hash',
                         'name' => 'period',
                         'label' => 'Período (Somente se for período interiro)',
-                        'value' => isset($event) ? $event->period : null,
+                        'value' => isset($reservation) ? $reservation->period : null,
                         'attributes' => [
                             'data-change' => 'selects'
                         ],
@@ -46,7 +46,7 @@
                         'icon' => 'bi bi-hash',
                         'name' => 'day',
                         'label' => 'Dia da semana',
-                        'value' => isset($event) ? $event->day : null,
+                        'value' => isset($reservation) ? $reservation->day : null,
                         'attributes' => [
                             'data-change' => 'selects'
                         ],
