@@ -29,21 +29,20 @@ class BodyEmail
     /**
      * @since 1.7.0
      * 
-     * @param string $name
      * @param string $status
      * @param string $hash
      * @param string $title
      * @param string $type
      * @return string
      */
-    public static function protocol(string $name, string $status, string $hash, string $title = '', string $type = 'create'): string
+    public static function protocol(string $status, string $hash, string $title = '', string $type = 'create'): string
     {
         $protocol = route("/reservations/protocol?protocol={$hash}", false, false);
         $copy = !is_null(SETTINGS) && !empty(SETTINGS['copyright']) ? SETTINGS['copyright'] : '';
         $site = !is_null(SETTINGS) && !empty(SETTINGS['site_name']) ? SETTINGS['site_name'] : '';
         $text = $type === 'create'
-            ? "Olá <strong>{$name}</strong>, aqui é da equipe da <strong>{$site}</strong>, este email é para comunicar que seu horário foi reservado e está em processo de aprovação. Você receberá um novo email quando o mesmo for aprovado."
-            : "Olá <strong>{$name}</strong>, aqui é da equipe da <strong>{$site}</strong>, este email é para comunicar que seu horário foi atualizado para: <strong>{$status}</strong>.";
+            ? "Olá, aqui é da equipe da <strong>{$site}</strong>, este email é para comunicar que seu horário foi reservado e está em processo de aprovação. Você receberá um novo email quando o mesmo for aprovado."
+            : "Olá, aqui é da equipe da <strong>{$site}</strong>, este email é para comunicar que seu horário foi atualizado para: <strong>{$status}</strong>.";
 
         $message = <<<EOT
             <div style="padding: 1rem; background: #ffffff; border-radius: 5px; color: #1E3E87;">

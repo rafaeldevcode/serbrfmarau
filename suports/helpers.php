@@ -482,23 +482,4 @@ if (!function_exists('getPrice')):
     }
 endif;
 
-if (!function_exists('getBodySchedules')):
-    /**
-     * @since 1.7.0
-     * 
-     * @param ?string $email
-     * @return string
-     */
-    function getBodySchedules(?string $email): string
-    {
-        if(isset($email)):
-            $body = __DIR__ . '/../location/body/form-schedules';
-        else:
-            $body = __DIR__ . '/../location/body/read';
-        endif;
-
-        return $body;
-    }
-endif;
-
 !defined('SETTINGS') && define('SETTINGS', (array)getSiteSettings());

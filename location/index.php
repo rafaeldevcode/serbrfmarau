@@ -17,7 +17,7 @@
 
     loadHtml(__DIR__.'/../resources/client/layout', [
         'title' => "Local - {$location->data->name}",
-        'body' => getBodySchedules($requests->email),
+        'body' => isset($requests->form) && $requests->form == '1' ?  __DIR__ . '/../location/body/form-schedules' : __DIR__ . '/../location/body/read',
         'plugins' => ['slick'],
         'data' => [
             'location' => $location->data,

@@ -31,23 +31,42 @@
                         'attributes' => 'required'
                     ]) ?>
                 </div>
-
-                <div class='w-full md:w-4/12 px-4'>
-                    <?php loadHtml(__DIR__.'/../../resources/partials/form/input-select', [
-                        'icon' => 'bi bi-hash',
-                        'name' => 'type',
-                        'label' => 'Tipo',
-                        'value' => null,
-                        'attributes' => 'required',
-                        'array' => [
-                            'Normal' => 'Normal',
-                            'Fixo' => 'Fixo'
-                        ]
-                    ]) ?>
-                </div>
             </div>
 
             <div class='flex flex-wrap'>
+                <div class='w-full md:w-4/12 px-4'>
+                    <?php loadHtml(__DIR__.'/../../resources/partials/form/input-default', [
+                        'icon' => 'bi bi-envelope-fill',
+                        'name' => 'email',
+                        'label' => 'Email',
+                        'type' => 'text',
+                        'value' => null,
+                        'attributes' => 'required'
+                    ]) ?>
+                </div>
+
+                <div class='w-full md:w-4/12 px-4'>
+                    <?php loadHtml(__DIR__.'/../../resources/partials/form/input-default', [
+                        'icon' => 'bi bi-telephone-fill',
+                        'name' => 'phone',
+                        'label' => 'Telefone',
+                        'type' => 'text',
+                        'value' => null,
+                        'attributes' => 'required'
+                    ]) ?>
+                </div>
+
+                <div class='w-full md:w-4/12 px-4'>
+                    <?php loadHtml(__DIR__.'/../../resources/partials/form/input-default', [
+                        'icon' => 'bi bi-123',
+                        'name' => 'identifier',
+                        'label' => 'CPF',
+                        'type' => 'text',
+                        'value' => null,
+                        'attributes' => 'required'
+                    ]) ?>
+            </div>
+
                 <div class='w-full md:w-4/12 px-4'>
                     <?php loadHtml(__DIR__.'/../../resources/partials/form/input-select', [
                         'icon' => 'bi bi-hash',
@@ -98,7 +117,7 @@
                         'icon' => 'bi bi-card-text',
                         'name' => 'observation',
                         'label' => 'Observação (Descreva aqui caso o evento for "Outros")',
-                        'value' => isset($reservation) ? $event->observation : null
+                        'value' => isset($reservation) ? $reservation->observation : null
                     ]) ?>
                 </div>
             </div>
@@ -128,7 +147,3 @@
         </form>
     </div>
 </section>
-
-<?php loadHtml(__DIR__.'/partials/modal-search-user', [
-    'location_id' => $location->id
-]) ?>

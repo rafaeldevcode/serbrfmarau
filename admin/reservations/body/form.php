@@ -9,7 +9,7 @@
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-alphabet-uppercase',
                     'name' => 'name',
-                    'label' => 'Nome',
+                    'label' => 'Nome da reserva',
                     'type' => 'text',
                     'value' => isset($reservation) ? $reservation->name : null,
                     'attributes' => 'required'
@@ -33,6 +33,39 @@
 
         <div class='flex flex-wrap'>
             <div class='w-full md:w-4/12 px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
+                    'icon' => 'bi bi-envelope-fill',
+                    'name' => 'email',
+                    'label' => 'Email',
+                    'type' => 'text',
+                    'value' => isset($reservation) ? $reservation->email : null,
+                    'attributes' => 'required'
+                ]) ?>
+            </div>
+
+            <div class='w-full md:w-4/12 px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
+                    'icon' => 'bi bi-telephone-fill',
+                    'name' => 'phone',
+                    'label' => 'Telefone',
+                    'type' => 'text',
+                    'value' => isset($reservation) ? $reservation->phone : null,
+                    'attributes' => 'required'
+                ]) ?>
+            </div>
+
+            <div class='w-full md:w-4/12 px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
+                    'icon' => 'bi bi-123',
+                    'name' => 'identifier',
+                    'label' => 'CPF / Identificado do cliente',
+                    'type' => 'text',
+                    'value' => isset($reservation) ? $reservation->identifier : null,
+                    'attributes' => 'required'
+                ]) ?>
+            </div>
+
+            <div class='w-full md:w-4/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
                     'icon' => 'bi bi-hash',
                     'name' => 'payment_type',
@@ -40,7 +73,7 @@
                     'value' => isset($reservation) ? $reservation->payment_type : null,
                     'attributes' => 'required',
                     'array' => [
-                        'Cartão de Crádito' => 'Cartão de Crádito',
+                        'Cartão de Crádito' => 'Cartão de Crédito',
                         'Cartão de débito' => 'Cartão de débito',
                         'Pix' => 'Pix',
                         'Dinheiro' => 'Dinheiro'
@@ -99,7 +132,8 @@
                     'array' => [
                         'Pendente' => 'Pendente',
                         'Aprovado' => 'Aprovado',
-                        'Reprovado' => 'Reprovado'
+                        'Reprovado' => 'Reprovado',
+                        'Finalizado' => 'Finalizado'
                     ]
                 ]) ?>
             </div>

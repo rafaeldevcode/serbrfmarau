@@ -18,6 +18,9 @@
 
     $reservation->update([
         'name' => $requests->name,
+        'email' => $requests->email,
+        'phone' => $requests->phone,
+        'identifier' => $requests->identifier,
         'type' => $requests->type,
         'payment_type' => $requests->payment_type,
         'amount_people' => $requests->amount_people,
@@ -50,7 +53,7 @@
             'reservation_status' => $requests->status
         ]);
 
-        $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->data->token, $title, 'update'), $title);
+        $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->data->token, $title, 'create'), $title, $requests->email);
         $email->send();
     endif;
 

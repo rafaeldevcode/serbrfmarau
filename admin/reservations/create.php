@@ -17,6 +17,9 @@
 
     $reservation = $reservation->create([
         'name' => $requests->name,
+        'email' => $requests->email,
+        'phone' => $requests->phone,
+        'identifier' => $requests->identifier,
         'type' => $requests->type,
         'payment_type' => $requests->payment_type,
         'amount_people' => $requests->amount_people,
@@ -45,7 +48,7 @@
         'token' => $protocol->generateToken()
     ]);
 
-    $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->token, $title, 'create'), $title);
+    $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->token, $title, 'create'), $title, $requests->email);
     $email->send();
 
     session([

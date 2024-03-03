@@ -13,19 +13,11 @@
         ]) ?>
 
         <div class="flex flex-wrap justify-center items-center mt-12">
-            <?php loadHtml(__DIR__.'/../../resources/partials/form/input-button', [
-                'type' => 'button',
-                'style' => 'color-main',
-                'title' => 'Agendar horário',
-                'value' => 'Agendar horário',
-                'attributes' => [
-                    'data-toggle' => 'search-user'
-                ]
-            ]) ?>
+            <div class='flex flex-col my-3'>
+                <a href="<?php route("/location?location={$location->id}&form=1") ?>" class='btn pointer btn-color-main py-2 w-[200px] font-bold text-xl text-light' title="Reservar horários">
+                    Agendar horários
+                </a>
+            </div>
         </div>
     </div>
 </section>
-
-<?php loadHtml(__DIR__.'/partials/modal-search-user', [
-    'location_id' => $location->id
-]) ?>
