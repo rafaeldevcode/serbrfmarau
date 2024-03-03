@@ -1,7 +1,6 @@
 <?php
 
-    use Src\Models\Client;
-    use Src\Models\Event;
+    use Src\Models\Reservation;
     use Src\Models\Protocol;
 
     $hash = requests()?->protocol;
@@ -11,19 +10,16 @@
 
     if(! $protocol) abort(404, 'Protocol not found!', 'danger');
 
-    $client = new Client();
-    $event = new Event();
+    $reservation = new Reservation();
 
-    $client = $client->find($protocol->client_id);
-    $event = $event->find($protocol->event_id);
-    $location = $event->location();
-    $schedules = $event->schedules();
+    $reservation = $reservation->find($protocol->reservation_id);
+    $location = $reservation->location();
+    $schedules = $reservation->schedules();
     $total_schedules = count($schedules->data);
 
     loadHtml(__DIR__.'/body/read', [
         'image' => !is_null(SETTINGS) && !empty(SETTINGS['site_bg_login']) ? 'assets/images/'.SETTINGS['site_bg_login'] : 'assets/images/login_bg.jpg',
-        'client' => $client?->data,
-        'event' => $event?->data,
+        'reservation' => $reservation?->data,
         'location' => $location?->data[0],
         'schedules' => $schedules?->data,
         'protocol' => $protocol,

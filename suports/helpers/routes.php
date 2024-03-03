@@ -17,10 +17,6 @@ if(!function_exists('routes')):
             '/admin/users/update',
             '/admin/users/create',
             '/admin/users/delete',
-            '/admin/clients',
-            '/admin/clients/create',
-            '/admin/clients/update',
-            '/admin/clients/delete',
             '/admin/locations',
             '/admin/locations/create',
             '/admin/locations/update',
@@ -29,10 +25,10 @@ if(!function_exists('routes')):
             '/admin/categories/create',
             '/admin/categories/update',
             '/admin/categories/delete',
-            '/admin/events',
-            '/admin/events/create',
-            '/admin/events/update',
-            '/admin/events/delete',
+            '/admin/reservations',
+            '/admin/reservations/create',
+            '/admin/reservations/update',
+            '/admin/reservations/delete',
             '/admin/gallery',
             '/admin/gallery/delete',
             '/admin/settings',
@@ -55,7 +51,7 @@ if(!function_exists('routes')):
             '/api/gallery/create',
             '/api/hours',
             '/api/locations',
-            '/events/protocols'
+            '/reservations/protocols'
         ];
     }
 endif;

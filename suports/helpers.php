@@ -1,8 +1,8 @@
 <?php
 
-use Src\Models\Event;
 use Src\Models\Gallery;
 use Src\Models\Location;
+use Src\Models\Reservation;
 use Src\Models\Time;
 
 require __DIR__.'/helpers/env.php';
@@ -200,39 +200,39 @@ if (!function_exists('getArraySelect')):
     }
 endif;
 
-if (!function_exists('getHoursEvent')):
+if (!function_exists('getHoursReservation')):
     /**
      * @since 1.7.0
      * 
      * @param ?int $location_id
      * @param ?string $date
-     * @param ?int $event_id
+     * @param ?int $reservation_id
      * @param ?string $day
      * @return array
      */
-    function getHoursEvent(?int $location_id = null, ?string $date = null, ?int $event_id = null, ?string $day = null): array
+    function getHoursReservation(?int $location_id = null, ?string $date = null, ?int $reservation_id = null, ?string $day = null): array
     {
         $location = new Location();
         $schedules = new Time();
-        $event = new Event();
+        $reservation = new Reservation();
 
-        $event_schedules = [];
+        $reservation_schedules = [];
         $data = [
             'hours' => [],
             'price' => 0
         ];
 
-        if(! is_null($event_id)):
-            $event = $event->find($event_id);
-            $event_schedules = getArraySelect($event->schedules()->data, 'id', 'hour');
+        if(! is_null($reservation_id)):
+            $reservation = $reservation->find($reservation_id);
+            $reservation_schedules = $reservation->data->date == $date ? getArraySelect($reservation->schedules()->data, 'id', 'hour') : [];
         endif;
 
         $location = $location->find($location_id);
 
         if(empty($date)):
-            $schedules = $schedules->where('location_id', '=', $location_id)->where('day', '=', $day)->get(['id', 'hour']);
+            $schedules = $schedules->where('location_id', '=', $location_id)->where('day', '=', $day)->where('status', '!=', 'Reprovado')->get(['id', 'hour']);
         else:
-            $schedules = $schedules->where('date', '=', $date)->where('location_id', '=', $location_id)->orWhere('day', '=', date('l', strtotime($date)))->get(['id', 'hour']);
+            $schedules = $schedules->where('date', '=', $date)->where('location_id', '=', $location_id)->where('status', '!=', 'Reprovado')->orWhere('day', '=', date('l', strtotime($date)))->get(['id', 'hour']);
         endif;
 
         $schedules = getArraySelect($schedules, 'id', 'hour');
@@ -257,8 +257,8 @@ if (!function_exists('getHoursEvent')):
             $active_hours = [];
         endif;
 
-        $schedules = array_diff($schedules, $event_schedules);
-        $active_hours = (! empty($date) && $opening_date > $date) ? [] : array_diff($active_hours, $schedules);
+        $schedules = array_diff($schedules, $reservation_schedules);
+        $active_hours = (! empty($date) && $opening_date > $date && date('Y-m-d') <= $date) ? array_diff($active_hours, $schedules) : [];
 
         for ($i = 0; $i < 24; $i++) :
             $hour_one = strlen($i) == 1 ? "0{$i}:00" : "{$i}:00";
@@ -267,8 +267,11 @@ if (!function_exists('getHoursEvent')):
             $blocked_one = in_array($hour_one, $active_hours) ? false : true;
             $blocked_two = in_array($hour_two, $active_hours) ? false : true;
 
-            $checked_one = in_array($hour_one, $event_schedules) ? true : false;
-            $checked_two = in_array($hour_two, $event_schedules) ? true : false;
+            $checked_one = in_array($hour_one, $reservation_schedules) ? true : false;
+            $checked_two = in_array($hour_two, $reservation_schedules) ? true : false;
+
+            $blocked_one = $checked_one && $location->data->type == 'period' ? true : $blocked_one;
+            $blocked_two = $checked_two && $location->data->type == 'period' ? true : $blocked_two;
 
             array_push($data['hours'], [
                 'hour' => $hour_one,
@@ -327,19 +330,20 @@ if (!function_exists('getOpeningDate')):
     }
 endif;
 
-if (!function_exists('getBadgeEventStatus')):
+if (!function_exists('getBadgeReservationStatus')):
     /**
      * @since 1.7.0
      * 
      * @param string $status
      * @return string
      */
-    function getBadgeEventStatus(string $status): string
+    function getBadgeReservationStatus(string $status): string
     {
         return match ($status) {
             'Pendente' => 'secondary',
             'Aprovado' => 'success',
-            'Reprovado' => 'danger'
+            'Reprovado' => 'danger',
+            'Finalizado' => 'info'
         };
     }
 endif;
@@ -482,27 +486,21 @@ if (!function_exists('getPrice')):
     }
 endif;
 
-if (!function_exists('getBodySchedules')):
+if (!function_exists('getLabelOpeningDay')):
     /**
      * @since 1.7.0
      * 
-     * @param ?string $email
-     * @param ?stdClass $client
+     * @param string $openingDay
      * @return string
      */
-    function getBodySchedules(?string $email, ?stdClass $client): string
+    function getLabelOpeningDay(string $openingDay): string
     {
-        if(isset($email)):
-            if(isset($client)):
-                $body = __DIR__ . '/../location/body/form-schedules';
-            else:
-                $body = __DIR__ . '/../location/body/form-client';
-            endif;
-        else:
-            $body = __DIR__ . '/../location/body/read';
-        endif;
-
-        return $body;
+        return match ($openingDay) {
+            'P1D' => '1 Dia',
+            'P1W' => '1 Semana',
+            'P1M' => '1 Mês',
+            'P1Y' => '1 Ano'
+        };
     }
 endif;
 

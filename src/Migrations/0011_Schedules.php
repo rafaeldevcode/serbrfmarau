@@ -19,11 +19,12 @@ class Schedules extends ExecuteMigrations
         $this->date('date')->nullable();
         $this->char('day', 9)->nullable();
         $this->char('hour', 5);
+        $this->string('status', 10)->default('Pendente');
 
-        $this->integer('event_id');
+        $this->integer('reservation_id');
         $this->integer('location_id');
 
-        $this->foreignKey('event_id')->references('id')->on('events');
+        $this->foreignKey('reservation_id')->references('id')->on('reservations');
         $this->foreignKey('location_id')->references('id')->on('locations');
 
         $this->timestamps();
