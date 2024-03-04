@@ -13,7 +13,7 @@
     foreach($requests->ids as $ID):
         $location->find($ID);
 
-        if($location->reservations()):
+        if(!empty($location->reservations()->data)):
             $message = 'Locais que possuem reservas registradas, não podem ser removidos!';
             $type = 'info';
         else:

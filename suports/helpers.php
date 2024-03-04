@@ -252,13 +252,24 @@ if (!function_exists('getHoursReservation')):
                 : json_decode($location->data->prices, true)[translateDayWeek($day)];
 
             $data['price'] = $location->data->type == 'period' ? number_format($price / count(getHoursByPeriod('Tarde')), 2, '.') : $price;
+            $data['start_hour'] = $location->data->start_hour;
+            $data['end_hour'] = $location->data->end_hour;
         else:
             $opening_date = date('Y-m-d');
             $active_hours = [];
         endif;
 
         $schedules = array_diff($schedules, $reservation_schedules);
-        $active_hours = (! empty($date) && $opening_date > $date && date('Y-m-d') <= $date) ? array_diff($active_hours, $schedules) : [];
+        
+        if(! empty($date) && $opening_date > $date && date('Y-m-d') <= $date):
+            $active_hours = array_diff($active_hours, $schedules);
+        elseif(empty($date)):
+            $active_hours = array_diff($active_hours, $schedules);
+        else:
+            $active_hours = [];
+        endif;
+        
+        // $active_hours = (! empty($date) && $opening_date > $date && date('Y-m-d') <= $date) ? array_diff($active_hours, $schedules) : [];
 
         for ($i = 0; $i < 24; $i++) :
             $hour_one = strlen($i) == 1 ? "0{$i}:00" : "{$i}:00";
@@ -501,6 +512,39 @@ if (!function_exists('getLabelOpeningDay')):
             'P1M' => '1 Mês',
             'P1Y' => '1 Ano'
         };
+    }
+endif;
+
+if (!function_exists('filterReservations')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param Reservation $reservation
+     * @return string
+     */
+    function filterReservations(Reservation $reservation)
+    {
+        $requests = requests();
+        $status = isset($requests->status) ? $requests->status : '';
+
+        if(isset($requests->search)):
+            $reservation = $reservation->where('name', 'LIKE', "%{$requests->search}%");
+        endif;
+
+        if(isset($requests->status) && !empty($requests->status)):
+            $reservation = $reservation->where('status', '=', $status);
+        endif;
+
+        if(isset($requests->reservation_type) && !empty($requests->reservation_type)):
+            $reservation = $reservation->where('type', '=', $requests->reservation_type);
+        endif;
+
+        if(isset($requests->date) && !empty($requests->date)):
+            $reservation = $reservation->where('date', '>=', date('Y-m-d'), 'start_date');
+            $reservation = $reservation->where('date', '<=', getOpeningDate($requests->date), 'end_date');
+        endif;
+    
+        return $reservation->paginate(20);
     }
 endif;
 

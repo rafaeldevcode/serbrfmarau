@@ -25,7 +25,7 @@
                     <?php loadHtml(__DIR__.'/../../resources/partials/form/input-default', [
                         'icon' => 'bi bi-alphabet-uppercase',
                         'name' => 'name',
-                        'label' => 'Nome',
+                        'label' => 'Nome da reserva',
                         'type' => 'text',
                         'value' => null,
                         'attributes' => 'required'

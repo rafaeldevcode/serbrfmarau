@@ -45,6 +45,7 @@ class Settings extends ExecuteMigrations
         $this->string('email', 50)->nullable();
         $this->string('andress', 120)->nullable();
         $this->mediumtext('map_location', 255)->nullable();
+        $this->date('last_cron')->default(date('Y-m-d'));
         $this->timestamps();
 
         $this->create();

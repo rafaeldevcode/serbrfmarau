@@ -17,12 +17,11 @@
 
     loadHtml(__DIR__.'/../resources/client/layout', [
         'title' => "Local - {$location->data->name}",
-        'body' => isset($requests->form) && $requests->form == '1' ?  __DIR__ . '/../location/body/form-schedules' : __DIR__ . '/../location/body/read',
+        'body' => __DIR__.'/../location/body/read',
         'plugins' => ['slick'],
         'data' => [
             'location' => $location->data,
-            'images' => $images->data,
-            'email' => $requests->email
+            'images' => $images->data
         ]
     ]);
 
@@ -43,17 +42,12 @@
             });
 
             const hoursAvailable = new HoursAvailable();
-            hoursAvailable.selectSeveralHours()
-                .getHours()
+            hoursAvailable.getHours()
                 .changeLocation()
                 .changeDate()
                 .changePeiod()
                 .changeDay()
                 .changeType()
                 .submited();
-
-            $('[data-change="status"]').on('change', (event) => {
-                $('#change-status').submit();
-            });
         </script>
     <?php }
