@@ -11,7 +11,7 @@
     foreach($requests->ids as $ID):
         $category = $category->find($ID);
         
-        if($category->locations()->data):
+        if(!empty($category->locations()->data)):
             $message = 'Categorias que estão vinculadas à algum local, não podem ser removidas!';
             $type = 'info';
         else:

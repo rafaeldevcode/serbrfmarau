@@ -13,55 +13,49 @@
 
     $requests = requests();
 
-    // Create reservation
-    if($requests->create_type == 'schedule'):
-        $title = 'Horário reservado!';
-        $status = 'Pendente';
+    $title = 'Horário reservado!';
+    $status = 'Pendente';
 
-        $reservation = $reservation->create([
-            'name' => $requests->name,
-            'email' => $requests->email,
-            'phone' => $requests->phone,
-            'identifier' => $requests->identifier,
-            'type' => 'Normal',
-            'payment_type' => $requests->payment_type,
-            'amount_people' => $requests->amount_people,
-            'event' => $requests->event,
-            'period' => $requests->period,
-            'location_id' => $requests->location_id,
-            'observation' => $requests->observation,
-            'status' => $status,
+    $reservation = $reservation->create([
+        'name' => $requests->name,
+        'email' => $requests->email,
+        'phone' => $requests->phone,
+        'identifier' => $requests->identifier,
+        'type' => 'Normal',
+        'payment_type' => $requests->payment_type,
+        'amount_people' => $requests->amount_people,
+        'event' => $requests->event,
+        'period' => $requests->period,
+        'location_id' => $requests->location_id,
+        'observation' => $requests->observation,
+        'status' => $status,
+        'date' => empty($requests->day) ? $requests->date : null,
+        'day' => ! empty($requests->day) ? $requests->day : date('l', strtotime($requests->date))
+    ]);
+
+    foreach ($requests->hours as $hour) :
+        $schedules->create([
             'date' => empty($requests->day) ? $requests->date : null,
-            'day' => ! empty($requests->day) ? $requests->day : date('l', strtotime($requests->date))
-        ]);
-
-        foreach ($requests->hours as $hour) :
-            $schedules->create([
-                'date' => empty($requests->day) ? $requests->date : null,
-                'day' => ! empty($requests->day) ? $requests->day : date('l', strtotime($requests->date)),
-                'hour' => $hour,
-                'status' => $status,
-                'reservation_id' => $reservation->id,
-                'location_id' => $requests->location_id
-            ]);
-        endforeach;
-
-        $protocol = $protocol->create([
+            'day' => ! empty($requests->day) ? $requests->day : date('l', strtotime($requests->date)),
+            'hour' => $hour,
+            'status' => $status,
             'reservation_id' => $reservation->id,
-            'reservation_status' => $status,
-            'token' => $protocol->generateToken()
+            'location_id' => $requests->location_id
         ]);
+    endforeach;
 
-        $email = new EmailServices(BodyEmail::protocol($status, $protocol->token, $title, 'create'), $title, $requests->email);
-        $email->send();
+    $protocol = $protocol->create([
+        'reservation_id' => $reservation->id,
+        'reservation_status' => $status,
+        'token' => $protocol->generateToken()
+    ]);
 
-        session([
-            'message' => 'Reserva adicionada com sucesso!',
-            'type' => 'success'
-        ]);
+    $email = new EmailServices(BodyEmail::protocol($status, $protocol->token, $title, 'create'), $title, $requests->email);
+    $email->send();
 
-        return header(route("/reservations/protocols?protocol={$protocol->token}", true), true, 302);
-        die;
-    endif;
+    session([
+        'message' => 'Reserva adicionada com sucesso!',
+        'type' => 'success'
+    ]);
 
-    return header(route("/", true), true, 302);
+    return header(route("/reservations/protocols?protocol={$protocol->token}", true), true, 302);

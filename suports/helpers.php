@@ -252,6 +252,8 @@ if (!function_exists('getHoursReservation')):
                 : json_decode($location->data->prices, true)[translateDayWeek($day)];
 
             $data['price'] = $location->data->type == 'period' ? number_format($price / count(getHoursByPeriod('Tarde')), 2, '.') : $price;
+            $data['start_hour'] = $location->data->start_hour;
+            $data['end_hour'] = $location->data->end_hour;
         else:
             $opening_date = date('Y-m-d');
             $active_hours = [];

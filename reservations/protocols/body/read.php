@@ -36,5 +36,16 @@
             </section>
         </section>
     </main>
+
+    <!-- Include flash message -->
+    <?php loadHtml(__DIR__.'/../../../resources/partials/message') ?>
+
+    <script type="text/javascript" src="<?php asset('libs/jquery/jquery.js?ver='.APP_VERSION)?>"></script>
+    <script type="text/javascript" src="<?php asset('assets/scripts/main.js?ver='.APP_VERSION) ?>"></script>
+    
+    <script type="text/javascript" src="<?php asset('assets/scripts/class/Message.js?ver='.APP_VERSION) ?>"></script>
+    <script type="text/javascript">
+        Message.hide('[data-message]');
+    </script>
 </body>
 </html>
