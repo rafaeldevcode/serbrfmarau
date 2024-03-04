@@ -504,4 +504,37 @@ if (!function_exists('getLabelOpeningDay')):
     }
 endif;
 
+if (!function_exists('filterReservations')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param Reservation $reservation
+     * @return string
+     */
+    function filterReservations(Reservation $reservation)
+    {
+        $requests = requests();
+        $status = isset($requests->status) ? $requests->status : '';
+
+        if(isset($requests->search)):
+            $reservation = $reservation->where('name', 'LIKE', "%{$requests->search}%");
+        endif;
+
+        if(isset($requests->status) && !empty($requests->status)):
+            $reservation = $reservation->where('status', '=', $status);
+        endif;
+
+        if(isset($requests->reservation_type) && !empty($requests->reservation_type)):
+            $reservation = $reservation->where('type', '=', $requests->reservation_type);
+        endif;
+
+        if(isset($requests->date) && !empty($requests->date)):
+            $reservation = $reservation->where('date', '>=', date('Y-m-d'), 'start_date');
+            $reservation = $reservation->where('date', '<=', getOpeningDate($requests->date), 'end_date');
+        endif;
+    
+        return $reservation->paginate(20);
+    }
+endif;
+
 !defined('SETTINGS') && define('SETTINGS', (array)getSiteSettings());

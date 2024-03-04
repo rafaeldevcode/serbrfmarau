@@ -49,12 +49,13 @@ class Model
      * @param ?string $value
      * @return self
      */
-    public function where(string $column, string $operator, ?string $value): self
+    public function where(string $column, string $operator, ?string $value, ?string $bind = null): self
     {
         $this->wheres[] = [
             'column' => $column,
             'operator' => $operator,
-            'value' => $value
+            'value' => $value,
+            'bind' => $bind
         ];
 
         return $this;
@@ -68,12 +69,13 @@ class Model
      * @param string $value
      * @return self
      */
-    public function orWhere(string $column, string $operator, string $value): self
+    public function orWhere(string $column, string $operator, string $value, ?string $bind = null): self
     {
         $this->orWheres[] = [
             'column' => $column,
             'operator' => $operator,
-            'value' => $value
+            'value' => $value,
+            'bind' => $bind
         ];
 
         return $this;
@@ -574,15 +576,19 @@ class Model
         $bindings = [];
 
         foreach ($this->wheres as $index => $where):
+            $bind = !is_null($where['bind']) ? $where['bind'] : $where['column'];
+
             $where_clause .= ($index === 0 ? ' WHERE ' : ' AND ');
-            $where_clause .= "{$where['column']} {$where['operator']} :{$where['column']}";
-            $bindings[$where['column']] = $where['value'];
+            $where_clause .= "{$where['column']} {$where['operator']} :{$bind}";
+            $bindings[$bind] = $where['value'];
         endforeach;
 
         foreach ($this->orWheres as $index => $where):
+            $bind = !is_null($where['bind']) ? $where['bind'] : $where['column'];
+
             $where_clause .= ' OR ';
-            $where_clause .= "{$where['column']} {$where['operator']} :{$where['column']}";
-            $bindings[$where['column']] = $where['value'];
+            $where_clause .= "{$where['column']} {$where['operator']} :{$bind}";
+            $bindings[$bind] = $where['value'];
         endforeach;
 
         return json_decode(json_encode([

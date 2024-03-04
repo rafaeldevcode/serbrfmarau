@@ -7,10 +7,8 @@
 
     if($method == 'read'):
         $reservation = new Reservation();
-        $requests = requests();
-        $status = isset($requests->status) ? $requests->status : '';
-        $operator = empty($status) ? '!=' : '=';
-        $reservations = !isset($requests->search) ? $reservation->where('status', $operator, $status)->paginate(20) : $reservation->where('status', $operator, $status)->where('name', 'LIKE', "%{$requests->search}%")->paginate(20);
+
+        $reservations = filterReservations($reservation);
         $background = 'bg-secondary';
         $text  = 'Visualizar';
         $body = __DIR__."/body/read";
@@ -71,9 +69,5 @@
                 .changeDay()
                 .changeType()
                 .submited();
-
-            $('[data-change="status"]').on('change', (event) => {
-                $('#change-status').submit();
-            });
         </script>
     <?php }

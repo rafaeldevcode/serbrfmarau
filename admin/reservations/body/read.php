@@ -1,29 +1,15 @@
 <section class='p-3 bg-light m-0 sm:m-3 rounded shadow-lg'>
     <section>
-        <form action="" class="w-full flex justify-end" id="change-status" method="POST">
-            <div class='w-full md:w-4/12'>
-                <?php if(isset(requests()->search)): ?>
-                    <input type="hidden" name="search" value="<?php echo requests()->search ?>">
-                <?php endif ?>
-
-                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
-                    'icon' => 'bi bi-hash',
-                    'name' => 'status',
-                    'label' => 'Status',
-                    'value' => isset(requests()->status) ? requests()->status : null,
-                    'attributes' => [
-                        'data-change' => 'status',
-                    ],
-                    'array' => [
-                        'Status' => '',
-                        'Pendente' => 'Pendente',
-                        'Aprovado' => 'Aprovado',
-                        'Reprovado' => 'Reprovado',
-                        'Finalizado' => 'Finalizado'
-                    ]
-                ]) ?>
-            </div>
-        </form>
+        <div class='flex justify-end'>
+            <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-button', [
+                'type' => 'button',
+                'style' => 'color-main',
+                'title' => 'Filtrar',
+                'value' => 'Filtrar',
+                'attributes' => [
+                    'data-toggle' => 'filter',
+            ]])?>
+        </div>
 
         <div class="relative overflow-x-auto max-w-[2000px] mx-auto mb-4 rounded border">
             <table class="w-full text-xs text-left">
@@ -138,4 +124,6 @@
             'search' => $reservations->search
         ]);
     endif; ?>
+
+    <?php loadHtml(__DIR__.'/partials/filter'); ?>
 </section>
