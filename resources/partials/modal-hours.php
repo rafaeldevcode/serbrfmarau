@@ -26,24 +26,6 @@
                 <div class='w-full'>
                     <?php loadHtml(__DIR__.'/form/input-select', [
                         'icon' => 'bi bi-hash',
-                        'name' => 'period',
-                        'label' => 'Período (Somente se for período interiro)',
-                        'value' => isset($reservation) ? $reservation->period : null,
-                        'attributes' => [
-                            'data-change' => 'selects'
-                        ],
-                        'array' => [
-                            '' => '----Selecione----',
-                            'Manhã' => 'Manhã',
-                            'Tarde' => 'Tarde',
-                            'Noite' => 'Noite'
-                        ]
-                    ]) ?>
-                </div>
-
-                <div class='w-full'>
-                    <?php loadHtml(__DIR__.'/form/input-select', [
-                        'icon' => 'bi bi-hash',
                         'name' => 'day',
                         'label' => 'Dia da semana',
                         'value' => isset($reservation) ? $reservation->day : null,
@@ -59,6 +41,24 @@
                             'Thursday' => 'Quinta',
                             'Friday' => 'Sexta',
                             'Saturday' => 'Sábado'
+                        ]
+                    ]) ?>
+                </div>
+
+                <div class='w-full'>
+                    <?php loadHtml(__DIR__.'/form/input-select', [
+                        'icon' => 'bi bi-hash',
+                        'name' => 'period',
+                        'label' => 'Período (Somente se for período interiro)',
+                        'value' => isset($reservation) ? $reservation->period : null,
+                        'attributes' => [
+                            'data-change' => 'selects'
+                        ],
+                        'array' => [
+                            '' => '----Selecione----',
+                            'Manhã' => 'Manhã',
+                            'Tarde' => 'Tarde',
+                            'Noite' => 'Noite'
                         ]
                     ]) ?>
                 </div>

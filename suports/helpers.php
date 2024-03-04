@@ -258,7 +258,16 @@ if (!function_exists('getHoursReservation')):
         endif;
 
         $schedules = array_diff($schedules, $reservation_schedules);
-        $active_hours = (! empty($date) && $opening_date > $date && date('Y-m-d') <= $date) ? array_diff($active_hours, $schedules) : [];
+        
+        if(! empty($date) && $opening_date > $date && date('Y-m-d') <= $date):
+            $active_hours = array_diff($active_hours, $schedules);
+        elseif(empty($date)):
+            $active_hours = array_diff($active_hours, $schedules);
+        else:
+            $active_hours = [];
+        endif;
+        
+        // $active_hours = (! empty($date) && $opening_date > $date && date('Y-m-d') <= $date) ? array_diff($active_hours, $schedules) : [];
 
         for ($i = 0; $i < 24; $i++) :
             $hour_one = strlen($i) == 1 ? "0{$i}:00" : "{$i}:00";

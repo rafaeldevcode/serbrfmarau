@@ -361,6 +361,10 @@ class HoursAvailable {
                 this.date.parent().parent().parent().show();
                 this.date.removeAttr('disabled', 'disabled');
             }
+
+            this.period.val('');
+            this.day.val('');
+            this.getHour = true;
         });
 
         return this;
@@ -462,7 +466,6 @@ class HoursAvailable {
                     day: this.day.attr('disabled') === 'disabled' ? null : this.day.val()
                 },
                 success: function(response) {
-                    console.log(response)
                     resolve(response);
                 },
                 error: function(xhr, status, error) {
