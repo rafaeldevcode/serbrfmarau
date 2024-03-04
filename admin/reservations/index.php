@@ -61,8 +61,7 @@
         <script type="text/javascript" src="<?php asset('assets/scripts/class/HoursAvailable.js') ?>"></script>
         <script type="text/javascript">
             const hoursAvailable = new HoursAvailable();
-            hoursAvailable.selectSeveralHours()
-                .getHours()
+            hoursAvailable.getHours()
                 .changeLocation()
                 .changeDate()
                 .changePeiod()

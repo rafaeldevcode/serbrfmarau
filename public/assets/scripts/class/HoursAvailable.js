@@ -15,7 +15,6 @@ class HoursAvailable {
         this.reservetionId = $('#reservation_id');
         this.day = $('#day');
         this.period = $('#period');
-        this.getHour = true;
         this.price = 0;
     }
 
@@ -75,35 +74,22 @@ class HoursAvailable {
      * @returns {Object}
      */
     getHours () {
-        if (this.getHour) {
-            $('#get-hours').on('click', async (event) => {
-                this.setLocation();
-                Modal.open('hours');
+        $(document).ready(async () => {
+            this.clearBlockHours();
 
-                if (this.getHour) {
-                    this.clearBlockHours();
-                    let count = 0;
+            const response = await this.get();
 
-                    const response = await this.get();
-
-                    this.price = response.price;
-                
-                    Object.keys(response.hours).forEach((key) => {
-                        this.createBlockHour(response.hours[key], key); 
-                        if(response.hours[key].checked){
-                            count++;
-                        }
-                    });
+            this.price = response.price;
         
-                    Preloader.hide('hours');
-                    this.selectSeveralHours();
-    
-                    this.getHour = false;
-
-                    $('#total-value').text(`R$ ${this.price * count}`);
-                }
+            Object.keys(response.hours).forEach((key) => {
+                this.createBlockHour(response.hours[key], key, response.hours[parseInt(key)+1], response.end_hour); 
             });
-        }
+
+            Preloader.hide('hours');
+            this.selectSeveralHours();
+
+            this.setPrice();
+        });
 
         return this;
     }
@@ -122,11 +108,11 @@ class HoursAvailable {
      * 
      * @returns {void}
      */
-    setPrice () {
+    setPrice (event = false) {
         let count = 0;
         const checkboxes = $('[data-checked="hour"]');
 
-        if(!this.period.attr('disabled')) event.preventDefault();
+        if(!this.period.attr('disabled') && event) event.preventDefault();
 
         setTimeout(() => {
             checkboxes.each(function (index, checkbox) {
@@ -134,6 +120,28 @@ class HoursAvailable {
                     count++;
                 }
             });
+
+            if(count > 0){
+                $('#schedule').removeClass('hidden');
+                $('#schedule').addClass('flex');
+    
+                $('#schedule').attr('data-cookies-show', true);
+            } else {
+                // $('#schedule').attr('data-cookies-show', false);
+
+                // setInterval(() => {
+                //     $('#schedule').addClass('hidden');
+                //     $('#schedule').removeClass('flex');
+                // }, 400);
+            }
+
+            if(count > 1){
+                $('#schedule').find('button').removeAttr('disabled');
+                $('#schedule').find('#warning').text('');
+            } else {
+                $('#schedule').find('button').attr('disabled', true);
+                $('#schedule').find('#warning').text('Para proseguir selecione no mínimo dois blocos de horário!');
+            }
 
             $('#total-value').text(`R$ ${this.price * count}`);
         }, 200);
@@ -144,9 +152,32 @@ class HoursAvailable {
      * 
      * @returns {void}
      */
-    createBlockHour (data, key) {
-        if(data.blocked && !data.checked) return;
-        const classBlock = data.blocked ? 'border-danger bg-danger text-white opacity-50' : 'border-color-main';
+    createBlockHour (date, key, nextDate, endHour) {
+        if(date.blocked && !date.checked || (endHour == date.hour)) return;
+        const classBlock = date.blocked ? 'border-danger bg-danger text-white opacity-50' : 'border-color-main';
+
+        const tr = $('<tr />');
+        tr.attr('class', 'bg-white border-b hover:bg-gray-100 text-gray-900');
+
+        const tdTitle = $('<td />');
+        tdTitle.attr({
+            class: 'px-2 py-4 whitespace-nowrap text-secondary',
+            scope: 'row'
+        });
+        tdTitle.text(`${this.getDateFormated()} - ${date.hour} às ${nextDate.hour}`);
+        
+        const tdPrice = $('<td />');
+        tdPrice.attr({
+            class: 'px-2 py-4 whitespace-nowrap text-secondary',
+            scope: 'row'
+        });
+        tdPrice.text(`R$ ${this.price}`);
+
+        const tdAction = $('<td />');
+        tdAction.attr({
+            class: 'px-2 py-4 whitespace-nowrap flex justify-end',
+            scope: 'row'
+        });
 
         const block = $('<div />');
 
@@ -155,33 +186,37 @@ class HoursAvailable {
         input.attr({
             type: 'checkbox',
             name: 'hours[]',
-            value: data.hour,
+            value: date.hour,
             class: 'hidden',
             id: `hour_${key}`
         });
 
-        if (data.blocked) {
+        if (date.blocked) {
             input.attr('disabled', 'disabled');
         }
 
-        if (data.checked) {
+        if (date.checked) {
             input.attr('checked', 'checked');
         }
 
         const label = $('<label />');
         label.attr({
-            class: `p-2 rounded border pointer text-gray-500 block ${classBlock}`,
+            class: `p-2 rounded border pointer text-gray-500 block text-xs ${classBlock}`,
             for: `hour_${key}`
         });
 
         const span = $('<span />');
-        span.text(data.hour);
+        span.text('Reservar');
 
         label.append(span);
         block.append(input);
         block.append(label);
+        tdAction.append(block);
+        tr.append(tdTitle);
+        tr.append(tdPrice);
+        tr.append(tdAction);
 
-        $('[data-list="hours"]').append(block);
+        $('[data-list="hours"]').append(tr);
 
         this.calculateTotalHourlyValue(input);
     }
@@ -225,9 +260,10 @@ class HoursAvailable {
 
         this.location.on('change', async (event) => {
             this.clearBlockHours();
-            this.getHour = true;
 
             this.togglePeriod(event.target.value);
+
+            this.getHours();
         });
 
         return this;
@@ -243,16 +279,7 @@ class HoursAvailable {
             this.clearBlockHours();
             Preloader.show('hours');
 
-            const response = await this.get();
-
-            this.price = response.price;
-        
-            Object.keys(response.hours).forEach((key) => {
-                this.createBlockHour(response.hours[key], key); 
-            });
-
-            Preloader.hide('hours');
-            this.selectSeveralHours();
+           this.getHours();
         });
 
         return this;
@@ -265,21 +292,7 @@ class HoursAvailable {
      */
     changePeiod () {
         this.period.on('change', async (event) => {
-            this.clearBlockHours();
-
-            this.clearBlockHours();
-            Preloader.show('hours');
-
-            const response = await this.get();
-
-            this.price = response.price;
-        
-            Object.keys(response.hours).forEach((key) => {
-                this.createBlockHour(response.hours[key], key); 
-            });
-
-            Preloader.hide('hours');
-            this.selectSeveralHours();
+            this.getHours();
 
             if (event.target.value.length > 0) {
                 const hours = this.getHoursByPeriod();
@@ -306,19 +319,7 @@ class HoursAvailable {
      */
     changeDay () {
         this.day.on('change', async (event) => {
-            this.clearBlockHours();
-            Preloader.show('hours');
-
-            const response = await this.get();
-
-            this.price = response.price;
-        
-            Object.keys(response.hours).forEach((key) => {
-                this.createBlockHour(response.hours[key], key); 
-            });
-
-            Preloader.hide('hours');
-            this.selectSeveralHours();
+            this.getHours();
         });
 
         return this;
@@ -364,7 +365,6 @@ class HoursAvailable {
 
             this.period.val('');
             this.day.val('');
-            this.getHour = true;
         });
 
         return this;
@@ -398,7 +398,7 @@ class HoursAvailable {
      */
     calculateTotalHourlyValue (checkbox) {
         checkbox.on('click', (event) => {
-            this.setPrice();
+            this.setPrice(event);
         });
     }
 
@@ -450,6 +450,22 @@ class HoursAvailable {
     /**
      * @since 1.7.0
      * 
+     * @returns {string}
+     */
+    getDateFormated() {
+        const date = new Date(this.date.val());
+        const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+        const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+        const dayWeek = days[date.getDay()+1];
+        const day = date.getDate()+1;
+        const month = months[date.getMonth()];
+
+        return dayWeek + ', ' + day + '/' + month;
+    }
+
+    /**
+     * @since 1.7.0
+     * 
      * @returns {Promise}
      */
     get() {
@@ -462,7 +478,7 @@ class HoursAvailable {
                 data: {
                     date: this.date.attr('disabled') === 'disabled' ? null : this.date.val(),
                     reservation_id: this.reservetionId.val(),
-                    location_id: this.location.val(),
+                    location_id: this.location.val() === undefined ? 0 : this.location.val(),
                     day: this.day.attr('disabled') === 'disabled' ? null : this.day.val()
                 },
                 success: function(response) {

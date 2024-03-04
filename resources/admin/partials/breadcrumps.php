@@ -13,7 +13,7 @@
                 </ul>
             </div>
 
-            <div class='flex frex-nowrap my-2 items-'>
+            <div class='flex frex-nowrap my-2 items-center'>
                 <button type='button' id='back' title='Voltar a página anterior' class='rounded py-2 px-1 btn-color-main mr-1 text-light'>
                     <i class="bi bi-arrow-bar-left text-2xl"></i>
                 </button>
@@ -22,7 +22,7 @@
                     <i class='<?php echo $icon ?> text-light text-2xl'></i>
                 </span>
 
-                <p class='text-3xl font-bold text-secondary m-0 block m-auto'><?php echo $title ?></p>
+                <p class='text-3xl font-bold text-secondary'><?php echo $title ?></p>
             </div>
         </div>
 
