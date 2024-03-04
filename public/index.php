@@ -1,5 +1,10 @@
 <?php
+
+    use Src\Cron;
+
     require __DIR__ .'/../bootstrap/bootstrap.php';
+
+    (new Cron())->handle();
 
     $path = empty(path()) ? '/' : path();
     $routes = routes();

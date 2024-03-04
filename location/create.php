@@ -32,13 +32,13 @@
             'observation' => $requests->observation,
             'status' => $status,
             'date' => empty($requests->day) ? $requests->date : null,
-            'day' => ! empty($requests->day) ? $requests->day : null
+            'day' => ! empty($requests->day) ? $requests->day : date('l', strtotime($requests->date))
         ]);
 
         foreach ($requests->hours as $hour) :
             $schedules->create([
                 'date' => empty($requests->day) ? $requests->date : null,
-                'day' => ! empty($requests->day) ? $requests->day : null,
+                'day' => ! empty($requests->day) ? $requests->day : date('l', strtotime($requests->date)),
                 'hour' => $hour,
                 'status' => $status,
                 'reservation_id' => $reservation->id,

@@ -27,6 +27,9 @@
                             </div>
                         </th>
                         <th scope="col" class="p-2">
+                            Data
+                        </th>
+                        <th scope="col" class="p-2">
                             Nome
                         </th>
                         <th scope="col" class="p-2">
@@ -64,6 +67,9 @@
                                     >
                                     <label for="checkbox-table-search-<?php echo $reservation->id ?>" class="sr-only">checkbox</label>
                                 </div>
+                            </td>
+                            <td scope="row" class="p-2 whitespace-nowrap">
+                                <?php echo $reservation->type == 'Fixo' ? translateDayWeek($reservation->day) : date('d/m/Y', strtotime($reservation->date)) ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $reservation->name ?>
