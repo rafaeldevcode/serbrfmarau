@@ -16,6 +16,7 @@ class HoursAvailable {
         this.day = $('#day');
         this.period = $('#period');
         this.price = 0;
+        this.countBlock = 0;
     }
 
     /**
@@ -76,14 +77,25 @@ class HoursAvailable {
     getHours () {
         $(document).ready(async () => {
             this.clearBlockHours();
+            Preloader.show('hours');
 
             const response = await this.get();
 
             this.price = response.price;
-        
-            Object.keys(response.hours).forEach((key) => {
-                this.createBlockHour(response.hours[key], key, response.hours[parseInt(key)+1], response.end_hour); 
-            });
+
+            if (response.message) {
+                Message.create(response.message, 'info');
+                this.createBlockMessage(response.message);
+            } else {
+                Object.keys(response.hours).forEach((key) => {
+                    this.createBlockHour(response.hours[key], key, response.hours[parseInt(key)+1], response.end_hour); 
+                });
+            }
+
+            if (this.countBlock === 0 && this.location.val() !== undefined) {
+                Message.create('Todos os horários já reservados!', 'info');
+                this.createBlockMessage('Todos os horários já reservados!'); 
+            }
 
             Preloader.hide('hours');
             this.selectSeveralHours();
@@ -218,7 +230,34 @@ class HoursAvailable {
 
         $('[data-list="hours"]').append(tr);
 
+        this.countBlock = this.countBlock + 1;
+
         this.calculateTotalHourlyValue(input);
+    }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @param {string} message
+     * @returns {void}
+     */
+    createBlockMessage(message) {
+        const tr = $('<tr />');
+        tr.attr('class', 'border border-color-main rounded p-4 shadow-lg w-full');
+
+        const td = $('<td />');
+        td.attr({
+            class: 'px-2 py-4 whitespace-nowrap text-secondary',
+            scope: 'row'
+        });
+
+        const p = $('<p />');
+        p.attr('class', 'text-center font-semibold text-secondary');
+        p.text(message);
+
+        td.append(p);
+        tr.append(td);
+        $('[data-list="hours"]').append(tr);
     }
 
     /**
@@ -242,10 +281,18 @@ class HoursAvailable {
         if(response.success){
             if(response.data.type == 'period') {
                 this.period.attr('disabled', false);
-                this.period.parent().parent().parent().show()
+                this.period.parent().parent().parent().show();
+
+                $('#email').attr('required', true);
+                $('#identifier').attr('required', true);
+                $('#amount_people').attr('required', true);
             } else {
                 this.period.attr('disabled', true);
-                this.period.parent().parent().parent().hide()
+                this.period.parent().parent().parent().hide();
+
+                $('#email').removeAttr('required');
+                $('#identifier').removeAttr('required');
+                $('#amount_people').removeAttr('required');
             }
         }
     }
@@ -292,7 +339,29 @@ class HoursAvailable {
      */
     changePeiod () {
         this.period.on('change', async (event) => {
-            this.getHours();
+            this.clearBlockHours();
+            Preloader.show('hours');
+
+            const response = await this.get();
+
+            this.price = response.price;
+
+            if (response.message) {
+                Message.create(response.message, 'info');
+                this.createBlockMessage(response.message);
+            } else {
+                Object.keys(response.hours).forEach((key) => {
+                    this.createBlockHour(response.hours[key], key, response.hours[parseInt(key)+1], response.end_hour); 
+                });
+            }
+
+            if (this.countBlock === 0) {
+                Message.create('Sem horários disponíves!', 'info');
+                this.createBlockMessage('Sem horários disponíves!'); 
+            }
+
+            Preloader.hide('hours');
+            this.selectSeveralHours();
 
             if (event.target.value.length > 0) {
                 const hours = this.getHoursByPeriod();
