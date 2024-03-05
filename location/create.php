@@ -23,7 +23,7 @@
         'identifier' => $requests->identifier,
         'type' => 'Normal',
         'payment_type' => $requests->payment_type,
-        'amount_people' => $requests->amount_people,
+        'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
         'event' => $requests->event,
         'period' => $requests->period,
         'location_id' => $requests->location_id,
@@ -50,8 +50,10 @@
         'token' => $protocol->generateToken()
     ]);
 
-    $email = new EmailServices(BodyEmail::protocol($status, $protocol->token, $title, 'create'), $title, $requests->email);
-    $email->send();
+    if(!empty($requests->email)):
+        $email = new EmailServices(BodyEmail::protocol($status, $protocol->token, $title, 'create'), $title, $requests->email);
+        $email->send();
+    endif;
 
     session([
         'message' => 'Reserva adicionada com sucesso!',
