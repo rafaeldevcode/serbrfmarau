@@ -163,26 +163,6 @@ class HoursAvailable {
         }, 200);
     }
 
-    getLastHour(hour, nextHour){
-        if(this.typeReservation == 'hour') return nextHour;
-
-        const manha = this.getHoursByPeriod('Manhã');
-        const tarde = this.getHoursByPeriod('Tarde');
-        const noite = this.getHoursByPeriod('Noite');
-
-        if(manha.includes(hour) && !tarde.includes(hour)){
-            return manha[manha.length-1];
-        }
-
-        if(tarde.includes(hour) && !noite.includes(hour)){
-            return tarde[tarde.length-1];
-        }
-
-        if(noite.includes(hour)){
-            return noite[noite.length-1];
-        }
-    }
-
     /**
      * @since 1.7.0
      * 
@@ -542,6 +522,36 @@ class HoursAvailable {
         return days[this.day.val()];
     }
 
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {String}
+     */
+    getLastHour(hour, nextHour){
+        if(this.typeReservation == 'hour') return nextHour;
+
+        const manha = this.getHoursByPeriod('Manhã');
+        const tarde = this.getHoursByPeriod('Tarde');
+        const noite = this.getHoursByPeriod('Noite');
+
+        if(manha.includes(hour) && !tarde.includes(hour)){
+            return manha[manha.length-1];
+        }
+
+        if(tarde.includes(hour) && !noite.includes(hour)){
+            return tarde[tarde.length-1];
+        }
+
+        if(noite.includes(hour)){
+            return noite[noite.length-1];
+        }
+    }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Array}
+     */
     getHoursHidden(){
         const manha = this.getHoursByPeriod('Manhã');
         const tarde = this.getHoursByPeriod('Tarde');
