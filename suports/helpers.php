@@ -224,7 +224,7 @@ if (!function_exists('getHoursReservation')):
 
         if(! is_null($reservation_id)):
             $reservation = $reservation->find($reservation_id);
-            $reservation_schedules = $reservation->data->date == $date ? getArraySelect($reservation->schedules()->data, 'id', 'hour') : [];
+            $reservation_schedules = $reservation->data?->date == $date ? getArraySelect($reservation->schedules()->data, 'id', 'hour') : [];
         endif;
 
         $location = $location->find($location_id);

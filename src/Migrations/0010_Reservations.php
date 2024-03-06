@@ -24,9 +24,9 @@ class Reservations extends ExecuteMigrations
         $this->string('payment_type', 20);
         // $this->string('event_type', 20);
         $this->integer('amount_people');
-        $this->string('event', 12);
+        $this->string('event', 13);
         $this->text('observation')->nullable();
-        $this->char('period', 5)->nullable();
+        $this->char('period', 6)->nullable();
         $this->date('date')->nullable();
         $this->char('day', 9)->nullable();
         $this->string('status', 10)->default('Pendente');

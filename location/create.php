@@ -47,7 +47,7 @@
     $protocol = $protocol->create([
         'reservation_id' => $reservation->id,
         'reservation_status' => $status,
-        'token' => $protocol->generateToken()
+        'token' => "P000{$reservation->id}"
     ]);
 
     if(!empty($requests->email)):
@@ -60,4 +60,4 @@
         'type' => 'success'
     ]);
 
-    return header(route("/reservations/protocols?protocol={$protocol->token}", true), true, 302);
+    return header(route("/reservation/protocol/{$protocol->token}", true), true, 302);

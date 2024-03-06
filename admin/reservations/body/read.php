@@ -1,6 +1,8 @@
 <section class='p-3 bg-light m-0 sm:m-3 rounded shadow-lg'>
     <section>
-        <div class='flex justify-end'>
+        <div class='flex flex-col items-end'>
+            <a target="_blank" class="mr-2 text-color-main" href="<?php route('/reservation/protocol') ?>">Buscar usando protocolo</a>
+
             <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-button', [
                 'type' => 'button',
                 'style' => 'color-main',

@@ -112,7 +112,7 @@
 
         <?php loadHtml(__DIR__.'/modal-reservation', [
             'is_admin' => $is_admin,
-            'reservation' => $reservation
+            'reservation' => isset($reservation) ? $reservation : null
         ]) ?>
     </form>
 </div>

@@ -5,11 +5,11 @@
 
     $location = new Location();
 
-    $requests = requests();
+    $id = slug(2);
 
-    if(is_null($requests->location)) abort(404, 'Location not found!', 'danger');
+    if(is_null($id)) abort(404, 'Location not found!', 'danger');
 
-    $location = $location->find($requests->location);
+    $location = $location->find($id);
 
     if(is_null($location->data)) abort(404, 'Location not found!', 'danger');
 

@@ -283,16 +283,28 @@ class HoursAvailable {
                 this.period.attr('disabled', false);
                 this.period.parent().parent().parent().show();
 
-                $('#email').attr('required', true);
+                $('#type').attr('disabled', true);
+                $('#type').parent().parent().parent().hide();
+
+                $('#email').attr('required', true);;
+                $('[for=email]').find('span').text('*');
                 $('#identifier').attr('required', true);
+                $('[for=identifier]').find('span').text('*');
                 $('#amount_people').attr('required', true);
+                $('[for=amount_people]').find('span').text('*');
             } else {
                 this.period.attr('disabled', true);
                 this.period.parent().parent().parent().hide();
 
+                $('#type').attr('disabled', false);
+                $('#type').parent().parent().parent().show();
+
                 $('#email').removeAttr('required');
+                $('[for=email]').find('span').text('');
                 $('#identifier').removeAttr('required');
+                $('[for=identifier]').find('span').text('');
                 $('#amount_people').removeAttr('required');
+                $('[for=amount_people]').find('span').text('');
             }
         }
     }
