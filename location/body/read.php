@@ -14,7 +14,6 @@
 
         <?php loadHtml(__DIR__.'/../../resources/partials/hours-available', [
             'location_id' => $location->id,
-            'reservation' => $reservation,
             'is_admin' => false,
             'route' => '/location/create'
         ]) ?>
