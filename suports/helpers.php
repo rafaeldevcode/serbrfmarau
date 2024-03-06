@@ -219,7 +219,6 @@ if (!function_exists('getHoursReservation')):
         $reservation_schedules = [];
         $data = [
             'hours' => [],
-            'price' => 0
         ];
 
         if(! is_null($reservation_id)):
@@ -232,7 +231,8 @@ if (!function_exists('getHoursReservation')):
         if(empty($date)):
             $schedules = $schedules->where('location_id', '=', $location_id)->where('day', '=', $day)->where('status', '!=', 'Reprovado')->get(['id', 'hour']);
         else:
-            $schedules = $schedules->where('date', '=', $date)->where('location_id', '=', $location_id)->where('status', '!=', 'Reprovado')->orWhere('day', '=', date('l', strtotime($date)))->get(['id', 'hour']);
+            $schedules = $schedules->where('date', '=', $date)->where('location_id', '=', $location_id)->where('status', '!=', 'Reprovado')->orWhere('day', '=', date('l', strtotime($date)))->get(['id', 'hour', 'location_id']);
+            $schedules = filterSchedules($schedules, $location_id);
         endif;
 
         $schedules = getArraySelect($schedules, 'id', 'hour');
@@ -251,7 +251,7 @@ if (!function_exists('getHoursReservation')):
                 ? json_decode($location->data->prices, true)[translateDayWeek(date('l', strtotime($date)))] 
                 : json_decode($location->data->prices, true)[translateDayWeek($day)];
 
-            $data['price'] = $location->data->type == 'period' ? number_format($price / count(getHoursByPeriod('Tarde')), 2, '.') : $price;
+            $data['price'] = $price;
             $data['start_hour'] = $location->data->start_hour;
             $data['end_hour'] = $location->data->end_hour;
         else:
@@ -544,6 +544,27 @@ if (!function_exists('filterReservations')):
         endif;
     
         return $reservation->paginate(20);
+    }
+endif;
+
+if (!function_exists('filterSchedules')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param array $schedules
+     * @param string $location_id
+     */
+    function filterSchedules(?array $schedules, int $location_id): ?array
+    {
+        if(is_null($schedules)) return null;
+
+        foreach($schedules as $indice => $time):
+            if($time->location_id !== $location_id):
+                unset($schedules[$indice]);
+            endif;
+        endforeach;
+
+        return $schedules;
     }
 endif;
 

@@ -15,8 +15,11 @@ class HoursAvailable {
         this.reservetionId = $('#reservation_id');
         this.day = $('#day');
         this.period = $('#period');
+        this.type = $('#type');
         this.price = 0;
         this.countBlock = 0;
+        this.typeReservation = null;
+        this.hoursHidden = this.getHoursHidden();
     }
 
     /**
@@ -155,7 +158,8 @@ class HoursAvailable {
                 $('#schedule').find('#warning').text('Para proseguir selecione no mínimo dois blocos de horário!');
             }
 
-            $('#total-value').text(`R$ ${this.price * count}`);
+            const price = this.typeReservation == 'hour' ? this.price * count : this.price;
+            $('#total-value').text(`R$ ${price}`);
         }, 200);
     }
 
@@ -166,17 +170,21 @@ class HoursAvailable {
      */
     createBlockHour (date, key, nextDate, endHour) {
         if(date.blocked && !date.checked || (endHour == date.hour)) return;
+
+        const hoursHidden = this.typeReservation == 'hour' ? [] : this.hoursHidden;
+        const classHidden = hoursHidden.includes(date.hour) ? ' hidden' : '';
         const classBlock = date.blocked ? 'border-danger bg-danger text-white opacity-50' : 'border-color-main';
+        const dateFormat = this.type.val() == 'Normal' ? this.getDateFormated() : this.translateDay();
 
         const tr = $('<tr />');
-        tr.attr('class', 'bg-white border-b hover:bg-gray-100 text-gray-900');
+        tr.attr('class', `bg-white border-b hover:bg-gray-100 text-gray-900${classHidden}`);
 
         const tdTitle = $('<td />');
         tdTitle.attr({
             class: 'px-2 py-4 whitespace-nowrap text-secondary',
             scope: 'row'
         });
-        tdTitle.text(`${this.getDateFormated()} - ${date.hour} às ${nextDate.hour}`);
+        tdTitle.text(`${dateFormat} - ${date.hour} às ${this.getLastHour(date.hour, nextDate.hour)}`);
         
         const tdPrice = $('<td />');
         tdPrice.attr({
@@ -266,6 +274,7 @@ class HoursAvailable {
      * @returns {void}
      */
     clearBlockHours () {
+        this.countBlock = 0;
         $('[data-list="hours"]').html('');
     }
 
@@ -283,8 +292,8 @@ class HoursAvailable {
                 this.period.attr('disabled', false);
                 this.period.parent().parent().parent().show();
 
-                $('#type').attr('disabled', true);
-                $('#type').parent().parent().parent().hide();
+                this.type.attr('disabled', true);
+                this.type.parent().parent().parent().hide();
 
                 $('#email').attr('required', true);;
                 $('[for=email]').find('span').text('*');
@@ -296,8 +305,8 @@ class HoursAvailable {
                 this.period.attr('disabled', true);
                 this.period.parent().parent().parent().hide();
 
-                $('#type').attr('disabled', false);
-                $('#type').parent().parent().parent().show();
+                this.type.attr('disabled', false);
+                this.type.parent().parent().parent().show();
 
                 $('#email').removeAttr('required');
                 $('[for=email]').find('span').text('');
@@ -306,7 +315,17 @@ class HoursAvailable {
                 $('#amount_people').removeAttr('required');
                 $('[for=amount_people]').find('span').text('');
             }
+
+            this.type.val('Normal');
+
+            this.day.attr('disabled', true);
+            this.day.parent().parent().parent().hide();
+
+            this.date.attr('disabled', false);
+            this.date.parent().parent().parent().show();
         }
+
+        this.typeReservation = response.data.type;
     }
 
     /**
@@ -377,6 +396,7 @@ class HoursAvailable {
 
             if (event.target.value.length > 0) {
                 const hours = this.getHoursByPeriod();
+                hours.pop();
                 
                 const checkboxes = $('[data-checked="hour"]');
         
@@ -412,10 +432,10 @@ class HoursAvailable {
      * @returns {Object}
      */
     changeType () {
+        this.clearBlockHours();
         const day = $('#day');
-        const type = $('#type');
 
-        if (type.val() === 'Fixo') {
+        if (this.type.val() === 'Fixo') {
             day.parent().parent().parent().show();
             day.removeAttr('disabled');
 
@@ -429,7 +449,7 @@ class HoursAvailable {
             this.date.removeAttr('disabled', 'disabled');
         }
 
-        type.on('change', async (event) => {
+        this.type.on('change', async (event) => {
             if (event.target.value === 'Fixo') {
                 day.parent().parent().parent().show();
                 day.removeAttr('disabled');
@@ -445,7 +465,7 @@ class HoursAvailable {
             }
 
             this.period.val('');
-            this.day.val('');
+            this.getHours();
         });
 
         return this;
@@ -486,27 +506,82 @@ class HoursAvailable {
     /**
      * @since 1.7.0
      * 
-     * @returns {Array}
+     * @returns {string}
      */
-    getHoursByPeriod () {
-        const hours = [];
-        const periods = {
-            Manhã: {
-                start: 8,
-                end: 13
-            },
-            Tarde: {
-                start: 13,
-                end: 18
-            },
-            Noite: {
-                start: 18,
-                end: 23
-            }
+    translateDay(){
+        const days = {
+            Sunday: 'Domingo',
+            Monday: 'Segunda',
+            Tuesday: 'Terça',
+            Wednesday: 'Quarta',
+            Thursday: 'Quinta',
+            Friday: 'Sexta',
+            Saturday: 'Sábado'
         }
 
+        return days[this.day.val()];
+    }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {String}
+     */
+    getLastHour(hour, nextHour){
+        if(this.typeReservation == 'hour') return nextHour;
+
+        const manha = this.getHoursByPeriod('Manhã');
+        const tarde = this.getHoursByPeriod('Tarde');
+        const noite = this.getHoursByPeriod('Noite');
+
+        if(manha.includes(hour) && !tarde.includes(hour)){
+            return manha[manha.length-1];
+        }
+
+        if(tarde.includes(hour) && !noite.includes(hour)){
+            return tarde[tarde.length-1];
+        }
+
+        if(noite.includes(hour)){
+            return noite[noite.length-1];
+        }
+    }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Array}
+     */
+    getHoursHidden(){
+        const manha = this.getHoursByPeriod('Manhã');
+        const tarde = this.getHoursByPeriod('Tarde');
+        const noite = this.getHoursByPeriod('Noite');
+
+        manha.shift();
+        manha.pop();
+
+        tarde.shift();
+        tarde.pop();
+
+        noite.shift();
+        noite.pop();
+        
+        return [...manha, ...tarde, ...noite];
+    }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @param {string} period
+     * @returns {Array}
+     */
+    getHoursByPeriod (customPeriod = false) {
+        const hours = [];
+        const periods = this.getPeriods();
+        const period = customPeriod ? customPeriod : this.period.val();
+
         for (let i = 0; i < 24; i++) {
-            if(i >= periods[this.period.val()].start && i <= periods[this.period.val()].end){
+            if(i >= periods[period].start && i <= periods[period].end){
                 let hourOne;
                 let hourTwo;
     
@@ -526,6 +601,28 @@ class HoursAvailable {
         hours.pop();
 
         return hours;
+    }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Object}
+     */
+    getPeriods(){
+        return {
+            Manhã: {
+                start: 8,
+                end: 13
+            },
+            Tarde: {
+                start: 13,
+                end: 18
+            },
+            Noite: {
+                start: 18,
+                end: 23
+            }
+        }
     }
 
     /**
