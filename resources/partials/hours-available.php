@@ -31,7 +31,6 @@
                         'data-change' => 'selects'
                     ],
                     'array' => [
-                        '' => '----Selecione----',
                         'Sunday' => 'Domingo',
                         'Monday' => 'Segunda',
                         'Tuesday' => 'Terça',
@@ -47,20 +46,6 @@
                 <div class='w-full md:w-3/12 px-2'>
                     <?php loadHtml(__DIR__.'/form/input-select', [
                         'icon' => 'bi bi-hash',
-                        'name' => 'type',
-                        'label' => 'Tipo',
-                        'value' => isset($reservation) ? $reservation->type : null,
-                        'attributes' => 'required',
-                        'array' => [
-                            'Normal' => 'Normal',
-                            'Fixo' => 'Fixo'
-                        ]
-                    ]) ?>
-                </div>
-
-                <div class='w-full md:w-3/12 px-2'>
-                    <?php loadHtml(__DIR__.'/form/input-select', [
-                        'icon' => 'bi bi-hash',
                         'name' => 'location_id',
                         'label' => 'Local',
                         'value' => isset($reservation) ? $reservation->location_id : null,
@@ -68,6 +53,20 @@
                         'array' => $locations,
                         'attributes' => [
                             'data-change' => 'locations'
+                        ]
+                    ]) ?>
+                </div>
+
+                <div class='w-full md:w-3/12 px-2'>
+                    <?php loadHtml(__DIR__.'/form/input-select', [
+                        'icon' => 'bi bi-hash',
+                        'name' => 'type',
+                        'label' => 'Tipo',
+                        'value' => isset($reservation) ? $reservation->type : null,
+                        'attributes' => 'required',
+                        'array' => [
+                            'Normal' => 'Normal',
+                            'Fixo' => 'Fixo'
                         ]
                     ]) ?>
                 </div>
