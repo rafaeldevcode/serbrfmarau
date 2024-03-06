@@ -283,12 +283,18 @@ class HoursAvailable {
                 this.period.attr('disabled', false);
                 this.period.parent().parent().parent().show();
 
+                $('#type').attr('disabled', true);
+                $('#type').parent().parent().parent().hide();
+
                 $('#email').attr('required', true);
                 $('#identifier').attr('required', true);
                 $('#amount_people').attr('required', true);
             } else {
                 this.period.attr('disabled', true);
                 this.period.parent().parent().parent().hide();
+
+                $('#type').attr('disabled', false);
+                $('#type').parent().parent().parent().show();
 
                 $('#email').removeAttr('required');
                 $('#identifier').removeAttr('required');

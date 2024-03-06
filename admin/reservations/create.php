@@ -20,7 +20,7 @@
         'email' => $requests->email,
         'phone' => $requests->phone,
         'identifier' => $requests->identifier,
-        'type' => $requests->type,
+        'type' => isset($requests->type) ? $requests->type : 'Normal',
         'payment_type' => $requests->payment_type,
         'amount_people' => empty($requests->amount_people) ? 0 : $requests->amount_people,
         'event' => $requests->event,
