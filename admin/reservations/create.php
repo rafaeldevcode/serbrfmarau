@@ -46,7 +46,7 @@
     $protocol = $protocol->create([
         'reservation_id' => $reservation->id,
         'reservation_status' => $requests->status,
-        'token' => $protocol->generateToken()
+        'token' => "P000{$reservation->id}"
     ]);
 
     if(!empty($requests->email)):

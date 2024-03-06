@@ -3,7 +3,7 @@
     use Src\Models\Reservation;
     use Src\Models\Protocol;
 
-    $hash = requests()?->protocol;
+    $hash = slug(3);
     $protocol = new Protocol();
 
     $protocol = $protocol->where('token', '=', $hash)->first();

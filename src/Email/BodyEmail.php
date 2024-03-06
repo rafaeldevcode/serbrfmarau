@@ -37,16 +37,17 @@ class BodyEmail
      */
     public static function protocol(string $status, string $hash, string $title = '', string $type = 'create'): string
     {
-        $protocol = route("/reservations/protocol?protocol={$hash}", false, false);
+        $protocol = route("/reservation/protocol/{$hash}", false, false);
         $site = !is_null(SETTINGS) && !empty(SETTINGS['site_name']) ? SETTINGS['site_name'] : '';
         $text = $type === 'create'
-            ? "Olá, aqui é da equipe da <strong>{$site}</strong>, este email é para comunicar que seu horário foi reservado e está em processo de aprovação. Você receberá um novo email quando o mesmo for aprovado."
+            ? "Olá, aqui é da equipe da <strong>{$site}</strong>, este email é para comunicar que seu horário foi reservado e está em processo de aprovação. Você receberá um novo email quando o mesmo for aprovado ou tiver seu status alterado."
             : "Olá, aqui é da equipe da <strong>{$site}</strong>, este email é para comunicar que seu horário foi atualizado para: <strong>{$status}</strong>.";
 
         $message = <<<EOT
             <div style="padding: 1rem; background: #ffffff; border-radius: 5px; color: #1E3E87;">
                 <p>{$text}</p>
-                <p><strong>Protocolo: </strong><a href="{$protocol}">Acessar link</a></p>
+                <p><strong>Protocolo: </strong>{$hash}</p>
+                <p><strong>Linke do protocolo: </strong><a href="{$protocol}">Acessar link</a></p>
             </div>
         EOT;
 
