@@ -5,7 +5,10 @@
 
     if($_SERVER['REQUEST_METHOD'] == 'GET'):
         $requests = requests();
-        $data = getHoursReservation($requests->location_id, $requests->date, $requests->reservation_id, $requests->day);
+        $reservation_id = isset($requests->reservation_id) ? $requests->reservation_id : null;
+        $day = isset($requests->day) ? $requests->day : null;
+
+        $data = getHoursReservation($requests->location_id, $requests->date, $reservation_id, $day);
     else:
         $data = ['success' => false, 'message' => 'Method Not Allowed'];
     endif;
