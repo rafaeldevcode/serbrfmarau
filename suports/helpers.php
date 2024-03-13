@@ -11,7 +11,7 @@ require __DIR__.'/helpers/requests.php';
 require __DIR__.'/helpers/menus-admin.php';
 require __DIR__.'/helpers/routes.php';
 
-!defined('APP_VERSION') && define('APP_VERSION', '1.7.0');
+!defined('APP_VERSION') && define('APP_VERSION', '1.7.1');
 
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -219,6 +219,7 @@ if (!function_exists('getHoursReservation')):
         $reservation = new Reservation();
 
         $current_hour = date('H:i');
+        $current_date = date('Y-m-d');
         $reservation_schedules = [];
         $data = [
             'hours' => [],
@@ -277,8 +278,13 @@ if (!function_exists('getHoursReservation')):
             $hour_one = strlen($i) == 1 ? "0{$i}:00" : "{$i}:00";
             $hour_two = strlen($i) == 1 ? "0{$i}:30" : "{$i}:30";
 
-            $blocked_one = in_array($hour_one, $active_hours) && $hour_one > $current_hour ? false : true;
-            $blocked_two = in_array($hour_two, $active_hours) && $hour_two > $current_hour ? false : true;
+            if($current_date === $date):
+                $blocked_one = in_array($hour_one, $active_hours) && $hour_one > $current_hour ? false : true;
+                $blocked_two = in_array($hour_two, $active_hours) && $hour_two > $current_hour ? false : true;
+            else:
+                $blocked_one = in_array($hour_one, $active_hours) ? false : true;
+                $blocked_two = in_array($hour_two, $active_hours) ? false : true;
+            endif;
 
             $checked_one = in_array($hour_one, $reservation_schedules) ? true : false;
             $checked_two = in_array($hour_two, $reservation_schedules) ? true : false;
@@ -446,8 +452,6 @@ if (!function_exists('getHoursByPeriod')):
             endif;
         endfor;
 
-        // hours.pop();
-
         return $hours;
     }
 endif;
@@ -481,6 +485,41 @@ if (!function_exists('getImagesLocation')):
         $location = $location->find($id);
 
         return $location->images()->data;
+    }
+endif;
+
+if (!function_exists('getLocationName')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $id
+     * @return ?string
+     */
+    function getLocationName(int $id): ?string
+    {
+        $location = new Location();
+        $location = $location->find($id);
+
+        return $location->data?->name;
+    }
+endif;
+
+if (!function_exists('getBtweenHours')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $id
+     * @return ?string
+     */
+    function getBtweenHours(int $id): ?string
+    {
+        $reservations = new Reservation();
+        $reservation = $reservations->find($id);
+
+        $hours = getArraySelect($reservation->schedules()->data, 'id', 'hour');
+        $keys = array_keys($hours);
+
+        return "{$hours[$keys[0]]} Às {$hours[$keys[count($keys)-1]]}";
     }
 endif;
 

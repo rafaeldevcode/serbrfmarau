@@ -67,8 +67,8 @@
                             'value' => isset($reservation) ? $reservation->payment_type : null,
                             'attributes' => 'required',
                             'array' => [
-                                'Cartão de Crádito' => 'Cartão de Crédito',
-                                'Cartão de débito' => 'Cartão de débito',
+                                'Cartão de Crédito' => 'Cartão de Crédito',
+                                'Cartão de Débito' => 'Cartão de Débito',
                                 'Pix' => 'Pix',
                                 'Dinheiro' => 'Dinheiro'
                             ]
@@ -94,7 +94,7 @@
                             'value' => isset($reservation) ? $reservation->event : null,
                             'attributes' => 'required',
                             'array' => [
-                                'Aniverssário' => 'Aniverssário',
+                                'Aniversário' => 'Aniversário',
                                 'Casamento' => 'Casamento',
                                 'Formatura' => 'Formatura',
                                 'Outros' => 'Outros'

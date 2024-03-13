@@ -79,7 +79,8 @@
                     'label' => 'Período (Somente se for período interiro)',
                     'value' => isset($reservation) ? $reservation->period : null,
                     'attributes' => [
-                        'data-change' => 'selects'
+                        'data-change' => 'selects',
+                        'required' => true
                     ],
                     'array' => [
                         '' => '----Selecione----',

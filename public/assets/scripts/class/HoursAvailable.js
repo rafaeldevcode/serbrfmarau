@@ -233,7 +233,7 @@ class HoursAvailable {
 
         $('[data-list="hours"]').append(tr);
 
-        this.countBlock = this.countBlock + 1;
+        if(classHidden === '') this.countBlock = this.countBlock + 1;
 
         this.calculateTotalHourlyValue(input);
     }
