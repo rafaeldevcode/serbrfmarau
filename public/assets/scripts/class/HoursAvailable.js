@@ -20,6 +20,7 @@ class HoursAvailable {
         this.countBlock = 0;
         this.typeReservation = null;
         this.hoursHidden = this.getHoursHidden();
+        this.currentHour = '09:00';
     }
 
     /**
@@ -93,11 +94,11 @@ class HoursAvailable {
                 Object.keys(response.hours).forEach((key) => {
                     this.createBlockHour(response.hours[key], key, response.hours[parseInt(key)+1], response.end_hour); 
                 });
-            }
 
-            if (this.countBlock === 0 && this.location.val() !== undefined) {
-                Message.create('Todos os horários já reservados!', 'info');
-                this.createBlockMessage('Todos os horários já reservados!'); 
+                if (this.countBlock === 0 && this.location.val() !== undefined) {
+                    Message.create('Sem horários disponíves!', 'info');
+                    this.createBlockMessage('Sem horários disponíves!');  
+                }
             }
 
             Preloader.hide('hours');
@@ -170,11 +171,12 @@ class HoursAvailable {
      */
     createBlockHour (date, key, nextDate, endHour) {
         if(date.blocked && !date.checked || (endHour == date.hour)) return;
+        if (this.typeReservation === 'period' && !this.getHoursAllPeriods().includes(date.hour)) return;
 
         const hoursHidden = this.typeReservation == 'hour' ? [] : this.hoursHidden;
         const classHidden = hoursHidden.includes(date.hour) ? ' hidden' : '';
         const classBlock = date.blocked ? 'border-danger bg-danger text-white opacity-50' : 'border-color-main';
-        const dateFormat = this.type.val() == 'Normal' ? this.getDateFormated() : this.translateDay();
+        const dateFormat = (this.type.val() === 'Normal' || this.type.val() === undefined) ? this.getDateFormated() : this.translateDay();
 
         const tr = $('<tr />');
         tr.attr('class', `bg-white border-b hover:bg-gray-100 text-gray-900${classHidden}`);
@@ -370,8 +372,8 @@ class HoursAvailable {
      */
     changePeiod () {
         this.period.on('change', async (event) => {
-            this.clearBlockHours();
             Preloader.show('hours');
+            this.clearBlockHours();
 
             const response = await this.get();
 
@@ -384,20 +386,20 @@ class HoursAvailable {
                 Object.keys(response.hours).forEach((key) => {
                     this.createBlockHour(response.hours[key], key, response.hours[parseInt(key)+1], response.end_hour); 
                 });
-            }
 
-            if (this.countBlock === 0) {
-                Message.create('Sem horários disponíves!', 'info');
-                this.createBlockMessage('Sem horários disponíves!'); 
+                if (this.countBlock === 0 && this.location.val() !== undefined) {
+                    Message.create('Sem horários disponíves!', 'info');
+                    this.createBlockMessage('Sem horários disponíves!'); 
+                }
             }
 
             Preloader.hide('hours');
             this.selectSeveralHours();
 
-            if (event.target.value.length > 0) {
+            if (event.target.value.length > 0) {     
                 const hours = this.getHoursByPeriod();
                 hours.pop();
-                
+
                 const checkboxes = $('[data-checked="hour"]');
         
                 checkboxes.each(function (index, checkbox) {
@@ -565,6 +567,19 @@ class HoursAvailable {
 
         noite.shift();
         noite.pop();
+        
+        return [...manha, ...tarde, ...noite];
+    }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Array}
+     */
+    getHoursAllPeriods(){
+        const manha = this.getHoursByPeriod('Manhã');
+        const tarde = this.getHoursByPeriod('Tarde');
+        const noite = this.getHoursByPeriod('Noite');
         
         return [...manha, ...tarde, ...noite];
     }

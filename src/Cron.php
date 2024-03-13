@@ -24,21 +24,23 @@ class Cron
                 ->where('date', '=', $last_cron)
                 ->get();
 
-            foreach($reservations as $item):
-                if($item->status == 'Pendente' || $item->status == 'Aprovado'):
-                    $reservation = $reservation->find($item->id);
-                    $reservation->update(['status' => $status]);
-
-                    $protocol = $protocol->find($reservation->protocols()->data[0]->id);
-                    $protocol->update([
-                        'reservation_status' => $status
-                    ]);
-            
-                    foreach($reservation->schedules()->data as $item):
-                        $schedules->find($item->id)->update(['status' => $status]);
-                    endforeach;
-                endif;
-            endforeach;
+            if($reservations):
+                foreach($reservations as $item):
+                    if($item->status == 'Pendente' || $item->status == 'Aprovado'):
+                        $reservation = $reservation->find($item->id);
+                        $reservation->update(['status' => $status]);
+    
+                        $protocol = $protocol->find($reservation->protocols()->data[0]->id);
+                        $protocol->update([
+                            'reservation_status' => $status
+                        ]);
+                
+                        foreach($reservation->schedules()->data as $item):
+                            $schedules->find($item->id)->update(['status' => $status]);
+                        endforeach;
+                    endif;
+                endforeach;
+            endif;
 
             $setting = new Setting();
             $current_setting = $setting->first();
