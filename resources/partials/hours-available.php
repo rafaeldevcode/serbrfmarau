@@ -1,7 +1,7 @@
 <div class="mt-12">
     <h2 class="font-bold text-xl text-secondary">Horários disponiveis</h2>
 
-    <form method="POST" action="<?php route($route) ?>">
+    <form method="POST" action="<?php route($route) ?>" id="submit-reservation">
         <?php if(isset($reservation)): ?>
             <input type="hidden" name="id" id="reservation_id" value="<?php echo $reservation->id ?>">
         <?php endif ?>
