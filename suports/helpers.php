@@ -452,8 +452,6 @@ if (!function_exists('getHoursByPeriod')):
             endif;
         endfor;
 
-        // hours.pop();
-
         return $hours;
     }
 endif;
@@ -487,6 +485,41 @@ if (!function_exists('getImagesLocation')):
         $location = $location->find($id);
 
         return $location->images()->data;
+    }
+endif;
+
+if (!function_exists('getLocationName')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $id
+     * @return ?string
+     */
+    function getLocationName(int $id): ?string
+    {
+        $location = new Location();
+        $location = $location->find($id);
+
+        return $location->data?->name;
+    }
+endif;
+
+if (!function_exists('getBtweenHours')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $id
+     * @return ?string
+     */
+    function getBtweenHours(int $id): ?string
+    {
+        $reservations = new Reservation();
+        $reservation = $reservations->find($id);
+
+        $hours = getArraySelect($reservation->schedules()->data, 'id', 'hour');
+        $keys = array_keys($hours);
+
+        return "{$hours[$keys[0]]} Às {$hours[$keys[count($keys)-1]]}";
     }
 endif;
 
