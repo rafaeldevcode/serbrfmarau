@@ -75,8 +75,8 @@
                         'value' => null,
                         'attributes' => 'required',
                         'array' => [
-                            'Cartão de Crádito' => 'Cartão de Crádito',
-                            'Cartão de débito' => 'Cartão de débito',
+                            'Cartão de Crédito' => 'Cartão de Crédito',
+                            'Cartão de Débito' => 'Cartão de Débito',
                             'Pix' => 'Pix',
                             'Dinheiro' => 'Dinheiro'
                         ]
@@ -102,7 +102,7 @@
                         'value' => null,
                         'attributes' => 'required',
                         'array' => [
-                            'Aniverssário' => 'Aniverssário',
+                            'Aniversário' => 'Aniversário',
                             'Casamento' => 'Casamento',
                             'Formatura' => 'Formatura',
                             'Outros' => 'Outros'
