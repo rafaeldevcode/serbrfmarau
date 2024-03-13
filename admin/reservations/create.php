@@ -24,7 +24,7 @@
         'payment_type' => $requests->payment_type,
         'amount_people' => empty($requests->amount_people) ? 0 : $requests->amount_people,
         'event' => $requests->event,
-        'period' => $requests->period,
+        'period' => isset($requests->period) ? $requests->period : null,
         'location_id' => $requests->location_id,
         'observation' => $requests->observation,
         'status' => $requests->status,
