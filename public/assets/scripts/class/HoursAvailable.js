@@ -29,18 +29,11 @@ class HoursAvailable {
      * @returns {Object}
      */
     submited () {
-        $('#save-hours').on('submit', (event) => {
-            if (this.validityHours()) {
-                $('#save-hours').submit();
-            } else {
-                event.preventDefault();
-
-                $('#get-hours').click();
-                Message.create('É necessário escolher os horários!', 'danger');
-            }
+        Preloader.hide('reservation');
+        
+        $('#submit-reservation').on('submit', (event) => {
+            Preloader.show('reservation');
         });
-
-        return this;
     }
 
     /**
