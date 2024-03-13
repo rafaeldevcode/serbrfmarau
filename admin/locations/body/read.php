@@ -19,6 +19,9 @@
                             Nome
                         </th>
                         <th scope="col" class="p-2">
+                            Tipo
+                        </th>
+                        <th scope="col" class="p-2">
                             Hora Inicial
                         </th>
                         <th scope="col" class="p-2">
@@ -53,6 +56,9 @@
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $location->name ?>
+                            </td>
+                            <td scope="row" class="p-2 whitespace-nowrap">
+                                <?php echo $location->type === 'period' ? 'Por período' : 'Por hora' ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $location->start_hour ?>
