@@ -14,14 +14,13 @@
 
     $reservation = $reservation->find($protocol->reservation_id);
     $location = $reservation->location();
-    $schedules = $reservation->schedules();
-    $total_schedules = count($schedules->data);
+    $schedules = $reservation->schedules()->data;
+    $total_schedules = is_null($schedules) ? 0 : count($schedules);
 
     loadHtml(__DIR__.'/body/read', [
         'image' => !is_null(SETTINGS) && !empty(SETTINGS['site_bg_login']) ? 'assets/images/'.SETTINGS['site_bg_login'] : 'assets/images/login_bg.jpg',
         'reservation' => $reservation?->data,
         'location' => $location?->data[0],
-        'schedules' => $schedules?->data,
         'protocol' => $protocol,
         'total_schedules' => $total_schedules
     ]);

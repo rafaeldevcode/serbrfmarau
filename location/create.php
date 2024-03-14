@@ -19,7 +19,7 @@
     $reservation = $reservation->create([
         'name' => $requests->name,
         'email' => $requests->email,
-        'phone' => $requests->phone,
+        'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
         'identifier' => $requests->identifier,
         'type' => 'Normal',
         'payment_type' => $requests->payment_type,

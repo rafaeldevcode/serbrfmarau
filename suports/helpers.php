@@ -456,6 +456,49 @@ if (!function_exists('getHoursByPeriod')):
     }
 endif;
 
+if (!function_exists('getHours')):
+    /**
+     * @since 1.7.0
+     * 
+     * @return array
+     */
+    function getHours(): array
+    {
+        $hours = [];
+
+        for ($i = 0; $i < 24; $i++):
+            if ($i < 10) {
+                $hour_one = "0{$i}:00";
+                $hour_two = "0{$i}:30";
+            } else {
+                $hour_one = "{$i}:00";
+                $hour_two = "{$i}:30";
+            }
+
+            array_push($hours, $hour_one);
+            array_push($hours, $hour_two);
+        endfor;
+
+        return $hours;
+    }
+endif;
+
+if (!function_exists('addHour')):
+    function addHour(array $current_hours): array
+    {
+        $last_hour = $current_hours[array_keys($current_hours)[0]+1];
+
+        $hours = getHours();
+        $filter = array_filter($hours, function ($hour) use($last_hour) {
+            return $hour === $last_hour;
+        });
+
+        array_push($current_hours, $hours[array_keys($filter)[0]+1]);
+
+        return $current_hours;
+    }
+endif;
+
 if (!function_exists('getImagePath')):
     /**
      * @since 1.7.0
@@ -516,7 +559,7 @@ if (!function_exists('getBtweenHours')):
         $reservations = new Reservation();
         $reservation = $reservations->find($id);
 
-        $hours = getArraySelect($reservation->schedules()->data, 'id', 'hour');
+        $hours = addHour(getArraySelect($reservation->schedules()->data, 'id', 'hour'));
         $keys = array_keys($hours);
 
         return "{$hours[$keys[0]]} Às {$hours[$keys[count($keys)-1]]}";

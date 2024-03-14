@@ -25,7 +25,7 @@
                         <div class='text-secondary'>
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Local:</strong> <?php echo $location->name ?></h2>
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Reserva:</strong> <?php echo $reservation->name ?></h2>
-                            <h2 class="text-3xl mb-2"><strong class="text-3xl">Horário:</strong> Das <?php echo $schedules[0]->hour ?> às <?php echo $schedules[$total_schedules-1]->hour ?></h2>
+                            <h2 class="text-3xl mb-2"><strong class="text-3xl">Horário:</strong> Das <?php echo getBtweenHours($reservation->id) ?></h2>
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Valor:</strong> R$ <?php echo number_format($total_schedules * getPrice($location->prices, $reservation->date, $reservation->day), 2, ',', ',') ?></h2>
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Status:</strong> <?php echo $reservation->status ?></h2>
                         </div>
