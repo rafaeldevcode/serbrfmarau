@@ -11,7 +11,7 @@ require __DIR__.'/helpers/requests.php';
 require __DIR__.'/helpers/menus-admin.php';
 require __DIR__.'/helpers/routes.php';
 
-!defined('APP_VERSION') && define('APP_VERSION', '1.7.1');
+!defined('APP_VERSION') && define('APP_VERSION', '1.7.2');
 
 date_default_timezone_set('America/Sao_Paulo');
 

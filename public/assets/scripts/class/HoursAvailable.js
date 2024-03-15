@@ -42,26 +42,48 @@ class HoursAvailable {
      * @returns {Object}
      */
     selectSeveralHours () {
-        $(document).ready(function () {
-            const checkboxes = $('[data-checked="hour"]');
-            let firstChecked = null;
+        const checkboxes = $('[data-checked="hour"]');
+        const hours = this.getHoursAllPeriods();
+        let lastChecked = false;
 
-            checkboxes.on('change', function () {
-                if ($(this).prop('checked')) {
-                    if (firstChecked === null) {
-                        firstChecked = checkboxes.index(this);
-                    } else {
-                        const lastIndex = checkboxes.index(this);
-
-                        checkboxes.each(function (index, checkbox) {
-                            if (!checkbox.disabled && index >= firstChecked && index <= lastIndex) {
-                                $(this).prop('checked', true);
-                            }
-                        });
-                    }
+        checkboxes.on('change', function () {
+            if ($(this).prop('checked')) {
+                if (! canSelect(lastChecked, $(this).val(), hours)) {
+                    $(this).prop('checked', false)
+                    Message.create('Os horários selecionados devem ser horários seguidos!', 'info');
+                } else {
+                    lastChecked = $(this).val();
                 }
-            });
+            } else {
+                const checkboxes = document.querySelectorAll('[data-checked="hour"]');
+                let hasSelected = false;
+                
+                checkboxes.forEach((checkbox) => {
+                    if (checkbox.checked) {
+                        hasSelected = true;
+                    }
+                });
+
+                if (! hasSelected) {
+                    lastChecked = false;
+                }
+            }
         });
+
+        function canSelect(lastHour, currentHour, hours){
+            if (!lastHour) return true;
+
+            let indice;
+
+            for (let i = 0; i < hours.length; i++) {
+                if (hours[i] === lastHour) {
+                    indice = i;;
+                    break;
+                }
+            }
+
+            return hours[indice+1] === currentHour ? true : false;
+        }
 
         return this;
     }
@@ -574,7 +596,9 @@ class HoursAvailable {
         const tarde = this.getHoursByPeriod('Tarde');
         const noite = this.getHoursByPeriod('Noite');
         
-        return [...manha, ...tarde, ...noite];
+        return [...manha, ...tarde, ...noite].filter((value, index, self) => {
+            return self.indexOf(value) === index;
+        });;
     }
 
     /**
