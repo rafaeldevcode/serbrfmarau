@@ -14,6 +14,7 @@
     $protocol = new Protocol();
 
     $title = 'Horário reservado!';
+    $payment = isset($requests->payment) ? $requests->payment : 'off';
 
     $reservation = $reservation->create([
         'name' => $requests->name,
@@ -29,7 +30,9 @@
         'observation' => $requests->observation,
         'status' => $requests->status,
         'date' => empty($requests->day) ? $requests->date : null,
-        'day' => ! empty($requests->day) ? $requests->day : date('l', strtotime($requests->date))
+        'day' => ! empty($requests->day) ? $requests->day : date('l', strtotime($requests->date)),
+        'payment' => $payment,
+        'observation_payment' => $requests->observation_payment
     ]);
 
     foreach ($requests->hours as $hour) :
