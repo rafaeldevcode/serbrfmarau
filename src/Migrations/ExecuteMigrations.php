@@ -100,6 +100,17 @@ class ExecuteMigrations
     }
 
     /**
+     * @since 1.7.0
+     * 
+     * @return self
+     */
+    public function after(string $column): self
+    {
+        $this->columns[$this->current_indice]['after'] = " AFTER {$column}";
+        return $this;
+    }
+
+    /**
      * @since 1.0.0
      * 
      * @return self
@@ -233,6 +244,48 @@ class ExecuteMigrations
 
         if($count_column > 0) $query .= ")";
         $query = str_replace(', )', ')', $query);
+
+        $this->connection->exec($query);
+
+        if(!empty($this->constraint)):
+            foreach($this->constraint as $key):
+                $query = "ALTER TABLE {$this->table} ADD KEY `fk_{$key['table']}_{$this->table}` (`{$key['foreign_key']}`)";
+                $this->connection->exec($query);
+                
+                $query = "ALTER TABLE {$this->table} ADD CONSTRAINT `fk_{$key['table']}_{$this->table}` FOREIGN KEY (`{$key['foreign_key']}`) REFERENCES `{$key['table']}` (`{$key['column_references']}`)";
+                $this->connection->exec($query);
+            endforeach;
+        endif;
+    }
+
+    /**
+     * @since 1.0.0
+     * 
+     * @return void
+     */
+    public function update(): void
+    {
+        $query = "ALTER TABLE $this->table ";
+        $count_column = count($this->columns);
+
+        foreach($this->columns as $column):
+            $column_name = $column['column_name'];
+            $column_type = $column['column_type'];
+            $nullable = $column['nullable'];
+            $default = $column['default'];
+            $primary_key = $column['primary_key'];
+            $unique = $column['unique'];
+            $after = $column['after'];
+
+            $query .= "ADD COLUMN `{$column_name}` {$column_type}{$nullable}{$default}{$primary_key}{$unique}{$after}, ";
+        endforeach;
+
+        if($this->timestamps):
+            $query .= "`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP";
+        endif;
+
+        if($count_column > 0) $query .= ";";
+        $query = str_replace(', ;', ';', $query);
 
         $this->connection->exec($query);
 

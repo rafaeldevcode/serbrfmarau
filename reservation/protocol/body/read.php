@@ -28,9 +28,22 @@
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Horário:</strong> Das <?php echo getBtweenHours($reservation->id) ?></h2>
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Valor:</strong> R$ <?php echo number_format($total_schedules * getPrice($location->prices, $reservation->date, $reservation->day), 2, ',', ',') ?></h2>
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Status:</strong> <?php echo $reservation->status ?></h2>
+                            <h2 class="text-3xl mb-2"><strong class="text-3xl">Protocolo:</strong> <?php echo $protocol->token ?></h2>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <a href="<?php echo route('/') ?>" title="Página inicial" class='text-center mt-4 btn btn-color-main text-light'>Página inicial</a>
                         </div>
 
                         <div class="p-4 rounded border bg-blue-100 text-center border-blue-600">
+                            <?php if(!is_null(SETTINGS) && !empty(SETTINGS['pix_key'])): ?>
+                                <p class="font-bold">Seu pagamento pode ser feito através do pix <span class="text-color-main"><?php echo SETTINGS['pix_key'] ?></span></p>
+                            <?php endif ?>
+
+                            <?php if(!is_null(SETTINGS) && !empty(SETTINGS['whatsapp'])): ?>
+                                <p class="font-bold">Envie comprovante para <span class="text-color-main"><?php echo SETTINGS['whatsapp'] ?></span> juntamente com seu protocolo <span class="text-color-main"><?php echo $protocol->token ?></span>.</p>
+                            <?php endif ?>
+
                             <p class="font-bold">Este protocolo também está em seu email. Um novo email será enviado toda vez que o status do seu agendamento for alterado.</p>
                         </div>
                     <?php else: ?>
