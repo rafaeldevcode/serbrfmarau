@@ -11,7 +11,7 @@ require __DIR__.'/helpers/requests.php';
 require __DIR__.'/helpers/menus-admin.php';
 require __DIR__.'/helpers/routes.php';
 
-!defined('APP_VERSION') && define('APP_VERSION', '1.7.2');
+!defined('APP_VERSION') && define('APP_VERSION', '1.7.3');
 
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -264,10 +264,10 @@ if (!function_exists('getHoursReservation')):
         endif;
 
         $schedules = array_diff($schedules, $reservation_schedules);
-        
-        if(! empty($date) && $opening_date > $date && date('Y-m-d') <= $date):
+
+        if(! empty($date) && isset($opening_date) && $opening_date > $date && date('Y-m-d') <= $date):
             $active_hours = array_diff($active_hours, $schedules);
-        elseif(empty($date)):
+        elseif(empty($date) && in_array($day, $opening_days)):
             $active_hours = array_diff($active_hours, $schedules);
         else:
             $active_hours = [];
