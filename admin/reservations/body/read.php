@@ -35,6 +35,9 @@
                             Horários
                         </th>
                         <th scope="col" class="p-2">
+                            Protocolo
+                        </th>
+                        <th scope="col" class="p-2">
                             Nome
                         </th>
                         <th scope="col" class="p-2">
@@ -48,6 +51,9 @@
                         </th>
                         <th scope="col" class="p-2">
                             Pagamento
+                        </th>
+                        <th scope="col" class="p-2">
+                            Pago
                         </th>
                         <th scope="col" class="p-2">
                             Local
@@ -83,6 +89,9 @@
                                 <?php echo getBtweenHours($reservation->id) ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
+                                <?php echo getProtocol($reservation->id) ?>
+                            </td>
+                            <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $reservation->name ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
@@ -96,6 +105,11 @@
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $reservation->payment_type ?>
+                            </td>
+                            <td scope="row" class="p-2 whitespace-nowrap">
+                                <span class="rounded text-xs text-light px-2 py-1 bg-<?php echo (is_null($reservation->status) || $reservation->payment == 'off') ? 'danger' : 'primary' ?>">
+                                    <?php echo (is_null($reservation->payment) || $reservation->payment == 'off') ? 'Não' : 'Sim' ?>
+                                </span>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo getLocationName($reservation->location_id) ?>

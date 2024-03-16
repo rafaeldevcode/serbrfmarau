@@ -118,6 +118,14 @@
                                 ]
                             ]) ?>
                         </div>
+
+                        <div class='w-full md:w-6/12 px-4 mt-6'>
+                            <?php loadHtml(__DIR__.'/form/input-checkbox-switch', [
+                                'name' => 'payment',
+                                'label' => 'Pago? (Não | Sim)',
+                                'value' => isset($reservation) ? $reservation->payment : null
+                            ]) ?>
+                        </div>
                     <?php endif ?>
 
                     <div class='w-full px-4'>
@@ -128,6 +136,17 @@
                             'value' => isset($reservation) ? $reservation->observation : null
                         ]) ?>
                     </div>
+
+                    <?php if($is_admin): ?>
+                        <div class='w-full px-4'>
+                            <?php loadHtml(__DIR__.'/form/text-area', [
+                                'icon' => 'bi bi-card-text',
+                                'name' => 'observation_payment',
+                                'label' => 'Observação (Descreva aqui observações para pagamento)',
+                                'value' => isset($reservation) ? $reservation->observation_payment : null
+                            ]) ?>
+                        </div>
+                    <?php endif ?>
                 </div>
             </section>
 

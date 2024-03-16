@@ -47,7 +47,6 @@ class BodyEmail
             <div style="padding: 1rem; background: #ffffff; border-radius: 5px; color: #1E3E87;">
                 <p>{$text}</p>
                 <p><strong>Protocolo: </strong>{$hash}</p>
-                <p><strong>Linke do protocolo: </strong><a href="{$protocol}">Acessar link</a></p>
             </div>
         EOT;
 

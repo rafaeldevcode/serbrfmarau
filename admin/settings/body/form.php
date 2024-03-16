@@ -204,6 +204,16 @@
                 ]) ?>
             </div>
 
+            <div class='w-full md:w-6/12 px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
+                    'icon' => 'bi bi-key-fill',
+                    'name' => 'pix_key',
+                    'label' => 'Chave pix para pagamento',
+                    'type' => 'text',
+                    'value' => isset($settings) ? $settings->pix_key : ''
+                ]) ?>
+            </div>
+
             <div class='w-full px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-checkbox-switch', [
                     'name' => 'maintenance',

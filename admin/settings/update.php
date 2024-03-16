@@ -41,7 +41,8 @@
         'site_favicon' => $requests->site_favicon ?? null,
         'site_bg_login' => $requests->site_bg_login ?? null,
         'construction' => $construction,
-        'maintenance' => $maintenance
+        'maintenance' => $maintenance,
+        'pix_key' => $requests->pix_key
     ];
 
     if(!isset($current_setting)):
