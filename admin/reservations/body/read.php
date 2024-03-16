@@ -35,6 +35,9 @@
                             Horários
                         </th>
                         <th scope="col" class="p-2">
+                            Protocolo
+                        </th>
+                        <th scope="col" class="p-2">
                             Nome
                         </th>
                         <th scope="col" class="p-2">
@@ -81,6 +84,9 @@
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo getBtweenHours($reservation->id) ?>
+                            </td>
+                            <td scope="row" class="p-2 whitespace-nowrap">
+                                <?php echo getProtocol($reservation->id) ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $reservation->name ?>

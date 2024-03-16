@@ -566,6 +566,22 @@ if (!function_exists('getBtweenHours')):
     }
 endif;
 
+if (!function_exists('getProtocol')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $id
+     * @return ?string
+     */
+    function getProtocol(int $id): ?string
+    {
+        $reservations = new Reservation();
+        $reservation = $reservations->find($id);
+
+        return $reservation->protocols()->data[0]->token;
+    }
+endif;
+
 if (!function_exists('getPrice')):
     /**
      * @since 1.7.0
