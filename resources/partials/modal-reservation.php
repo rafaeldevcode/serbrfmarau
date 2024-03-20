@@ -49,13 +49,16 @@
                     </div>
 
                     <div class='w-full md:w-6/12 px-4'>
-                        <?php loadHtml(__DIR__.'/form/input-default', [
+                        <?php loadHtml(__DIR__.'/form/input-select', [
                             'icon' => 'bi bi-123',
                             'name' => 'identifier',
                             'label' => $is_admin ? 'CPF / Identificado do cliente' : 'CPF',
-                            'type' => 'text',
                             'value' => isset($reservation) ? $reservation->identifier : null,
-                            'attributes' => 'required'
+                            'attributes' => [
+                                'required' => true,
+                                'onchange' => "javascript:Clients.insertClient(event)"
+                            ],
+                            'array' => []
                         ]) ?>
                     </div>
 

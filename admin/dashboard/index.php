@@ -10,6 +10,7 @@
     $location_reservations = [];
 
     $today_reservations = $reservations->where('status', '=', 'Aprovado')->where('day', '=', $day)->get();
+    $today_reservations = is_null($today_reservations) ? [] : $today_reservations;
     $today_reservations = array_filter($today_reservations, function ($item) use($date) {
         return !is_null($item->date) || $item->date === $date;
     });

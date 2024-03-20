@@ -50,6 +50,7 @@
         'route_delete' => $method == 'read' ? '/admin/reservations/delete' : null,
         'route_add' => $method == 'create' ? null : '/admin/reservations?method=create',
         'route_search' => '/admin/reservations',
+        'plugins' => ['select2'],
         'body' => $body,
         'data' => $data,
     ]);
@@ -59,7 +60,10 @@
         loadHtml(__DIR__.'/../../resources/admin/partials/modal-delete'); ?>
         
         <script type="text/javascript" src="<?php asset('assets/scripts/class/HoursAvailable.js') ?>"></script>
+        <script type="text/javascript" src="<?php asset('assets/scripts/class/Clients.js') ?>"></script>
         <script type="text/javascript">
+            Clients.init('#identifier', '/api/clients', 'CPF / Identificado do cliente');
+
             const hoursAvailable = new HoursAvailable();
             hoursAvailable.getHours()
                 .changeLocation()

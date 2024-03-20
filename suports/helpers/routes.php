@@ -53,6 +53,7 @@ if(!function_exists('routes')):
             '/api/gallery/create',
             '/api/hours',
             '/api/locations',
+            '/api/clients',
             "/reservation/protocol/{$slug_two}",
             "/reservation/protocol"
         ];
