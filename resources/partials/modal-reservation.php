@@ -94,6 +94,7 @@
                             'value' => isset($reservation) ? $reservation->event : null,
                             'attributes' => 'required',
                             'array' => [
+                                'Jogo' => 'Jogo',
                                 'Aniversário' => 'Aniversário',
                                 'Casamento' => 'Casamento',
                                 'Formatura' => 'Formatura',
