@@ -18,7 +18,7 @@
     loadHtml(__DIR__.'/../resources/client/layout', [
         'title' => "Local - {$location->data->name}",
         'body' => __DIR__.'/../location/body/read',
-        'plugins' => ['slick'],
+        'plugins' => ['slick', 'select2'],
         'data' => [
             'location' => $location->data,
             'images' => $images->data
@@ -28,7 +28,10 @@
     function loadInFooter() 
     { ?>
         <script type="text/javascript" src="<?php asset('assets/scripts/class/HoursAvailable.js') ?>"></script>
+        <script type="text/javascript" src="<?php asset('assets/scripts/class/Clients.js') ?>"></script>
         <script type="text/javascript">
+            Clients.init('#identifier', '/api/clients', 'CPF');
+
             $(document).ready(function(){
                 $('#carousel').slick({
                     slidesToShow: 1,

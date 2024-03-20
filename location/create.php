@@ -3,6 +3,7 @@
 
     use Src\Email\BodyEmail;
     use Src\Email\EmailServices;
+    use Src\Models\Client;
     use Src\Models\Reservation;
     use Src\Models\Protocol;
     use Src\Models\Time;
@@ -10,8 +11,10 @@
     $schedules = new Time();
     $reservation = new Reservation();
     $protocol = new Protocol();
+    $client = new Client();
 
     $requests = requests();
+    $client = $client->where('cpf', '=', $requests->identifier)->first();
 
     $title = 'Horário reservado!';
     $status = 'Pendente';
@@ -49,6 +52,28 @@
         'reservation_status' => $status,
         'token' => $protocol->generateToken($reservation->id)
     ]);
+
+    if ($client) {
+        $new_client = new Client();
+        $new_client->find($client->id)->update([
+            'email' => $requests->email,
+            'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
+            'cpf' => $requests->identifier,
+            'payment_type' => $requests->payment_type,
+            'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
+            'event' => $requests->event
+        ]);
+    } else {
+        $client = new Client();
+        $client->create([
+            'email' => $requests->email,
+            'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
+            'cpf' => $requests->identifier,
+            'payment_type' => $requests->payment_type,
+            'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
+            'event' => $requests->event
+        ]);
+    }
 
     if(!empty($requests->email)):
         $email = new EmailServices(BodyEmail::protocol($status, $protocol->token, $title, 'create'), $title, $requests->email);

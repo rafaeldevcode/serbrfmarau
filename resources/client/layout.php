@@ -16,6 +16,11 @@
     <link rel='stylesheet' href='<?php asset('libs/tailwind/client/style.css?ver='.APP_VERSION) ?>' />
     <link rel='stylesheet' href='<?php asset('assets/css/globals.css?ver='.APP_VERSION) ?>' />
 
+    <?php if(isset($plugins) && in_array('select2', $plugins)): ?>
+        <link href="<?php asset('libs/select2/select2.min.css?ver='.APP_VERSION)?>" />
+        <link href="<?php asset('libs/select2/select2.min.css?ver='.APP_VERSION) ?>" rel="stylesheet" />
+    <?php endif ?>
+
     <link rel="shortcut icon" href="<?php !is_null(SETTINGS) && !empty(SETTINGS['site_favicon']) ? asset('assets/images/'.SETTINGS['site_favicon'].'') : asset('assets/images/favicon.svg') ?>" alt="Logo <?php echo !is_null(SETTINGS) && !empty(SETTINGS['site_name']) ? SETTINGS['site_name'] : env('APP_NAME') ?>">
 
     <meta name='author' content='Rafael Vieira | github.com/rafaeldevcode' />
@@ -54,6 +59,10 @@
 
     <?php if(isset($plugins) && in_array('slick', $plugins)): ?>
         <script type="text/javascript" src="<?php asset('libs/slick/slick.min.js?ver='.APP_VERSION)?>"></script>
+    <?php endif ?>
+
+    <?php if(isset($plugins) && in_array('select2', $plugins)): ?>
+        <script type="text/javascript" src="<?php asset('libs/select2/select2.full.min.js?ver='.APP_VERSION)?>"></script>
     <?php endif ?>
     
     <script type="text/javascript">

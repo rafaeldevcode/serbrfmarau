@@ -214,6 +214,12 @@ if (!function_exists('getHoursReservation')):
      */
     function getHoursReservation(?int $location_id = null, ?string $date = null, ?int $reservation_id = null, ?string $day = null): array
     {
+        if ($location_id === 0) {
+            return [
+                'hours' => []
+            ];
+        }
+
         $location = new Location();
         $schedules = new Time();
         $reservation = new Reservation();
