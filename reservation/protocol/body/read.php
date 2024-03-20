@@ -36,8 +36,10 @@
                         </div>
 
                         <div class="p-4 rounded border bg-blue-100 text-center border-blue-600">
-                            <?php if(!is_null(SETTINGS) && !empty(SETTINGS['pix_key'])): ?>
-                                <p class="font-bold">Seu pagamento pode ser feito através do pix <span class="text-color-main"><?php echo SETTINGS['pix_key'] ?></span></p>
+                            <?php if($reservation->payment_type === 'Pix' && !is_null(SETTINGS) && !empty(SETTINGS['pix_key'])): ?>
+                                <p class="font-bold">Seu pagamento pode ser feito através do pix <span class="text-color-main"><?php echo SETTINGS['pix_key'] ?>.</span></p>
+                            <?php elseif(!is_null(SETTINGS) && !empty(SETTINGS['pix_key'])): ?>   
+                                <p class="font-bold">Seu método de pagamento é <span class="text-color-main"><?php echo $reservation->payment_type ?></span>, mas se desejar pode efetuar o pagamento via pix: <span class="text-color-main"><?php echo SETTINGS['pix_key'] ?>.</p>
                             <?php endif ?>
 
                             <?php if(!is_null(SETTINGS) && !empty(SETTINGS['whatsapp'])): ?>

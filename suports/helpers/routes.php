@@ -13,6 +13,7 @@ if(!function_exists('routes')):
 
         return [
             '/',
+            '/admin',
             '/admin/dashboard',
             '/admin/users',
             '/admin/users/update',
