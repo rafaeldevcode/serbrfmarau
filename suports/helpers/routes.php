@@ -162,3 +162,27 @@ if(!function_exists('verifySlug')):
         return $array;
     }
 endif;
+
+if(!function_exists('transBreadcrumps')):
+    /**
+     * @since 1.6.0
+     * @param string $path
+     * @return string
+     */
+    function transBreadcrumps(string $path): string 
+    {
+        $breadcrumps = [
+            'admin' => 'admin',
+            'dashboard' => 'dashboard',
+            'users' => 'usuarios',
+            'locations' => 'locais',
+            'categories' => 'categorias',
+            'reservations' => 'reservas',
+            'gallery' => 'galeria',
+            'settings' => 'configuracoes',
+            'profile' => 'perfil'
+        ];
+
+        return isset($breadcrumps[$path]) ? $breadcrumps[$path] : $path;
+    }
+endif;
