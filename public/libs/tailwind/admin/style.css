@@ -863,6 +863,10 @@ video {
   width: 30px;
 }
 
+.w-\[360px\] {
+  width: 360px;
+}
+
 .w-\[400px\] {
   width: 400px;
 }
@@ -877,14 +881,6 @@ video {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-\[350px\] {
-  width: 350px;
-}
-
-.w-\[360px\] {
-  width: 360px;
 }
 
 .max-w-\[1000px\] {
@@ -905,10 +901,6 @@ video {
 
 .max-w-\[none\] {
   max-width: none;
-}
-
-.max-w-sm {
-  max-width: 24rem;
 }
 
 .flex-row {
@@ -1040,6 +1032,11 @@ video {
   border-color: rgb(30 62 135 / var(--tw-border-opacity));
 }
 
+.border-gray-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity));
+}
+
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
@@ -1048,11 +1045,6 @@ video {
 .border-secondary {
   --tw-border-opacity: 1;
   border-color: rgb(108 117 125 / var(--tw-border-opacity));
-}
-
-.border-gray-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
 .bg-color-main {
@@ -1281,10 +1273,6 @@ video {
   font-weight: 500;
 }
 
-.font-normal {
-  font-weight: 400;
-}
-
 .uppercase {
   text-transform: uppercase;
 }
@@ -1340,11 +1328,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-gray-700 {
-  --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
 .antialiased {
@@ -1654,17 +1637,14 @@ video {
   .md\:w-7\/12 {
     width: 58.333333%;
   }
-
-  .md\:flex-row {
-    flex-direction: row;
-  }
-
-  .md\:items-end {
-    align-items: flex-end;
-  }
 }
 
 @media (min-width: 960px) {
+  .lg\:mx-0 {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
   .lg\:w-5\/12 {
     width: 41.666667%;
   }
@@ -1672,31 +1652,8 @@ video {
   .lg\:flex-row {
     flex-direction: row;
   }
-}
 
-@media (prefers-color-scheme: dark) {
-  .dark\:border-gray-700 {
-    --tw-border-opacity: 1;
-    border-color: rgb(55 65 81 / var(--tw-border-opacity));
-  }
-
-  .dark\:bg-gray-800 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(31 41 55 / var(--tw-bg-opacity));
-  }
-
-  .dark\:text-gray-400 {
-    --tw-text-opacity: 1;
-    color: rgb(156 163 175 / var(--tw-text-opacity));
-  }
-
-  .dark\:text-white {
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity));
-  }
-
-  .dark\:hover\:bg-gray-700:hover {
-    --tw-bg-opacity: 1;
-    background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+  .lg\:items-end {
+    align-items: flex-end;
   }
 }
