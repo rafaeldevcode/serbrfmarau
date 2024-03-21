@@ -39,7 +39,7 @@
     <section class='flex flex-nowrap justify-between w-full'>
         <?php loadHtml(__DIR__.'/partials/sidebar') ?>
 
-        <section class='w-full'>
+        <section class='w-calc'>
             <?php loadHtml(__DIR__.'/partials/header') ?>
 
             <?php loadHtml(__DIR__.'/partials/breadcrumps', [

@@ -1,5 +1,5 @@
 <section class='p-3'>
-    <div class='border-b flex justify-between flex-col md:flex-row items-start md:items-end'>
+    <div class='border-b flex justify-between flex-col lg:flex-row items-start lg:items-end'>
         <div>
             <div class="breadcrumps-overflow">
                 <ul class='p-0 flex flex-nowrap text-secondary'>
@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class='flex mb-2 mx-auto md:mx-0'>
+        <div class='flex mb-2 mx-auto lg:mx-0'>
             <div class='flex flex-col sm:flex-row space-y-2 sm:space-y-0 justify-center'>
                 <div class="mx-1">
                     <?php if(isset($route_search)): ?>
