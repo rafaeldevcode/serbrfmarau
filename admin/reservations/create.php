@@ -55,27 +55,29 @@
         'token' => $protocol->generateToken($reservation->id)
     ]);
 
-    if ($client) {
-        $new_client = new Client();
-        $new_client->find($client->id)->update([
-            'email' => $requests->email,
-            'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
-            'cpf' => $requests->identifier,
-            'payment_type' => $requests->payment_type,
-            'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
-            'event' => $requests->event
-        ]);
-    } else {
-        $client = new Client();
-        $client->create([
-            'email' => $requests->email,
-            'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
-            'cpf' => $requests->identifier,
-            'payment_type' => $requests->payment_type,
-            'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
-            'event' => $requests->event
-        ]);
-    }
+    if (isset($requests->identifier) && ! empty($requests->identifier)):
+        if ($client) {
+            $new_client = new Client();
+            $new_client->find($client->id)->update([
+                'email' => $requests->email,
+                'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
+                'cpf' => $requests->identifier,
+                'payment_type' => $requests->payment_type,
+                'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
+                'event' => $requests->event
+            ]);
+        } else {
+            $client = new Client();
+            $client->create([
+                'email' => $requests->email,
+                'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
+                'cpf' => $requests->identifier,
+                'payment_type' => $requests->payment_type,
+                'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
+                'event' => $requests->event
+            ]);
+        }
+    endif;
 
     if(!empty($requests->email)):
         $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->token, $title, 'create'), $title, $requests->email);
