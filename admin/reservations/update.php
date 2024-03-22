@@ -64,7 +64,8 @@
         endforeach;
 
         if(!empty($requests->email)):
-            $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->data->token, $title, 'update'), $title, $requests->email);
+            $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->data->token, $title, 'update'), $title);
+            $email->setEmailTo($requests->email);
             $email->send();
         endif;
     endif;

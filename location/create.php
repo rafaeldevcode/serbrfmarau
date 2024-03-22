@@ -4,6 +4,7 @@
     use Src\Email\BodyEmail;
     use Src\Email\EmailServices;
     use Src\Models\Client;
+    use Src\Models\Location;
     use Src\Models\Reservation;
     use Src\Models\Protocol;
     use Src\Models\Time;
@@ -12,9 +13,12 @@
     $reservation = new Reservation();
     $protocol = new Protocol();
     $client = new Client();
+    $location = new Location();
 
     $requests = requests();
-    $client = $client->where('cpf', '=', $requests->identifier)->first();
+    $identifier = isset($requests->identifier) ? $requests->identifier : null;
+    $client = isset($identifier) ? $client->where('cpf', '=', $identifier)->first() : null;
+    $location = $location->find($requests->location_id);
 
     $title = 'Horário reservado!';
     $status = 'Pendente';
@@ -23,7 +27,7 @@
         'name' => $requests->name,
         'email' => $requests->email,
         'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
-        'identifier' => $requests->identifier,
+        'identifier' => $identifier,
         'type' => 'Normal',
         'payment_type' => $requests->payment_type,
         'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
@@ -53,13 +57,13 @@
         'token' => $protocol->generateToken($reservation->id)
     ]);
 
-    if (isset($requests->identifier) && ! empty($requests->identifier)):
+    if (isset($identifier) && ! empty($identifier)):
         if ($client) {
             $new_client = new Client();
             $new_client->find($client->id)->update([
                 'email' => $requests->email,
                 'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
-                'cpf' => $requests->identifier,
+                'cpf' => $identifier,
                 'payment_type' => $requests->payment_type,
                 'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
                 'event' => $requests->event
@@ -69,7 +73,7 @@
             $client->create([
                 'email' => $requests->email,
                 'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
-                'cpf' => $requests->identifier,
+                'cpf' => $identifier,
                 'payment_type' => $requests->payment_type,
                 'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
                 'event' => $requests->event
@@ -77,10 +81,12 @@
         }
     endif;
 
-    if(!empty($requests->email)):
-        $email = new EmailServices(BodyEmail::protocol($status, $protocol->token, $title, 'create'), $title, $requests->email);
-        $email->send();
-    endif;
+    $email = new EmailServices(BodyEmail::protocol($status, $protocol->token, $title, 'create'), $title);
+    
+    $email->setEmailTo($location->data->email);
+    if(!empty($requests->email)) $email->setEmailTo($requests->email);
+    
+    $email->send();
 
     session([
         'message' => 'Reserva adicionada com sucesso!',

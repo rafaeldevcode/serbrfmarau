@@ -19,23 +19,53 @@ class EmailServices
     private $subject;
 
     /**
-     * @var string $email_to
+     * @var array $email_to
      */
-    private $email_to;
+    private $emails_to;
+
+    /**
+     * @var PHPMailer $mail
+     */
+    private $mail;
 
     /**
      * @since 1.1.0
      * 
      * @param string $body
      * @param string $subject
-     * @param ?string $email_to
      * @return void
      */
-    public function __construct(string $body, string $subject, ?string $email_to = null)
+    public function __construct(string $body, string $subject)
     {
         $this->body = $body;
         $this->subject = $subject;
-        $this->email_to = is_null($email_to) ? env('SMTP_EMAIL_TO') : $email_to;
+        $this->mail = new PHPMailer(true);
+        $this->emails_to = [];
+    }
+
+    /**
+     * @since 1.0.0
+     * 
+     * @param string $email
+     * @return self
+     */
+    public function setEmailTo(string $email): self
+    {
+        array_push($this->emails_to, $email);
+
+        return $this;
+    }
+
+    /**
+     * @since 1.0.0
+     * 
+     * @return void
+     */
+    public function setAddress(): void
+    {
+        foreach($this->emails_to as $email):
+            $this->mail->addAddress($email);
+        endforeach;
     }
 
     /**
@@ -46,27 +76,25 @@ class EmailServices
     public function send(): void
     {
         if (env('SMTP_SERVICE') === 'true'):
-            $mail = new PHPMailer(true);
+            // $this->mail->SMTPDebug  = SMTP::DEBUG_SERVER;
+            // $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $this->mail->isSMTP();
+            $this->mail->Host = env('SMTP_HOST');
+            $this->mail->SMTPAuth = true;
+            $this->mail->Username = env('SMTP_USERNAME');
+            $this->mail->Password = env('SMTP_PASSWORD');
+            $this->mail->Port = env('SMTP_PORT');
 
-            // $mail->SMTPDebug  = SMTP::DEBUG_SERVER;
-            // $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            $mail->isSMTP();
-            $mail->Host = env('SMTP_HOST');
-            $mail->SMTPAuth = true;
-            $mail->Username = env('SMTP_USERNAME');
-            $mail->Password = env('SMTP_PASSWORD');
-            $mail->Port = env('SMTP_PORT');
+            $this->mail->setFrom(env('SMTP_EMAIL_FROM'));
+            $this->setAddress();
 
-            $mail->setFrom(env('SMTP_EMAIL_FROM'));
-            $mail->addAddress($this->email_to);
+            $this->mail->isHTML(true);
+            $this->mail->Subject = $this->subject;
+            $this->mail->Body = $this->body;
+            $this->mail->AltBody = $this->body;
+            $this->mail->CharSet = 'UTF-8';
 
-            $mail->isHTML(true);
-            $mail->Subject = $this->subject;
-            $mail->Body = $this->body;
-            $mail->AltBody = $this->body;
-            $mail->CharSet = 'UTF-8';
-
-            $mail->send();
+            $this->mail->send();
         endif;
     }
 }

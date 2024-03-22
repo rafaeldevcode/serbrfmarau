@@ -80,7 +80,8 @@
     endif;
 
     if(!empty($requests->email)):
-        $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->token, $title, 'create'), $title, $requests->email);
+        $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->token, $title, 'create'), $title);
+        $email->setEmailTo($requests->email);
         $email->send();
     endif;
 
