@@ -2,6 +2,7 @@
 
 use Src\Models\Gallery;
 use Src\Models\Location;
+use Src\Models\Protocol;
 use Src\Models\Reservation;
 use Src\Models\Time;
 
@@ -632,14 +633,20 @@ if (!function_exists('filterReservations')):
     function filterReservations(Reservation $reservation)
     {
         $requests = requests();
-        $status = isset($requests->status) ? $requests->status : '';
+
+        if(!empty($requests->protocol)):
+            $protocol = new Protocol();
+            $protocol = $protocol->where('token', '=', $requests->protocol)->first();
+            
+            $reservation = $reservation->where('id', '=', $protocol->reservation_id);
+        endif;
 
         if(isset($requests->search)):
             $reservation = $reservation->where('name', 'LIKE', "%{$requests->search}%");
         endif;
 
         if(isset($requests->status) && !empty($requests->status)):
-            $reservation = $reservation->where('status', '=', $status);
+            $reservation = $reservation->where('status', '=', $requests->status);
         endif;
 
         if(isset($requests->reservation_type) && !empty($requests->reservation_type)):
