@@ -293,8 +293,8 @@ if (!function_exists('getHoursReservation')):
                 $blocked_two = in_array($hour_two, $active_hours) ? false : true;
             endif;
 
-            $checked_one = in_array($hour_one, $reservation_schedules) ? true : false;
-            $checked_two = in_array($hour_two, $reservation_schedules) ? true : false;
+            $checked_one = in_array($hour_one, $schedules) ? true : false;
+            $checked_two = in_array($hour_two, $schedules) ? true : false;
 
             $blocked_one = $checked_one && $location->data->type == 'period' ? true : $blocked_one;
             $blocked_two = $checked_two && $location->data->type == 'period' ? true : $blocked_two;

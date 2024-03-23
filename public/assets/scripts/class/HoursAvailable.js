@@ -59,7 +59,7 @@ class HoursAvailable {
                 let hasSelected = false;
                 
                 checkboxes.forEach((checkbox) => {
-                    if (checkbox.checked) {
+                    if (checkbox.checked && !checkbox.disabled) {
                         hasSelected = true;
                     }
                 });
@@ -147,7 +147,7 @@ class HoursAvailable {
 
         setTimeout(() => {
             checkboxes.each(function (index, checkbox) {
-                if (checkbox.checked) {
+                if (checkbox.checked && !checkbox.disabled) {
                     count++;
                 }
             });
@@ -191,17 +191,26 @@ class HoursAvailable {
         const hoursHidden = this.typeReservation == 'hour' ? [] : this.hoursHidden;
         const classHidden = hoursHidden.includes(date.hour) ? ' hidden' : '';
         const classBlock = date.blocked ? 'border-danger bg-danger text-white opacity-50' : 'border-color-main';
+        const classChecked = date.checked ? 'bg-gray-100' : 'bg-white';
         const dateFormat = (this.type.val() === 'Normal' || this.type.val() === undefined) ? this.getDateFormated() : this.translateDay();
 
         const tr = $('<tr />');
-        tr.attr('class', `bg-white border-b hover:bg-gray-100 text-gray-900${classHidden}`);
+        tr.attr('class', `${classChecked} border-b hover:bg-gray-100 text-gray-900${classHidden}`);
+
+        const badge = $('<span /></span>');
+        badge.attr('class', 'rounded text-xs text-light px-2 py-1 bg-color-main mb-1');
+        badge.text('Reservado');
 
         const tdTitle = $('<td />');
         tdTitle.attr({
-            class: 'px-2 py-4 whitespace-nowrap text-secondary',
+            class: 'px-2 py-4 whitespace-nowrap text-secondary flex flex-col-reverse items-start',
             scope: 'row'
         });
         tdTitle.text(`${dateFormat} - ${date.hour} às ${this.getLastHour(date.hour, nextDate.hour)}`);
+
+        if (date.checked) {
+            tdTitle.append(badge);
+        }
         
         const tdPrice = $('<td />');
         tdPrice.attr({
