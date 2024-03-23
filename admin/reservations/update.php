@@ -21,7 +21,7 @@
         'name' => $requests->name,
         'email' => $requests->email,
         'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
-        'identifier' => $requests->identifier,
+        'identifier' => isset($requests->identifier) ? $requests->identifier : null,
         'type' => isset($requests->type) ? $requests->type : 'Normal',
         'payment_type' => $requests->payment_type,
         'amount_people' => empty($requests->amount_people) ? 0 : $requests->amount_people,

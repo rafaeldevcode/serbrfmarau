@@ -14,7 +14,8 @@
     $client = new Client();
 
     $requests = requests();
-    $client = $client->where('cpf', '=', $requests->identifier)->first();
+    $identifier = isset($requests->identifier) ? $requests->identifier : null;
+    $client = isset($identifier) ? $client->where('cpf', '=', $identifier)->first() : null;
 
     $title = 'Horário reservado!';
     $payment = isset($requests->payment) ? $requests->payment : 'off';
@@ -23,7 +24,7 @@
         'name' => $requests->name,
         'email' => $requests->email,
         'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
-        'identifier' => $requests->identifier,
+        'identifier' => $identifier,
         'type' => isset($requests->type) ? $requests->type : 'Normal',
         'payment_type' => $requests->payment_type,
         'amount_people' => empty($requests->amount_people) ? 0 : $requests->amount_people,
@@ -55,13 +56,13 @@
         'token' => $protocol->generateToken($reservation->id)
     ]);
 
-    if (isset($requests->identifier) && ! empty($requests->identifier)):
+    if (isset($identifier) && ! empty($identifier)):
         if ($client) {
             $new_client = new Client();
             $new_client->find($client->id)->update([
                 'email' => $requests->email,
                 'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
-                'cpf' => $requests->identifier,
+                'cpf' => $identifier,
                 'payment_type' => $requests->payment_type,
                 'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
                 'event' => $requests->event
@@ -71,7 +72,7 @@
             $client->create([
                 'email' => $requests->email,
                 'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
-                'cpf' => $requests->identifier,
+                'cpf' => $identifier,
                 'payment_type' => $requests->payment_type,
                 'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
                 'event' => $requests->event
