@@ -8,7 +8,7 @@
         $reservation_id = isset($requests->reservation_id) ? $requests->reservation_id : null;
         $day = isset($requests->day) ? $requests->day : null;
 
-        $data = getHoursReservation($requests->location_id, $requests->date, $reservation_id, $day);
+        $data = getHoursReservation($requests->location_id, $requests->date, $reservation_id, $day, $requests->block_previous);
     else:
         $data = ['success' => false, 'message' => 'Method Not Allowed'];
     endif;

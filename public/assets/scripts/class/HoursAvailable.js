@@ -21,6 +21,8 @@ class HoursAvailable {
         this.typeReservation = null;
         this.hoursHidden = this.getHoursHidden();
         this.currentHour = '09:00';
+        this.body = $('[data-list="hours"]');
+        this.blockPreviusHours = true;
     }
 
     /**
@@ -190,7 +192,7 @@ class HoursAvailable {
 
         const hoursHidden = this.typeReservation == 'hour' ? [] : this.hoursHidden;
         const classHidden = hoursHidden.includes(date.hour) ? ' hidden' : '';
-        const classBlock = date.blocked ? 'border-danger bg-danger text-white opacity-50' : 'border-color-main';
+        // const classBlock = date.blocked ? 'border-danger bg-danger text-white opacity-50' : 'border-color-main';
         const classChecked = date.checked ? 'bg-gray-100' : 'bg-white';
         const dateFormat = (this.type.val() === 'Normal' || this.type.val() === undefined) ? this.getDateFormated() : this.translateDay();
 
@@ -247,7 +249,7 @@ class HoursAvailable {
 
         const label = $('<label />');
         label.attr({
-            class: `p-2 rounded border pointer text-gray-500 block text-xs ${classBlock}`,
+            class: `p-2 rounded border pointer text-gray-500 block text-xs border-color-main opacity-50`,
             for: `hour_${key}`
         });
 
@@ -262,7 +264,7 @@ class HoursAvailable {
         tr.append(tdPrice);
         tr.append(tdAction);
 
-        $('[data-list="hours"]').append(tr);
+        this.body.append(tr);
 
         if(classHidden === '') this.countBlock = this.countBlock + 1;
 
@@ -291,7 +293,7 @@ class HoursAvailable {
 
         td.append(p);
         tr.append(td);
-        $('[data-list="hours"]').append(tr);
+        this.body.append(tr);
     }
 
     /**
@@ -301,7 +303,7 @@ class HoursAvailable {
      */
     clearBlockHours () {
         this.countBlock = 0;
-        $('[data-list="hours"]').html('');
+        this.body.html('');
     }
 
     /**
@@ -715,7 +717,8 @@ class HoursAvailable {
                     date: this.date.attr('disabled') === 'disabled' ? null : this.date.val(),
                     reservation_id: this.reservetionId.val(),
                     location_id: this.location.val() === undefined ? 0 : this.location.val(),
-                    day: this.day.attr('disabled') === 'disabled' ? null : this.day.val()
+                    day: this.day.attr('disabled') === 'disabled' ? null : this.day.val(),
+                    block_previous: this.blockPreviusHours
                 },
                 success: function(response) {
                     resolve(response);

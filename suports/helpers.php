@@ -211,9 +211,10 @@ if (!function_exists('getHoursReservation')):
      * @param ?string $date
      * @param ?int $reservation_id
      * @param ?string $day
+     * @param string $block_previous
      * @return array
      */
-    function getHoursReservation(?int $location_id = null, ?string $date = null, ?int $reservation_id = null, ?string $day = null): array
+    function getHoursReservation(?int $location_id = null, ?string $date = null, ?int $reservation_id = null, ?string $day = null, string $block_previous = 'true'): array
     {
         if ($location_id === 0) {
             return [
@@ -272,20 +273,24 @@ if (!function_exists('getHoursReservation')):
 
         $schedules = array_diff($schedules, $reservation_schedules);
 
-        if(! empty($date) && isset($opening_date) && $opening_date > $date && date('Y-m-d') <= $date):
-            $active_hours = array_diff($active_hours, $schedules);
-        elseif(empty($date) && in_array($day, $opening_days)):
-            $active_hours = array_diff($active_hours, $schedules);
+        if($block_previous === 'true'):
+            if(! empty($date) && isset($opening_date) && $opening_date > $date && date('Y-m-d') <= $date):
+                $active_hours = array_diff($active_hours, $schedules);
+            elseif(empty($date) && in_array($day, $opening_days)):
+                $active_hours = array_diff($active_hours, $schedules);
+            else:
+                $active_hours = [];
+                $data['message'] = 'Horários ainda não liberados pelo sistema, para mais informações entre em contato via WhatsApp!';
+            endif;
         else:
-            $active_hours = [];
-            $data['message'] = 'Horários ainda não liberados pelo sistema, para mais informações entre em contato via WhatsApp!';
+            $active_hours = array_diff($active_hours, $schedules);
         endif;
 
         for ($i = 0; $i < 24; $i++) :
             $hour_one = strlen($i) == 1 ? "0{$i}:00" : "{$i}:00";
             $hour_two = strlen($i) == 1 ? "0{$i}:30" : "{$i}:30";
 
-            if($current_date === $date):
+            if($block_previous === 'true' && $current_date === $date):
                 $blocked_one = in_array($hour_one, $active_hours) && $hour_one > $current_hour ? false : true;
                 $blocked_two = in_array($hour_two, $active_hours) && $hour_two > $current_hour ? false : true;
             else:

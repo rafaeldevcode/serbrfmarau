@@ -20,4 +20,39 @@
             <?php endforeach ?>
         </div>
     </div>
+
+    <div class="px-2">
+        <h2 class="mb-2 text-3xl font-bold tracking-tight text-color-main border-b pb-2">Horários por locais</h2>
+
+        <?php foreach($location_reservations as $reservation): ?>
+            <form class="mb-4">
+                <input type="hidden" name="location_id" value="<?php echo $reservation['id'] ?>">
+                <input type="hidden" name="type" value="<?php echo $reservation['type'] ?>">
+
+                <div data-reservation="false" class="bg-gray-200 p-2 rounded-t font-bold text-gray-800 flex justify-between items-center pointer">
+                    <span class="flex items-center gap-2">
+                        <i class="bi bi-chevron-down" data-icon="id"></i>
+                        <?php echo $reservation['location'] ?>
+                    </span>
+
+                    <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
+                        'icon' => 'bi bi-calendar-event-fill',
+                        'name' => 'date',
+                        'type' => 'date',
+                        'value' => date('Y-m-d'),
+                        'attributes' => [
+                            'data-date' => 'date'
+                        ]
+                    ]) ?>
+                </div>
+
+                <div class="rounded-b border border-gray-200">
+                    <table class="w-full text-xs text-left">
+                        <tbody data-list="hours">
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        <?php endforeach ?>
+    </div>
 </section>
