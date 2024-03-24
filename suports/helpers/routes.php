@@ -175,7 +175,7 @@ if(!function_exists('transBreadcrumps')):
     {
         $breadcrumps = [
             'admin' => 'admin',
-            'dashboard' => 'dashboard',
+            'dashboard' => 'painel',
             'users' => 'usuarios',
             'locations' => 'locais',
             'categories' => 'categorias',
