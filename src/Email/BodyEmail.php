@@ -37,7 +37,6 @@ class BodyEmail
      */
     public static function protocol(string $status, string $hash, string $title = '', string $type = 'create'): string
     {
-        $protocol = route("/reservation/protocol/{$hash}", false, false);
         $site = !is_null(SETTINGS) && !empty(SETTINGS['site_name']) ? SETTINGS['site_name'] : '';
         $text = $type === 'create'
             ? "Olá, aqui é a equipe da <strong>{$site}</strong>, este email é para comunicar que seu horário foi reservado e está em processo de aprovação. Você receberá um novo email quando o mesmo for aprovado ou tiver seu status alterado."

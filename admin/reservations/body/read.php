@@ -106,18 +106,38 @@
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $reservation->payment_type ?>
                             </td>
-                            <td scope="row" class="p-2 whitespace-nowrap">
-                                <span class="rounded text-xs text-light px-2 py-1 bg-<?php echo (is_null($reservation->status) || $reservation->payment == 'off') ? 'danger' : 'primary' ?>">
-                                    <?php echo (is_null($reservation->payment) || $reservation->payment == 'off') ? 'Não' : 'Sim' ?>
+                            <td scope="row" class="p-2">
+                                <span class="flex items-center">
+                                    <span data-status="<?php echo $reservation->payment ?>" class="rounded text-xs text-light px-2 py-1 bg-<?php echo (is_null($reservation->status) || $reservation->payment == 'off') ? 'danger' : 'primary' ?>">
+                                        <?php echo (is_null($reservation->payment) || $reservation->payment == 'off') ? 'Não' : 'Sim' ?>
+                                    </span>
+                                    <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-checkbox-switch', [
+                                        'name' => 'payment',
+                                        'label' => '',
+                                        'value' => $reservation->payment,
+                                        'attributes' => [
+                                            'data-reservation-payment' => $reservation->id
+                                        ]
+                                    ]) ?>
                                 </span>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo getLocationName($reservation->location_id) ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
-                                <span class="rounded text-xs text-light px-2 py-1 bg-<?php echo getBadgeReservationStatus($reservation->status) ?>">
-                                    <?php echo $reservation->status ?>
-                                </span>
+                                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
+                                    'name' => 'status',
+                                    'value' => $reservation->status,
+                                    'attributes' => [
+                                        'data-reservation-status' => $reservation->id
+                                    ],
+                                    'array' => [
+                                        'Pendente' => 'Pendente',
+                                        'Aprovado' => 'Aprovado',
+                                        'Reprovado' => 'Reprovado',
+                                        'Finalizado' => 'Finalizado'
+                                    ]
+                                ]) ?>
                             </td>
                             <td class="flex items-center justify-end p-2 space-x-2 right">
                                 <a href="<?php route("/admin/reservations/?method=edit&id={$reservation->id}") ?>" title='Editar reserva <?php echo $reservation->name ?>' class='text-xs p-2 rounded btn-primary text-light fw-bold'>

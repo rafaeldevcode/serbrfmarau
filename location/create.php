@@ -82,10 +82,8 @@
     endif;
 
     $email = new EmailServices(BodyEmail::protocol($status, $protocol->token, $title, 'create'), $title);
-    
     $email->setEmailTo($location->data->email);
     if(!empty($requests->email)) $email->setEmailTo($requests->email);
-    
     $email->send();
 
     session([

@@ -3,6 +3,7 @@
 
     use Src\Email\BodyEmail;
     use Src\Email\EmailServices;
+    use Src\Models\Location;
     use Src\Models\Reservation;
     use Src\Models\Protocol;
     use Src\Models\Time;
@@ -10,12 +11,14 @@
     $schedules = new Time();
     $reservation = new Reservation();
     $protocol = new Protocol();
+    $location = new Location();
 
     $requests = requests();
     $reservation = $reservation->find($requests->id);
     $title = 'Status do horário atualizado!';
     $current_status = $reservation->data->status;
     $payment = isset($requests->payment) ? $requests->payment : 'off';
+    $location = $location->find($requests->location_id);
 
     $reservation->update([
         'name' => $requests->name,
@@ -63,11 +66,10 @@
             $schedules->find($item->id)->update(['status' => $requests->status]);
         endforeach;
 
-        if(!empty($requests->email)):
-            $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->data->token, $title, 'update'), $title);
-            $email->setEmailTo($requests->email);
-            $email->send();
-        endif;
+        $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->data->token, $title, 'update'), $title);
+        $email->setEmailTo($location->data->email);
+        if(!empty($requests->email)) $email->setEmailTo($requests->email);
+        $email->send();
     endif;
 
     session([

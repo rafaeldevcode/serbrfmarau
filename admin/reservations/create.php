@@ -4,6 +4,7 @@
     use Src\Email\BodyEmail;
     use Src\Email\EmailServices;
     use Src\Models\Client;
+    use Src\Models\Location;
     use Src\Models\Protocol;
     use Src\Models\Reservation;
     use Src\Models\Time;
@@ -12,10 +13,12 @@
     $reservation = new Reservation();
     $protocol = new Protocol();
     $client = new Client();
+    $location = new Location();
 
     $requests = requests();
     $identifier = isset($requests->identifier) ? $requests->identifier : null;
     $client = isset($identifier) ? $client->where('cpf', '=', $identifier)->first() : null;
+    $location = $location->find($requests->location_id);
 
     $title = 'Horário reservado!';
     $payment = isset($requests->payment) ? $requests->payment : 'off';
@@ -80,11 +83,10 @@
         }
     endif;
 
-    if(!empty($requests->email)):
-        $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->token, $title, 'create'), $title);
-        $email->setEmailTo($requests->email);
-        $email->send();
-    endif;
+    $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->token, $title, 'create'), $title);
+    $email->setEmailTo($location->data->email);
+    if(!empty($requests->email)) $email->setEmailTo($requests->email);
+    $email->send();
 
     session([
         'message' => 'Reserva Realizada com sucesso!',
