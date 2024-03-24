@@ -17,7 +17,7 @@
                     'name' => 'date',
                     'label' => 'Data',
                     'type' => 'date',
-                    'value' => isset($reservation) ? $reservation->date : date('Y-m-d')
+                    'value' => isset($reservation, $reservation->date) ? $reservation->date : date('Y-m-d')
                 ]) ?>
             </div>
 

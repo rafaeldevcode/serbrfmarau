@@ -2,6 +2,7 @@
 
 use Src\Models\Gallery;
 use Src\Models\Location;
+use Src\Models\Payment;
 use Src\Models\Protocol;
 use Src\Models\Reservation;
 use Src\Models\Time;
@@ -12,7 +13,7 @@ require __DIR__.'/helpers/requests.php';
 require __DIR__.'/helpers/menus-admin.php';
 require __DIR__.'/helpers/routes.php';
 
-!defined('APP_VERSION') && define('APP_VERSION', '1.7.3');
+!defined('APP_VERSION') && define('APP_VERSION', '1.7.4');
 
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -298,8 +299,13 @@ if (!function_exists('getHoursReservation')):
                 $blocked_two = in_array($hour_two, $active_hours) ? false : true;
             endif;
 
-            $checked_one = in_array($hour_one, $schedules) ? true : false;
-            $checked_two = in_array($hour_two, $schedules) ? true : false;
+            if ($block_previous === 'false'):
+                $checked_one = in_array($hour_one, $schedules) ? true : false;
+                $checked_two = in_array($hour_two, $schedules) ? true : false;
+            else:
+                $checked_one = in_array($hour_one, $reservation_schedules) ? true : false;
+                $checked_two = in_array($hour_two, $reservation_schedules) ? true : false;
+            endif;
 
             $blocked_one = $checked_one && $location->data->type == 'period' ? true : $blocked_one;
             $blocked_two = $checked_two && $location->data->type == 'period' ? true : $blocked_two;
@@ -685,6 +691,82 @@ if (!function_exists('filterSchedules')):
         endforeach;
 
         return $schedules;
+    }
+endif;
+
+if (!function_exists('generatePayments')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param ?string $type
+     * @param ?string $date
+     * @param array
+     */
+    function generatePayments(?string $type, ?string $date): array
+    {
+        $date = is_null($date) ? date('Y-m-d') : $date;
+        $payments = [];
+
+        if(! isset($type) || $type === 'Normal'):
+            $week = date('W', strtotime($date));
+            $month = date('n', strtotime($date));
+            $year = date('Y', strtotime($date));
+            
+            array_push($payments, "{$year}:{$month}:{$week}");
+        else:
+            $current_week = date('W', strtotime($date));
+            $month = date('n', strtotime($date));
+            $year = date('Y', strtotime($date));
+            $weeks = array_filter(getWeeksMonth($year, $month), function ($item) use($current_week) {
+                return (int)$item >= (int) $current_week;
+            });
+
+            foreach($weeks as $week):
+                array_push($payments, "{$year}:{$month}:{$week}");
+            endforeach;
+        endif;
+
+        return $payments;
+    }
+endif;
+
+if (!function_exists('getPaymentIds')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $reservation_id
+     * @param string $type
+     * @return array
+     */
+    function getPaymentIds(int $reservation_id): array
+    {
+        $payment = new Payment();
+        $payments = $payment->where('reservation_id', '=', $reservation_id)->get();
+        $payments = getArraySelect($payments, 'id', 'status');
+
+        return $payments;
+    }
+endif;
+
+if (!function_exists('getWeeksMonth')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param string $year
+     * @param string $month
+     * @return array
+     */
+    function getWeeksMonth(string $year, string $month): array
+    {
+        $weeks = [];
+
+        for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, $month, $year); $day++) {
+            $week = date('W', strtotime("$year-$month-$day"));
+
+            $weeks[$week][] = "$year-$month-$day";
+        }
+
+        return array_keys($weeks);
     }
 endif;
 

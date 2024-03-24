@@ -122,13 +122,15 @@
                             ]) ?>
                         </div>
 
-                        <div class='w-full md:w-6/12 px-4 mt-6'>
-                            <?php loadHtml(__DIR__.'/form/input-checkbox-switch', [
-                                'name' => 'payment',
-                                'label' => 'Pago? (Não | Sim)',
-                                'value' => isset($reservation) ? $reservation->payment : null
-                            ]) ?>
-                        </div>
+                        <?php if (!isset($reservation)): ?>
+                            <div class='w-full md:w-6/12 px-4 mt-6'>
+                                <?php loadHtml(__DIR__.'/form/input-checkbox-switch', [
+                                    'name' => 'payment',
+                                    'label' => 'Pago? (Não | Sim)',
+                                    'value' => null
+                                ]) ?>
+                            </div>
+                        <?php endif ?>
                     <?php endif ?>
 
                     <div class='w-full px-4'>

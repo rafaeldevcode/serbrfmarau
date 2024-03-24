@@ -16,7 +16,6 @@ class ChangeReservations extends ExecuteMigrations
     public function init()
     {
         $this->text('observation_payment')->after('day')->nullable();
-        $this->char('payment', 3)->after('day')->default('off');
 
         $this->update();
     }

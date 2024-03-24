@@ -66,7 +66,8 @@
             Clients.init('#identifier', '/api/clients', 'CPF / Identificado do cliente');
 
             UpdateReservation.payment()
-                .status();
+                .status()
+                .openModal();
 
             const hoursAvailable = new HoursAvailable();
             hoursAvailable.getHours()

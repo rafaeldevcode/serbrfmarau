@@ -3,6 +3,7 @@
     use Src\Email\BodyEmail;
     use Src\Email\EmailServices;
     use Src\Models\Location;
+    use Src\Models\Payment;
     use Src\Models\Protocol;
     use Src\Models\Reservation;
     use Src\Models\Time;
@@ -13,16 +14,15 @@
         $data = ['success' => false, 'message' => 'Method Not Allowed'];
     else:
         $requests = requests();
-        $reservation = new Reservation();
-        $reservation = $reservation->find($requests->id);
-
-        $data = $requests->type === 'payment' ? ['payment' => $requests->payment] : ['status' => $requests->status];
-
-        $reservation->update($data);
-
-        $data = ['success' => true, 'message' => 'Status alterado com sucesso', 'data' => $data];
 
         if($requests->type === 'status'):
+            $reservation = new Reservation();
+            $reservation = $reservation->find($requests->id);
+    
+            $reservation->update(['status' => $requests->status]);
+    
+            $data = ['success' => true, 'message' => 'Status alterado com sucesso', 'data' => ['status' => $requests->status]];
+
             $protocol = new Protocol();
             $schedules = new Time();
             $location = new Location();
@@ -42,6 +42,13 @@
             if(!empty($reservation->data->email)) $email->setEmailTo($reservation->data->email);
             $email->setEmailTo($location->data->email);
             $email->send();
+        elseif($requests->type === 'payment'):
+            $payment = new Payment();
+            $payment = $payment->find((int)$requests->id);
+    
+            $payment->update(['status' => $requests->payment]);
+    
+            $data = ['success' => true, 'message' => 'Status de pagamento alterado com sucesso', 'data' => ['payment' => $requests->payment]];
         endif;
     endif;
 

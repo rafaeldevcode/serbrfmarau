@@ -192,7 +192,7 @@ class HoursAvailable {
 
         const hoursHidden = this.typeReservation == 'hour' ? [] : this.hoursHidden;
         const classHidden = hoursHidden.includes(date.hour) ? ' hidden' : '';
-        // const classBlock = date.blocked ? 'border-danger bg-danger text-white opacity-50' : 'border-color-main';
+        const classBlock = date.blocked ? 'border-color-main bg-color-main text-white opacity-50' : 'border-color-main';
         const classChecked = date.checked ? 'bg-gray-100' : 'bg-white';
         const dateFormat = (this.type.val() === 'Normal' || this.type.val() === undefined) ? this.getDateFormated() : this.translateDay();
 
@@ -249,7 +249,7 @@ class HoursAvailable {
 
         const label = $('<label />');
         label.attr({
-            class: `p-2 rounded border pointer text-gray-500 block text-xs border-color-main opacity-50`,
+            class: `p-2 rounded border pointer text-gray-500 block text-xs ${classBlock}`,
             for: `hour_${key}`
         });
 
@@ -344,13 +344,21 @@ class HoursAvailable {
                 $('[for=amount_people]').find('span').text('');
             }
 
-            this.type.val('Normal');
+            // this.type.val('Normal');
 
-            this.day.attr('disabled', true);
-            this.day.parent().parent().parent().hide();
+            if (this.type.val() === 'Fixo') {
+                this.date.attr('disabled', true);
+                this.date.parent().parent().parent().hide();
+    
+                this.day.attr('disabled', false);
+                this.day.parent().parent().parent().show();
+            } else {
+                this.day.attr('disabled', true);
+                this.day.parent().parent().parent().hide();
 
-            this.date.attr('disabled', false);
-            this.date.parent().parent().parent().show();
+                this.date.attr('disabled', false);
+                this.date.parent().parent().parent().show();
+            }
         }
 
         this.typeReservation = response.data.type;

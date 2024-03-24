@@ -5,6 +5,7 @@
     use Src\Email\EmailServices;
     use Src\Models\Client;
     use Src\Models\Location;
+    use Src\Models\Payment;
     use Src\Models\Protocol;
     use Src\Models\Reservation;
     use Src\Models\Time;
@@ -14,6 +15,7 @@
     $protocol = new Protocol();
     $client = new Client();
     $location = new Location();
+    $payment = new Payment();
 
     $requests = requests();
     $identifier = isset($requests->identifier) ? $requests->identifier : null;
@@ -21,7 +23,7 @@
     $location = $location->find($requests->location_id);
 
     $title = 'Horário reservado!';
-    $payment = isset($requests->payment) ? $requests->payment : 'off';
+    $payments = generatePayments(isset($requests->type) ? $requests->type : null, isset($requests->date) ? $requests->date : null);
 
     $reservation = $reservation->create([
         'name' => $requests->name,
@@ -38,7 +40,6 @@
         'status' => $requests->status,
         'date' => empty($requests->day) ? $requests->date : null,
         'day' => ! empty($requests->day) ? $requests->day : date('l', strtotime($requests->date)),
-        'payment' => $payment,
         'observation_payment' => $requests->observation_payment
     ]);
 
@@ -82,6 +83,14 @@
             ]);
         }
     endif;
+
+    foreach($payments as $token):
+        $payment->create([
+            'token' => $token,
+            'status' => isset($requests->payment) ? $requests->payment : 'off',
+            'reservation_id' => $reservation->id
+        ]);
+    endforeach;
 
     $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->token, $title, 'create'), $title);
     $email->setEmailTo($location->data->email);

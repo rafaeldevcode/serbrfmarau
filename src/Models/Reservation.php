@@ -35,4 +35,14 @@ class Reservation extends Model
     {
         return $this->hasMany(Protocol::class, 'protocols', 'reservation_id');
     }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @return Payment
+     */
+    public function payments(): Payment
+    {
+        return $this->hasMany(Payment::class, 'payments', 'reservation_id');
+    }
 }

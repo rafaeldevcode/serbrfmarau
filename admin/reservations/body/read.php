@@ -108,17 +108,32 @@
                             </td>
                             <td scope="row" class="p-2">
                                 <span class="flex items-center">
-                                    <span data-status="<?php echo $reservation->payment ?>" class="rounded text-xs text-light px-2 py-1 bg-<?php echo (is_null($reservation->status) || $reservation->payment == 'off') ? 'danger' : 'primary' ?>">
-                                        <?php echo (is_null($reservation->payment) || $reservation->payment == 'off') ? 'Não' : 'Sim' ?>
-                                    </span>
-                                    <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-checkbox-switch', [
-                                        'name' => 'payment',
-                                        'label' => '',
-                                        'value' => $reservation->payment,
-                                        'attributes' => [
-                                            'data-reservation-payment' => $reservation->id
-                                        ]
-                                    ]) ?>
+                                    <?php if($reservation->type === 'Normal'): ?>
+                                        <!-- <span data-status="<?php echo $reservation->payment ?>" class="rounded text-xs text-light px-2 py-1 bg-<?php echo (is_null($reservation->status) || $reservation->payment == 'off') ? 'danger' : 'primary' ?>">
+                                            <?php echo (is_null($reservation->payment) || $reservation->payment == 'off') ? 'Não' : 'Sim' ?>
+                                        </span> -->
+
+                                        <?php 
+                                        $payments = getPaymentIds($reservation->id);
+
+                                        loadHtml(__DIR__.'/../../../resources/partials/form/input-checkbox-switch', [
+                                            'name' => 'payment',
+                                            'label' => '',
+                                            'value' => array_values($payments)[0],
+                                            'attributes' => [
+                                                'data-reservation-payment' => array_keys($payments)[0]
+                                            ]
+                                        ]) ?>
+                                    <?php else: ?>
+                                        <button
+                                            data-reservation="<?php echo $reservation->id ?>"
+                                            type='button'
+                                            title='Pagamentos'
+                                            class='p-2 text-xs rounded btn-danger text-light fw-bold'
+                                        >
+                                            Pagamentos
+                                        </button>
+                                    <?php endif ?>
                                 </span>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
@@ -179,5 +194,8 @@
         ]);
     endif; ?>
 
-    <?php loadHtml(__DIR__.'/partials/filter'); ?>
+    <?php 
+        loadHtml(__DIR__.'/partials/filter');
+        loadHtml(__DIR__.'/partials/payments')
+    ?>
 </section>
