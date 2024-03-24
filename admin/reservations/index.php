@@ -61,8 +61,13 @@
         
         <script type="text/javascript" src="<?php asset('assets/scripts/class/HoursAvailable.js') ?>"></script>
         <script type="text/javascript" src="<?php asset('assets/scripts/class/Clients.js') ?>"></script>
+        <script type="text/javascript" src="<?php asset('assets/scripts/class/UpdateReservation.js') ?>"></script>
         <script type="text/javascript">
             Clients.init('#identifier', '/api/clients', 'CPF / Identificado do cliente');
+
+            UpdateReservation.payment()
+                .status()
+                .openModal();
 
             const hoursAvailable = new HoursAvailable();
             hoursAvailable.getHours()

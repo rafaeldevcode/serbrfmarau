@@ -5,6 +5,7 @@
 module.exports = {
     content: [
         "./public/libs/tailwind/import.css",
+        "./public/assets/scripts/**/*.js",
         "./resources/admin/**/*.php",
         "./resources/errors/*.php",
         "./resources/partials/**/*.php",

@@ -3,6 +3,7 @@
 
     use Src\Email\BodyEmail;
     use Src\Email\EmailServices;
+    use Src\Models\Location;
     use Src\Models\Reservation;
     use Src\Models\Protocol;
     use Src\Models\Time;
@@ -10,18 +11,19 @@
     $schedules = new Time();
     $reservation = new Reservation();
     $protocol = new Protocol();
+    $location = new Location();
 
     $requests = requests();
     $reservation = $reservation->find($requests->id);
     $title = 'Status do horário atualizado!';
     $current_status = $reservation->data->status;
-    $payment = isset($requests->payment) ? $requests->payment : 'off';
+    $location = $location->find($requests->location_id);
 
     $reservation->update([
         'name' => $requests->name,
         'email' => $requests->email,
         'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
-        'identifier' => $requests->identifier,
+        'identifier' => isset($requests->identifier) ? $requests->identifier : null,
         'type' => isset($requests->type) ? $requests->type : 'Normal',
         'payment_type' => $requests->payment_type,
         'amount_people' => empty($requests->amount_people) ? 0 : $requests->amount_people,
@@ -32,7 +34,6 @@
         'status' => $requests->status,
         'date' => empty($requests->day) ? $requests->date : null,
         'day' => ! empty($requests->day) ? $requests->day : date('l', strtotime($requests->date)),
-        'payment' => $payment,
         'observation_payment' => $requests->observation_payment
     ]);
 
@@ -63,10 +64,10 @@
             $schedules->find($item->id)->update(['status' => $requests->status]);
         endforeach;
 
-        if(!empty($requests->email)):
-            $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->data->token, $title, 'update'), $title, $requests->email);
-            $email->send();
-        endif;
+        $email = new EmailServices(BodyEmail::protocol($requests->status, $protocol->data->token, $title, 'update'), $title);
+        $email->setEmailTo($location->data->email);
+        if(!empty($requests->email)) $email->setEmailTo($requests->email);
+        $email->send();
     endif;
 
     session([

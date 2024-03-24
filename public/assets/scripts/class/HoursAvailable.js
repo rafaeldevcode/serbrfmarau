@@ -21,6 +21,8 @@ class HoursAvailable {
         this.typeReservation = null;
         this.hoursHidden = this.getHoursHidden();
         this.currentHour = '09:00';
+        this.body = $('[data-list="hours"]');
+        this.blockPreviusHours = true;
     }
 
     /**
@@ -59,7 +61,7 @@ class HoursAvailable {
                 let hasSelected = false;
                 
                 checkboxes.forEach((checkbox) => {
-                    if (checkbox.checked) {
+                    if (checkbox.checked && !checkbox.disabled) {
                         hasSelected = true;
                     }
                 });
@@ -147,7 +149,7 @@ class HoursAvailable {
 
         setTimeout(() => {
             checkboxes.each(function (index, checkbox) {
-                if (checkbox.checked) {
+                if (checkbox.checked && !checkbox.disabled) {
                     count++;
                 }
             });
@@ -190,18 +192,27 @@ class HoursAvailable {
 
         const hoursHidden = this.typeReservation == 'hour' ? [] : this.hoursHidden;
         const classHidden = hoursHidden.includes(date.hour) ? ' hidden' : '';
-        const classBlock = date.blocked ? 'border-danger bg-danger text-white opacity-50' : 'border-color-main';
+        const classBlock = date.blocked ? 'border-color-main bg-color-main text-white opacity-50' : 'border-color-main';
+        const classChecked = date.checked ? 'bg-gray-100' : 'bg-white';
         const dateFormat = (this.type.val() === 'Normal' || this.type.val() === undefined) ? this.getDateFormated() : this.translateDay();
 
         const tr = $('<tr />');
-        tr.attr('class', `bg-white border-b hover:bg-gray-100 text-gray-900${classHidden}`);
+        tr.attr('class', `${classChecked} border-b hover:bg-gray-100 text-gray-900${classHidden}`);
+
+        const badge = $('<span /></span>');
+        badge.attr('class', 'rounded text-xs text-light px-2 py-1 bg-color-main mb-1');
+        badge.text('Reservado');
 
         const tdTitle = $('<td />');
         tdTitle.attr({
-            class: 'px-2 py-4 whitespace-nowrap text-secondary',
+            class: 'px-2 py-4 whitespace-nowrap text-secondary flex flex-col-reverse items-start',
             scope: 'row'
         });
         tdTitle.text(`${dateFormat} - ${date.hour} às ${this.getLastHour(date.hour, nextDate.hour)}`);
+
+        if (date.checked) {
+            tdTitle.append(badge);
+        }
         
         const tdPrice = $('<td />');
         tdPrice.attr({
@@ -253,7 +264,7 @@ class HoursAvailable {
         tr.append(tdPrice);
         tr.append(tdAction);
 
-        $('[data-list="hours"]').append(tr);
+        this.body.append(tr);
 
         if(classHidden === '') this.countBlock = this.countBlock + 1;
 
@@ -282,7 +293,7 @@ class HoursAvailable {
 
         td.append(p);
         tr.append(td);
-        $('[data-list="hours"]').append(tr);
+        this.body.append(tr);
     }
 
     /**
@@ -292,7 +303,7 @@ class HoursAvailable {
      */
     clearBlockHours () {
         this.countBlock = 0;
-        $('[data-list="hours"]').html('');
+        this.body.html('');
     }
 
     /**
@@ -333,13 +344,21 @@ class HoursAvailable {
                 $('[for=amount_people]').find('span').text('');
             }
 
-            this.type.val('Normal');
+            // this.type.val('Normal');
 
-            this.day.attr('disabled', true);
-            this.day.parent().parent().parent().hide();
+            if (this.type.val() === 'Fixo') {
+                this.date.attr('disabled', true);
+                this.date.parent().parent().parent().hide();
+    
+                this.day.attr('disabled', false);
+                this.day.parent().parent().parent().show();
+            } else {
+                this.day.attr('disabled', true);
+                this.day.parent().parent().parent().hide();
 
-            this.date.attr('disabled', false);
-            this.date.parent().parent().parent().show();
+                this.date.attr('disabled', false);
+                this.date.parent().parent().parent().show();
+            }
         }
 
         this.typeReservation = response.data.type;
@@ -473,6 +492,8 @@ class HoursAvailable {
 
                 this.date.parent().parent().parent().hide();
                 this.date.attr('disabled', 'disabled');
+
+                this.day.val(this.getWeekDay());
             } else {
                 day.parent().parent().parent().hide();
                 day.attr('disabled', 'disabled');
@@ -537,6 +558,21 @@ class HoursAvailable {
         }
 
         return days[this.day.val()];
+    }
+
+
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {String}
+     */
+    getWeekDay () {
+        const date = this.date.val()
+        const daysWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const dateObj = new Date(date);
+        const numberWeekDay = dateObj.getDay();
+        
+        return daysWeek[numberWeekDay+1] === undefined ? daysWeek[0] : daysWeek[numberWeekDay+1];
     }
 
     /**
@@ -666,7 +702,7 @@ class HoursAvailable {
         const date = new Date(this.date.val());
         const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
         const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-        const dayWeek = days[date.getDay()+1];
+        const dayWeek = days[date.getDay()+1] === undefined ? days[0] : days[date.getDay()+1];
         const day = date.getDate()+1;
         const month = months[date.getMonth()];
 
@@ -689,7 +725,8 @@ class HoursAvailable {
                     date: this.date.attr('disabled') === 'disabled' ? null : this.date.val(),
                     reservation_id: this.reservetionId.val(),
                     location_id: this.location.val() === undefined ? 0 : this.location.val(),
-                    day: this.day.attr('disabled') === 'disabled' ? null : this.day.val()
+                    day: this.day.attr('disabled') === 'disabled' ? null : this.day.val(),
+                    block_previous: this.blockPreviusHours
                 },
                 success: function(response) {
                     resolve(response);

@@ -16,6 +16,17 @@
                 ]) ?>
             </div>
 
+            <div class='w-full md:w-6/12 px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
+                    'icon' => 'bi bi-envelope-fill',
+                    'name' => 'email',
+                    'label' => 'Email',
+                    'type' => 'email',
+                    'value' => isset($location) ? $location->email : null,
+                    'attributes' => 'required'
+                ]) ?>
+            </div>
+
             <div class='w-full md:w-3/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-clock-fill',

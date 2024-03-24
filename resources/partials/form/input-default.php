@@ -15,13 +15,17 @@
     endif;
 ?>
 
-<div class="my-3">
-    <label class="text-secondary text-sm font-bold" for="<?php echo $name ?>"><?php echo $label ?><span class="text-danger"><?php echo $is_required ?></span></label>
+<div class="<?php echo isset($label) ? 'my-3' : 'my-0' ?> my-3">
+    <?php if(isset($label)): ?>
+        <label class="text-secondary text-sm font-bold" for="<?php echo $name ?>"><?php echo $label ?><span class="text-danger"><?php echo $is_required ?></span></label>
+    <?php endif; ?>
 
     <label class="relative block">
-        <span class="sr-only">
-            <?php echo $label.$is_required ?>
-        </span>
+        <?php if(isset($label)): ?>
+            <span class="sr-only">
+                <?php echo $label.$is_required ?>
+            </span>
+        <?php endif; ?>
 
         <span class="absolute inset-y-0 left-0 flex items-center pl-2">
             <?php if(isset($icon)): ?>

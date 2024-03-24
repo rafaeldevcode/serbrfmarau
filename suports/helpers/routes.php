@@ -54,6 +54,8 @@ if(!function_exists('routes')):
             '/api/hours',
             '/api/locations',
             '/api/clients',
+            '/api/reservations/update',
+            '/api/payments',
             "/reservation/protocol/{$slug_two}",
             "/reservation/protocol"
         ];

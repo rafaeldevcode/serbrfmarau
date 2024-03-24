@@ -1,4 +1,4 @@
-<div data-modal="reservation" class="z-[99999] fixed top-0 left-0 w-full h-full items-center justify-center hidden z-50">
+<div data-modal="reservation" class="z-[99999] fixed top-0 left-0 w-full h-full items-center justify-center hidden z-50 overflow-y-auto">
     <div class="bg-white rounded w-full max-w-[800px] relative" data-modal-body="popup">
         <?php loadHtml(__DIR__.'/preloader', ['position' => 'absolute', 'type' => 'reservation']) ?>
 
@@ -70,7 +70,6 @@
                             'value' => isset($reservation) ? $reservation->payment_type : null,
                             'attributes' => 'required',
                             'array' => [
-                                'Cartão de Crédito' => 'Cartão de Crédito',
                                 'Cartão de Débito' => 'Cartão de Débito',
                                 'Pix' => 'Pix',
                                 'Dinheiro' => 'Dinheiro'
@@ -123,13 +122,15 @@
                             ]) ?>
                         </div>
 
-                        <div class='w-full md:w-6/12 px-4 mt-6'>
-                            <?php loadHtml(__DIR__.'/form/input-checkbox-switch', [
-                                'name' => 'payment',
-                                'label' => 'Pago? (Não | Sim)',
-                                'value' => isset($reservation) ? $reservation->payment : null
-                            ]) ?>
-                        </div>
+                        <?php if (!isset($reservation)): ?>
+                            <div class='w-full md:w-6/12 px-4 mt-6'>
+                                <?php loadHtml(__DIR__.'/form/input-checkbox-switch', [
+                                    'name' => 'payment',
+                                    'label' => 'Pago? (Não | Sim)',
+                                    'value' => null
+                                ]) ?>
+                            </div>
+                        <?php endif ?>
                     <?php endif ?>
 
                     <div class='w-full px-4'>

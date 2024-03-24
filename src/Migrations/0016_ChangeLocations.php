@@ -4,9 +4,9 @@ namespace Src\Migrations;
 
 use Src\Migrations\ExecuteMigrations;
 
-class ChangeReservations extends ExecuteMigrations
+class ChangeLocations extends ExecuteMigrations
 {
-    public $table = 'reservations';
+    public $table = 'locations';
 
     /**
      * @since 1.7.0
@@ -15,7 +15,7 @@ class ChangeReservations extends ExecuteMigrations
      */
     public function init()
     {
-        $this->text('observation_payment')->after('day')->nullable();
+        $this->string('email', 50)->after('name');
 
         $this->update();
     }

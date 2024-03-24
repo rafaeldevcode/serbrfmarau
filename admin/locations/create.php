@@ -24,7 +24,8 @@
         'category_id' => $requests->category_id,
         'type' => $requests->type,
         'prices' => json_encode(array_combine(pickDaysOfTheWeek(), $prices)),
-        'opening_days' => json_encode($requests->opening_days)
+        'opening_days' => json_encode($requests->opening_days),
+        'email' => $requests->email
     ]);
 
     $location->find($new_location->id)->images()->sync($images);

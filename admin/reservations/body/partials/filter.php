@@ -14,6 +14,14 @@
                     <input type="hidden" name="search" value="<?php echo requests()->search ?>">
                 <?php endif ?>
 
+                <?php loadHtml(__DIR__.'/../../../../resources/partials/form/input-default', [
+                    'icon' => 'bi bi-hash',
+                    'name' => 'protocol',
+                    'label' => 'Protocolo',
+                    'type' => 'bi bi-person-fill',
+                    'value' => isset(requests()->protocol) ? requests()->protocol : null
+                ]) ?>
+
                 <?php loadHtml(__DIR__.'/../../../../resources/partials/form/input-select', [
                     'icon' => 'bi bi-hash',
                     'name' => 'status',
