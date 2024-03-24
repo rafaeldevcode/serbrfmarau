@@ -482,6 +482,8 @@ class HoursAvailable {
 
                 this.date.parent().parent().parent().hide();
                 this.date.attr('disabled', 'disabled');
+
+                this.day.val(this.getWeekDay());
             } else {
                 day.parent().parent().parent().hide();
                 day.attr('disabled', 'disabled');
@@ -546,6 +548,21 @@ class HoursAvailable {
         }
 
         return days[this.day.val()];
+    }
+
+
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {String}
+     */
+    getWeekDay () {
+        const date = this.date.val()
+        const daysWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const dateObj = new Date(date);
+        const numberWeekDay = dateObj.getDay();
+        
+        return daysWeek[numberWeekDay+1] === undefined ? daysWeek[0] : daysWeek[numberWeekDay+1];
     }
 
     /**
@@ -675,7 +692,7 @@ class HoursAvailable {
         const date = new Date(this.date.val());
         const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
         const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-        const dayWeek = days[date.getDay()+1];
+        const dayWeek = days[date.getDay()+1] === undefined ? days[0] : days[date.getDay()+1];
         const day = date.getDate()+1;
         const month = months[date.getMonth()];
 
