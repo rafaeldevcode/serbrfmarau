@@ -1,5 +1,6 @@
 <?php
 
+    use Src\Models\Payment;
     use Src\Models\Reservation;
 
     header('Content-Type: application/json');
@@ -9,6 +10,8 @@
     else:
         $requests = requests();
         $reservation = new Reservation();
+
+        createPayments($requests->id);
         $reservation = $reservation->find($requests->id);
         $payments = $reservation->payments()->data;
 
