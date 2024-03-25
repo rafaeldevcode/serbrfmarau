@@ -21,7 +21,7 @@
     endif; 
 ?>
 
-<label class="relative inline-flex items-center my-3 pointer">
+<label class="relative inline-flex items-center <?php echo isset($label) ? 'my-3' : '' ?> pointer">
     <input 
         type="checkbox" 
         class="sr-only peer" 

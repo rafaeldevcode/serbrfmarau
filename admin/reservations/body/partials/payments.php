@@ -9,7 +9,7 @@
         </div>
 
         <form class="p-4">
-            <div class='w-full' data-list="payments"></div>
+            <div class='w-full h-[450px] overflow-x-auto' data-list="payments"></div>
 
             <div class="flex justify-end space-x-2 mt-4">
                 <button data-modal-close="popup" type="button" title="Fechar" class="btn btn-secondary font-bold">

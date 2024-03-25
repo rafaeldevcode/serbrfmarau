@@ -16,7 +16,7 @@
     endif;
 ?>
 
-<div class='flex flex-col my-3'>
+<div class='flex flex-col <?php echo isset($label) ? 'my-3' : '' ?>'>
     <?php if (isset($label)): ?>
         <label for="<?php echo $name ?>" class="block mb-1 text-sm font-bold text-secondary">
             <?php echo $label ?>

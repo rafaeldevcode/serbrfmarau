@@ -770,4 +770,35 @@ if (!function_exists('getWeeksMonth')):
     }
 endif;
 
+if (!function_exists('createPayments')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $reservation_id
+     * @return void
+     */
+    function createPayments (int $reservation_id): void
+    {
+        $payment = new Payment();
+        $date = date('Y-m-d');
+        $month = date('n', strtotime($date));
+        
+        $payment = $payment->where('token', 'LIKE', "%:{$month}:%")
+            ->where('reservation_id', '=', $reservation_id)
+            ->first();
+
+        if(!isset($payment)):
+            $payments = generatePayments('Fixo', '2024-04-01');
+            
+            foreach($payments as $token):
+                (new Payment)->create([
+                    'token' => $token,
+                    'status' => 'off',
+                    'reservation_id' => $reservation_id
+                ]);
+            endforeach;
+        endif;
+    }
+endif;
+
 !defined('SETTINGS') && define('SETTINGS', (array)getSiteSettings());
