@@ -5,10 +5,11 @@ class Clients {
         $(selector).select2({
             placeholder: placeholder,
             allowClear: true,
-            dataType: 'json',
             minimumInputLength: 1,
+            allowClear: true,
             ajax: {
                 url: route,
+                dataType: 'json',
                 delay: 250,
                 method: "GET",
                 cache: true,
@@ -17,20 +18,34 @@ class Clients {
                         search: params.term
                     };
                 },
-                processResults: (response) => {
-                    const modifiedResults = response.data.map(item => {
-                        return {
-                            id: item.cpf,
-                            cpf: item.cpf,
-                            email: item.email,
-                            phone: item.phone,
-                            amount_people: item.amount_people,
-                            event: item.event,
-                            payment_type: item.payment_type
-                        };
-                    });
-                
-                    return {results: modifiedResults};
+                processResults: (response, params) => {
+                    if (response.data === null) {
+                        const modifiedResults = [{
+                            id: params.term,
+                            cpf: params.term,
+                            email: '',
+                            phone: '',
+                            amount_people: '0',
+                            event: 'Jogo',
+                            payment_type: 'Cartão de Débito'
+                        }];
+
+                        return {results: modifiedResults};
+                    } else {
+                        const modifiedResults = response.data.map(item => {
+                            return {
+                                id: item.cpf,
+                                cpf: item.cpf,
+                                email: item.email,
+                                phone: item.phone,
+                                amount_people: item.amount_people,
+                                event: item.event,
+                                payment_type: item.payment_type
+                            };
+                        });
+
+                        return {results: modifiedResults};
+                    }
                 }
             },
             templateResult: (response, params) => {
@@ -48,10 +63,10 @@ class Clients {
 
                 return span;
             },
-            templateSelection: (response) => {                
+            templateSelection: (response) => {         
 
-                return response.cpf;
-            }
+                return response.cpf || response.text;
+            },
         });
     }
 
