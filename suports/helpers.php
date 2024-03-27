@@ -13,7 +13,7 @@ require __DIR__.'/helpers/requests.php';
 require __DIR__.'/helpers/menus-admin.php';
 require __DIR__.'/helpers/routes.php';
 
-!defined('APP_VERSION') && define('APP_VERSION', '1.7.4');
+!defined('APP_VERSION') && define('APP_VERSION', '1.7.5');
 
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -303,8 +303,10 @@ if (!function_exists('getHoursReservation')):
                 $checked_one = in_array($hour_one, $schedules) ? true : false;
                 $checked_two = in_array($hour_two, $schedules) ? true : false;
             else:
-                $checked_one = in_array($hour_one, $reservation_schedules) ? true : false;
-                $checked_two = in_array($hour_two, $reservation_schedules) ? true : false;
+                $array_verify = is_null($reservation_id) ? $schedules : $reservation_schedules;
+                
+                $checked_one = in_array($hour_one, $array_verify) ? true : false;
+                $checked_two = in_array($hour_two, $array_verify) ? true : false;
             endif;
 
             $blocked_one = $checked_one && $location->data->type == 'period' ? true : $blocked_one;

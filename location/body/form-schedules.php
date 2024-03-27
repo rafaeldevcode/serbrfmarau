@@ -101,6 +101,7 @@
                         'value' => null,
                         'attributes' => 'required',
                         'array' => [
+                            'Jogo' => 'Jogo',
                             'Aniversário' => 'Aniversário',
                             'Casamento' => 'Casamento',
                             'Formatura' => 'Formatura',
