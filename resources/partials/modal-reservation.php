@@ -13,7 +13,23 @@
         <div class="p-4">
             <section class="w-full">
                 <div class='flex justify-between flex-wrap'>
-                    <div class='w-full px-4'>
+                    <div class='w-full px-4'>                        
+                        <?php loadHtml(__DIR__.'/form/input-select', [
+                            'icon' => 'bi bi-123',
+                            'name' => 'identifier',
+                            'label' => $is_admin ? 'CPF / Identificador do cliente' : 'CPF',
+                            'value' => isset($reservation) ? $reservation->identifier : null,
+                            'attributes' => [
+                                'required' => true,
+                                'onchange' => "javascript:Clients.insertClient(event)"
+                            ],
+                            'array' => []
+                        ]) ?>
+                    </div>
+                </div>
+
+                <div class='flex flex-wrap'>
+                    <div class='w-full md:w-6/12 px-4'>
                         <?php loadHtml(__DIR__.'/form/input-default', [
                             'icon' => 'bi bi-alphabet-uppercase',
                             'name' => 'name',
@@ -23,9 +39,7 @@
                             'attributes' => 'required'
                         ]) ?>
                     </div>
-                </div>
 
-                <div class='flex flex-wrap'>
                     <div class='w-full md:w-6/12 px-4'>
                         <?php loadHtml(__DIR__.'/form/input-default', [
                             'icon' => 'bi bi-envelope-fill',
@@ -45,20 +59,6 @@
                             'type' => 'text',
                             'value' => isset($reservation) ? $reservation->phone : null,
                             'attributes' => 'required'
-                        ]) ?>
-                    </div>
-
-                    <div class='w-full md:w-6/12 px-4'>
-                        <?php loadHtml(__DIR__.'/form/input-select', [
-                            'icon' => 'bi bi-123',
-                            'name' => 'identifier',
-                            'label' => $is_admin ? 'CPF / Identificador do cliente' : 'CPF',
-                            'value' => isset($reservation) ? $reservation->identifier : null,
-                            'attributes' => [
-                                'required' => true,
-                                'onchange' => "javascript:Clients.insertClient(event)"
-                            ],
-                            'array' => []
                         ]) ?>
                     </div>
 
