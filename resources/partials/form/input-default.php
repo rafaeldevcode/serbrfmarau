@@ -15,7 +15,7 @@
     endif;
 ?>
 
-<div class="<?php echo isset($label) ? 'my-3' : 'my-0' ?> my-3">
+<div class="<?php echo isset($label) ? 'my-3' : '' ?>">
     <?php if(isset($label)): ?>
         <label class="text-secondary text-sm font-bold" for="<?php echo $name ?>"><?php echo $label ?><span class="text-danger"><?php echo $is_required ?></span></label>
     <?php endif; ?>
