@@ -289,39 +289,39 @@ if (!function_exists('getHoursReservation')):
 
         for ($i = 0; $i < 24; $i++) :
             $hour_one = strlen($i) == 1 ? "0{$i}:00" : "{$i}:00";
-            $hour_two = strlen($i) == 1 ? "0{$i}:30" : "{$i}:30";
+            // $hour_two = strlen($i) == 1 ? "0{$i}:30" : "{$i}:30";
 
             if($block_previous === 'true' && $current_date === $date):
                 $blocked_one = in_array($hour_one, $active_hours) && $hour_one > $current_hour ? false : true;
-                $blocked_two = in_array($hour_two, $active_hours) && $hour_two > $current_hour ? false : true;
+                // $blocked_two = in_array($hour_two, $active_hours) && $hour_two > $current_hour ? false : true;
             else:
                 $blocked_one = in_array($hour_one, $active_hours) ? false : true;
-                $blocked_two = in_array($hour_two, $active_hours) ? false : true;
+                // $blocked_two = in_array($hour_two, $active_hours) ? false : true;
             endif;
 
             if ($block_previous === 'false'):
                 $checked_one = in_array($hour_one, $schedules) ? true : false;
-                $checked_two = in_array($hour_two, $schedules) ? true : false;
+                // $checked_two = in_array($hour_two, $schedules) ? true : false;
             else:
                 $array_verify = is_null($reservation_id) ? $schedules : $reservation_schedules;
                 
                 $checked_one = in_array($hour_one, $array_verify) ? true : false;
-                $checked_two = in_array($hour_two, $array_verify) ? true : false;
+                // $checked_two = in_array($hour_two, $array_verify) ? true : false;
             endif;
 
             $blocked_one = $checked_one && $location->data->type == 'period' ? true : $blocked_one;
-            $blocked_two = $checked_two && $location->data->type == 'period' ? true : $blocked_two;
+            // $blocked_two = $checked_two && $location->data->type == 'period' ? true : $blocked_two;
 
             array_push($data['hours'], [
                 'hour' => $hour_one,
                 'blocked' => $blocked_one,
                 'checked' => $checked_one
             ]);
-            array_push($data['hours'], [
-                'hour' => $hour_two,
-                'blocked' => $blocked_two,
-                'checked' => $checked_two
-            ]);
+            // array_push($data['hours'], [
+            //     'hour' => $hour_two,
+            //     'blocked' => $blocked_two,
+            //     'checked' => $checked_two
+            // ]);
         endfor;
 
         return $data;
