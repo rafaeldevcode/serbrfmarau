@@ -23,6 +23,7 @@
         'user_id' => $_SESSION['user_id'],
         'category_id' => $requests->category_id,
         'type' => $requests->type,
+        'description' => $requests->description,
         'prices' => json_encode(array_combine(pickDaysOfTheWeek(), $prices)),
         'opening_days' => json_encode($requests->opening_days),
         'email' => $requests->email

@@ -119,6 +119,15 @@
                     ]
                 ]) ?>
             </div>
+
+            <div class='w-full md:w-6/12 px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/text-area', [
+                    'icon' => 'bi bi-card-text',
+                    'name' => 'description',
+                    'label' => 'Descrição',
+                    'value' => isset($location) ? $location->description : null
+                ]) ?>
+            </div>
         </div>
 
         <div class='w-full flex flex-wrap px-3'>

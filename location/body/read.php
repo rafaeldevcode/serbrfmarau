@@ -9,7 +9,8 @@
 <section class="py-8">
     <div class="container">
         <?php loadHtml(__DIR__ . '/../../resources/client/partials/title', [
-            'title' => $location->name
+            'title' => $location->name,
+            'subtitle' => $location->description
         ]) ?>
 
         <?php loadHtml(__DIR__.'/../../resources/partials/hours-available', [

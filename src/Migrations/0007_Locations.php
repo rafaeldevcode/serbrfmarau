@@ -22,6 +22,7 @@ class Locations extends ExecuteMigrations
         $this->char('end_hour', 5);
         $this->char('opening', 3);
         $this->text('prices');
+        $this->text('description')->nullable();
         $this->string('opening_days', 255);
         $this->char('type', 6)->nullable();
         $this->char('status', 3)->default('on');
