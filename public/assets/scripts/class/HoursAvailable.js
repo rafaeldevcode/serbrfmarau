@@ -101,6 +101,7 @@ class HoursAvailable {
             Preloader.show('hours');
 
             const response = await this.get();
+            console.log(response);
 
             this.price = response.price;
 
