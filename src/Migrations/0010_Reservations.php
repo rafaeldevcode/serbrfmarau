@@ -30,6 +30,7 @@ class Reservations extends ExecuteMigrations
         $this->date('date')->nullable();
         $this->char('day', 9)->nullable();
         $this->string('status', 10)->default('Pendente');
+        $this->char('is_partner', 3)->default('off');
 
         $this->integer('location_id');
 

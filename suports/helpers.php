@@ -457,18 +457,18 @@ if (!function_exists('getHoursByPeriod')):
         for ($i = 0; $i < 24; $i++):
             if($i >= $periods[$period]['start'] && $i <= $periods[$period]['end']):
                 $hour_one = '';
-                $hour_two = '';
+                // $hour_two = '';
 
                 if ($i < 10) {
                     $hour_one = "0{$i}:00";
-                    $hour_two = "0{$i}:30";
+                    // $hour_two = "0{$i}:30";
                 } else {
                     $hour_one = "{$i}:00";
-                    $hour_two = "{$i}:30";
+                    // $hour_two = "{$i}:30";
                 }
 
                 array_push($hours, $hour_one);
-                array_push($hours, $hour_two);
+                // array_push($hours, $hour_two);
             endif;
         endfor;
 
@@ -489,14 +489,14 @@ if (!function_exists('getHours')):
         for ($i = 0; $i < 24; $i++):
             if ($i < 10) {
                 $hour_one = "0{$i}:00";
-                $hour_two = "0{$i}:30";
+                // $hour_two = "0{$i}:30";
             } else {
                 $hour_one = "{$i}:00";
-                $hour_two = "{$i}:30";
+                // $hour_two = "{$i}:30";
             }
 
             array_push($hours, $hour_one);
-            array_push($hours, $hour_two);
+            // array_push($hours, $hour_two);
         endfor;
 
         return $hours;
@@ -609,12 +609,13 @@ if (!function_exists('getPrice')):
      * @param ?string $prices
      * @return float
      */
-    function getPrice(?string $prices, ?string $date, ?string $day): float
+    function getPrice(?string $prices, ?string $date, ?string $day, ?string $isPartner): float
     {
         $prices = json_decode($prices, true);
         $day = is_null($day) ? date('l', strtotime($date)) : $day;
+        $price = $isPartner === 'on' ? $prices[translateDayWeek($day)][0] : $prices[translateDayWeek($day)][1];
 
-        return floatval($prices[translateDayWeek($day)]);
+        return floatval($price);
     }
 endif;
 
@@ -802,5 +803,35 @@ if (!function_exists('createPayments')):
         endif;
     }
 endif;
+
+if (!function_exists('mountPrices')) {
+    /**
+     * @since 1.7.0
+     * 
+     * @param array $prices
+     * @param array $pricesPartners
+     * @return array
+     */
+    function mountPrices(array $prices, array $pricesPartners): array
+    {
+        $data = [];
+        $prices = array_map(function($value) {
+            return ($value === "") ? '0.00' : str_replace(',', '.', $value);
+        }, $prices);
+
+        $pricesPartners = array_map(function($value) {
+            return ($value === "") ? '0.00' : str_replace(',', '.', $value);
+        }, $pricesPartners);
+
+        foreach (pickDaysOfTheWeek() as $indice => $day) {
+            $data = $data + [$day => [
+                $pricesPartners[$indice],
+                $prices[$indice]
+            ]];
+        }
+
+        return $data;
+    }
+}
 
 !defined('SETTINGS') && define('SETTINGS', (array)getSiteSettings());

@@ -76,6 +76,7 @@
                 .changePeiod()
                 .changeDay()
                 .changeType()
+                .changeIsPartner()
                 .submited();
         </script>
     <?php }

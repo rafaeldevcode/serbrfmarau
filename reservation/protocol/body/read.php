@@ -26,7 +26,7 @@
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Local:</strong> <?php echo $location->name ?></h2>
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Reserva:</strong> <?php echo $reservation->name ?></h2>
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Horário:</strong> Das <?php echo getBtweenHours($reservation->id) ?></h2>
-                            <h2 class="text-3xl mb-2"><strong class="text-3xl">Valor:</strong> R$ <?php echo number_format($total_schedules * getPrice($location->prices, $reservation->date, $reservation->day), 2, ',', ',') ?></h2>
+                            <h2 class="text-3xl mb-2"><strong class="text-3xl">Valor:</strong> R$ <?php echo number_format($total_schedules * getPrice($location->prices, $reservation->date, $reservation->day, $reservation->is_partner), 2, ',', ',') ?></h2>
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Status:</strong> <?php echo $reservation->status ?></h2>
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Protocolo:</strong> <?php echo $protocol->token ?></h2>
                         </div>

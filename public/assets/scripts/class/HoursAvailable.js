@@ -16,6 +16,7 @@ class HoursAvailable {
         this.day = $('#day');
         this.period = $('#period');
         this.type = $('#type');
+        this.isPartner = $('#is_partner');
         this.price = 0;
         this.countBlock = 0;
         this.typeReservation = null;
@@ -44,51 +45,50 @@ class HoursAvailable {
      * @returns {Object}
      */
     selectSeveralHours () {
-        const checkboxes = $('[data-checked="hour"]');
-        const hours = this.getHoursAllPeriods();
-        let lastChecked = false;
+        $(document).ready(function () {
+            const checkboxes = $('[data-checked="hour"]');
+            let firstChecked = null;
+            let lastChecked = null;
 
-        checkboxes.on('change', function () {
-            if ($(this).prop('checked')) {
-                if (! canSelect(lastChecked, $(this).val(), hours)) {
-                    $(this).prop('checked', false)
-                    Message.create('Os horários selecionados devem ser horários seguidos!', 'info');
-                } else {
-                    lastChecked = $(this).val();
-                }
-            } else {
-                const checkboxes = document.querySelectorAll('[data-checked="hour"]');
-                let hasSelected = false;
-                
-                checkboxes.forEach((checkbox) => {
-                    if (checkbox.checked && !checkbox.disabled) {
-                        hasSelected = true;
+            checkboxes.on('change', function () {
+                if ($(this).prop('checked')) {
+                    if (firstChecked === null) {
+                        firstChecked = checkboxes.index(this);
+                    } else {                        
+                        lastChecked = checkboxes.index(this);
+
+                        checkboxes.map((key, checkbox) => $(checkbox).prop('checked', false));
+
+                        getInterval(checkboxes, firstChecked, lastChecked).map((key, checkbox) => $(checkbox).prop('checked', true));
                     }
-                });
+                } else {
+                    if (checkboxes.index(this) === firstChecked) {
+                        firstChecked = null;
+                        lastChecked = null;
 
-                if (! hasSelected) {
-                    lastChecked = false;
+                        checkboxes.map((key, checkbox) => $(checkbox).prop('checked', false));
+                    } else {
+                        lastChecked = checkboxes.index(this);
+
+                        checkboxes.map((key, checkbox) => $(checkbox).prop('checked', false));
+
+                        getInterval(checkboxes, firstChecked, lastChecked).map((key, checkbox) => $(checkbox).prop('checked', true));
+                    }
                 }
+            });
+
+            function getInterval(items, startIndex, endIndex) {
+                if (startIndex > endIndex) {
+                    [startIndex, endIndex] = [endIndex, startIndex];
+                }
+        
+                return items.slice(startIndex, endIndex + 1);
             }
         });
 
-        function canSelect(lastHour, currentHour, hours){
-            if (!lastHour) return true;
-
-            let indice;
-
-            for (let i = 0; i < hours.length; i++) {
-                if (hours[i] === lastHour) {
-                    indice = i;;
-                    break;
-                }
-            }
-
-            return hours[indice+1] === currentHour ? true : false;
-        }
-
         return this;
     }
+    
 
     /**
      * @since 1.7.0
@@ -101,9 +101,8 @@ class HoursAvailable {
             Preloader.show('hours');
 
             const response = await this.get();
-            console.log(response);
 
-            this.price = response.price;
+            this.price = this.isPartner.prop('checked') ? response.price[0] : response.price[1];
 
             if (response.message) {
                 Message.create(response.message, 'info');
@@ -169,13 +168,15 @@ class HoursAvailable {
                 // }, 400);
             }
 
-            if(count > 1){
-                $('#schedule').find('button').removeAttr('disabled');
-                $('#schedule').find('#warning').text('');
-            } else {
-                $('#schedule').find('button').attr('disabled', true);
-                $('#schedule').find('#warning').text('Para proseguir selecione no mínimo dois blocos de horário!');
-            }
+            // if(count > 1){
+            //     $('#schedule').find('button').removeAttr('disabled');
+            //     $('#schedule').find('#warning').text('');
+            // } else {
+            //     $('#schedule').find('button').attr('disabled', true);
+            //     $('#schedule').find('#warning').text('Para proseguir selecione no mínimo dois blocos de horário!');
+            // }
+
+            $('#schedule').find('button').removeAttr('disabled');
 
             const price = this.typeReservation == 'hour' ? this.price * count : this.price;
             $('#total-value').text(`R$ ${price}`);
@@ -515,6 +516,19 @@ class HoursAvailable {
      * 
      * @returns {boolean}
      */
+    changeIsPartner () {
+        this.isPartner.on('change', async (event) => {
+            this.getHours();
+        });
+
+        return this;
+    }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {boolean}
+     */
     validityHours () {
         if (this.reservetionId.val()) return true;
 
@@ -652,18 +666,18 @@ class HoursAvailable {
         for (let i = 0; i < 24; i++) {
             if(i >= periods[period].start && i <= periods[period].end){
                 let hourOne;
-                let hourTwo;
+                // let hourTwo;
     
                 if (i < 10) {
                     hourOne = `0${i}:00`;
-                    hourTwo = `0${i}:30`;
+                    // hourTwo = `0${i}:30`;
                 } else {
                     hourOne = `${i}:00`;
-                    hourTwo = `${i}:30`;
+                    // hourTwo = `${i}:30`;
                 }
     
                 hours.push(hourOne);
-                hours.push(hourTwo);
+                // hours.push(hourTwo);
             }
         }
 
@@ -727,7 +741,7 @@ class HoursAvailable {
                     reservation_id: this.reservetionId.val(),
                     location_id: this.location.val() === undefined ? 0 : this.location.val(),
                     day: this.day.attr('disabled') === 'disabled' ? null : this.day.val(),
-                    block_previous: this.blockPreviusHours
+                    block_previous: this.blockPreviusHours,
                 },
                 success: function(response) {
                     resolve(response);

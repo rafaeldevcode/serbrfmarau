@@ -1,4 +1,4 @@
-<div data-modal="reservation" class="z-[99999] fixed top-0 left-0 w-full h-full items-center justify-center hidden z-50 overflow-y-auto">
+<div data-modal="reservation" class="z-[99999] fixed top-0 left-0 w-full h-full items-center justify-center hidden overflow-y-auto">
     <div class="bg-white rounded w-full max-w-[800px] relative" data-modal-body="popup">
         <?php loadHtml(__DIR__.'/preloader', ['position' => 'absolute', 'type' => 'reservation']) ?>
 
