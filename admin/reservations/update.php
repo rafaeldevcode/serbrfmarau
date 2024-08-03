@@ -18,6 +18,7 @@
     $title = 'Status do horário atualizado!';
     $current_status = $reservation->data->status;
     $location = $location->find($requests->location_id);
+    $isPartner = isset($requests->is_partner) ? $requests->is_partner : 'off';
 
     $reservation->update([
         'name' => $requests->name,
@@ -32,6 +33,7 @@
         'location_id' => $requests->location_id,
         'observation' => $requests->observation,
         'status' => $requests->status,
+        'is_partner' => $isPartner,
         'date' => empty($requests->day) ? $requests->date : null,
         'day' => ! empty($requests->day) ? $requests->day : date('l', strtotime($requests->date)),
         'observation_payment' => $requests->observation_payment

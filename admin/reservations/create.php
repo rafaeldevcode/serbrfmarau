@@ -21,6 +21,7 @@
     $identifier = isset($requests->identifier) ? $requests->identifier : null;
     $client = isset($identifier) ? $client->where('cpf', '=', $identifier)->first() : null;
     $location = $location->find($requests->location_id);
+    $isPartner = isset($requests->is_partner) ? $requests->is_partner : 'off';
 
     $title = 'Horário reservado!';
     $payments = generatePayments(isset($requests->type) ? $requests->type : null, isset($requests->date) ? $requests->date : null);
@@ -38,6 +39,7 @@
         'location_id' => $requests->location_id,
         'observation' => $requests->observation,
         'status' => $requests->status,
+        'is_partner' => $isPartner,
         'date' => empty($requests->day) ? $requests->date : null,
         'day' => ! empty($requests->day) ? $requests->day : date('l', strtotime($requests->date)),
         'observation_payment' => $requests->observation_payment

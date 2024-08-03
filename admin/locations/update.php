@@ -8,9 +8,6 @@
 
     $status = empty($requests->status) ? 'off' : $requests->status;
     $images = isset($requests->images) ? $requests->images : null;
-    $prices = array_map(function($value) {
-        return ($value === "") ? '0.00' : str_replace(',', '.', $value);
-    }, $requests->prices);
 
     $location->find($requests->id)->update([
         'name' => $requests->name,
@@ -21,7 +18,7 @@
         'category_id' => $requests->category_id,
         'type' => $requests->type,
         'description' => $requests->description,
-        'prices' => json_encode(array_combine(pickDaysOfTheWeek(), $prices)),
+        'prices' => json_encode(mountPrices($requests->prices, $requests->prices_partners)),
         'opening_days' => json_encode($requests->opening_days),
         'email' => $requests->email
     ]);

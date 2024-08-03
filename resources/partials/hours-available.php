@@ -10,6 +10,13 @@
             <input type="hidden" name="location_id" id="location_id" value="<?php echo $location_id ?>">
         <?php endif ?>
 
+        <div class='w-full md:w-6/12 px-4 mt-6'>
+            <?php loadHtml(__DIR__.'/form/input-checkbox-switch', [
+                'name' => 'is_partner',
+                'label' => 'Sócio? (Não | Sim)',
+                'value' => isset($reservation) ? $reservation->is_partner : null
+            ]) ?>
+        </div>
         <div class="flex flex-wrap w-full border-b border-secondary pb-2">
             <div class='w-full md:w-3/12 px-2'>
                 <?php loadHtml(__DIR__.'/form/input-default', [

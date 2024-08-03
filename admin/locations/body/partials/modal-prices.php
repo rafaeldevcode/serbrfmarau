@@ -12,11 +12,11 @@
             <section>
                 <?php foreach(pickDaysOfTheWeek() as $day): ?>
                     <div class="w-full flex justify-between">
-                        <div class='w-9/12 px-2'>
+                        <div class='w-6/12 px-2'>
                             <?php loadHtml(__DIR__.'/../../../../resources/partials/form/input-default', [
                                 'icon' => 'bi bi-alphabet-uppercase',
                                 'name' => 'days[]',
-                                'label' => '',
+                                'label' => 'Dia',
                                 'type' => 'text',
                                 'value' => $day,
                                 'attributes' => 'disabled'
@@ -26,10 +26,20 @@
                         <div class='w-3/12 px-2'>
                             <?php loadHtml(__DIR__.'/../../../../resources/partials/form/input-default', [
                                 'icon' => 'bi bi-currency-dollar',
-                                'name' => 'prices[]',
-                                'label' => '',
+                                'name' => 'prices_partners[]',
+                                'label' => 'Sócio',
                                 'type' => 'text',
-                                'value' => isset($days) ? $days[$day] : null
+                                'value' => isset($days) ? $days[$day][0] : null
+                            ]) ?>
+                        </div>
+
+                        <div class='w-3/12 px-2'>
+                            <?php loadHtml(__DIR__.'/../../../../resources/partials/form/input-default', [
+                                'icon' => 'bi bi-currency-dollar',
+                                'name' => 'prices[]',
+                                'label' => 'Não Sócio',
+                                'type' => 'text',
+                                'value' => isset($days) ? $days[$day][1] : null
                             ]) ?>
                         </div>
                     </div>

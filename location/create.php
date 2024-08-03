@@ -25,6 +25,7 @@
     $title = 'Horário reservado!';
     $status = 'Pendente';
     $payments = generatePayments(isset($requests->type) ? $requests->type : null, isset($requests->date) ? $requests->date : null);
+    $isPartner = isset($requests->is_partner) ? $requests->is_partner : 'off';
 
     $reservation = $reservation->create([
         'name' => $requests->name,
@@ -39,6 +40,7 @@
         'location_id' => $requests->location_id,
         'observation' => $requests->observation,
         'status' => $status,
+        'is_partner' => $isPartner,
         'date' => empty($requests->day) ? $requests->date : null,
         'day' => ! empty($requests->day) ? $requests->day : date('l', strtotime($requests->date))
     ]);
