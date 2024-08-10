@@ -75,7 +75,6 @@
                         'value' => null,
                         'attributes' => 'required',
                         'array' => [
-                            'Cartão de Débito' => 'Cartão de Débito',
                             'Pix' => 'Pix',
                             'Dinheiro' => 'Dinheiro'
                         ]
