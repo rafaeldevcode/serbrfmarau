@@ -70,7 +70,6 @@
                             'value' => isset($reservation) ? $reservation->payment_type : null,
                             'attributes' => 'required',
                             'array' => [
-                                'Cartão de Débito' => 'Cartão de Débito',
                                 'Pix' => 'Pix',
                                 'Dinheiro' => 'Dinheiro'
                             ]
