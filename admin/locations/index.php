@@ -73,22 +73,22 @@
 
             $('[name="opening_days[]"]').select2({placeholder: '----Selecione----'});
 
-            $('#save-location').on('submit', (event) => {
-                let valid = false;
+            // $('#save-location').on('submit', (event) => {
+            //     let valid = false;
 
-                $('[name="prices[]"]').each((key, input) => {
-                    if(input.value.length > 0){
-                        valid = true;
-                        return;
-                    }
-                });
+            //     $('[name="prices[]"]').each((key, input) => {
+            //         if(input.value.length > 0){
+            //             valid = true;
+            //             return;
+            //         }
+            //     });
 
-                if(!valid){
-                    event.preventDefault();
+            //     if(!valid){
+            //         event.preventDefault();
 
-                    Message.create('É necessário preencher os preços dos horário/período!', 'danger');
-                    Modal.open('prices');
-                }
-            });
+            //         Message.create('É necessário preencher os preços dos horário/período!', 'danger');
+            //         Modal.open('prices');
+            //     }
+            // });
         </script>
     <?php }

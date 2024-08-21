@@ -213,9 +213,10 @@ if (!function_exists('getHoursReservation')):
      * @param ?int $reservation_id
      * @param ?string $day
      * @param string $block_previous
+     * @param string $priod
      * @return array
      */
-    function getHoursReservation(?int $location_id = null, ?string $date = null, ?int $reservation_id = null, ?string $day = null, string $block_previous = 'true'): array
+    function getHoursReservation(?int $location_id = null, ?string $date = null, ?int $reservation_id = null, ?string $day = null, string $block_previous = 'true', string $period = ''): array
     {
         if ($location_id === 0) {
             return [
@@ -260,9 +261,11 @@ if (!function_exists('getHoursReservation')):
                 $active_hours = [];
             endif;
 
+            $periodType = $period === 'Dia todo' ? 'full' : 'normal';
+
             $price = empty($day) 
-                ? json_decode($location->data->prices, true)[translateDayWeek(date('l', strtotime($date)))] 
-                : json_decode($location->data->prices, true)[translateDayWeek($day)];
+                ? json_decode($location->data->prices, true)[$periodType][translateDayWeek(date('l', strtotime($date)))] 
+                : json_decode($location->data->prices, true)[$periodType][translateDayWeek($day)];
 
             $data['price'] = $price;
             $data['start_hour'] = $location->data->start_hour;
@@ -808,25 +811,37 @@ if (!function_exists('mountPrices')) {
     /**
      * @since 1.7.0
      * 
-     * @param array $prices
-     * @param array $pricesPartners
-     * @return array
+     * @param stdClass $prices
+     * @param stdClass $pricesPartners['normal']
+     * @return stdClass
      */
-    function mountPrices(array $prices, array $pricesPartners): array
+    function mountPrices(stdClass $prices, stdClass $pricesPartners): array
     {
-        $data = [];
-        $prices = array_map(function($value) {
-            return ($value === "") ? '0.00' : str_replace(',', '.', $value);
+        $data = ["normal" => [], "full" => []];
+        $prices = (array)$prices;
+        $pricesPartners = (array)$pricesPartners;
+        
+        $prices = array_map(function($priceArray) {
+            return array_map(function($value) {
+                return ($value === "") ? '0.00' : str_replace(',', '.', $value);
+            }, $priceArray);
         }, $prices);
 
-        $pricesPartners = array_map(function($value) {
-            return ($value === "") ? '0.00' : str_replace(',', '.', $value);
+        $pricesPartners = array_map(function($priceArray) {
+            return array_map(function($value) {
+                return ($value === "") ? '0.00' : str_replace(',', '.', $value);
+            }, $priceArray);
         }, $pricesPartners);
 
         foreach (pickDaysOfTheWeek() as $indice => $day) {
-            $data = $data + [$day => [
-                $pricesPartners[$indice],
-                $prices[$indice]
+            $data["normal"] = $data["normal"] + [$day => [
+                $pricesPartners['normal'][$indice],
+                $prices['normal'][$indice]
+            ]];
+
+            $data["full"] = $data["full"] + [$day => [
+                $pricesPartners['full'][$indice],
+                $prices['full'][$indice]
             ]];
         }
 

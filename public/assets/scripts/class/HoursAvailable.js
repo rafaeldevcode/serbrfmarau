@@ -412,8 +412,8 @@ class HoursAvailable {
             this.clearBlockHours();
 
             const response = await this.get();
-
-            this.price = response.price;
+            
+            this.price = this.isPartner.prop('checked') ? response.price[0] : response.price[1];
 
             if (response.message) {
                 Message.create(response.message, 'info');
@@ -663,21 +663,43 @@ class HoursAvailable {
         const periods = this.getPeriods();
         const period = customPeriod ? customPeriod : this.period.val();
 
-        for (let i = 0; i < 24; i++) {
-            if(i >= periods[period].start && i <= periods[period].end){
-                let hourOne;
-                // let hourTwo;
-    
-                if (i < 10) {
-                    hourOne = `0${i}:00`;
-                    // hourTwo = `0${i}:30`;
-                } else {
-                    hourOne = `${i}:00`;
-                    // hourTwo = `${i}:30`;
+        if (period === 'Dia todo') {
+            Object.keys(periods).forEach((key) => {
+                for (let i = 0; i < 24; i++) {
+                    if(i >= periods[key].start && i <= periods[key].end){
+                        let hourOne;
+                        // let hourTwo;
+            
+                        if (i < 10) {
+                            hourOne = `0${i}:00`;
+                            // hourTwo = `0${i}:30`;
+                        } else {
+                            hourOne = `${i}:00`;
+                            // hourTwo = `${i}:30`;
+                        }
+            
+                        hours.push(hourOne);
+                        // hours.push(hourTwo);
+                    }
                 }
-    
-                hours.push(hourOne);
-                // hours.push(hourTwo);
+            });
+        } else {
+            for (let i = 0; i < 24; i++) {
+                if(i >= periods[period].start && i <= periods[period].end){
+                    let hourOne;
+                    // let hourTwo;
+        
+                    if (i < 10) {
+                        hourOne = `0${i}:00`;
+                        // hourTwo = `0${i}:30`;
+                    } else {
+                        hourOne = `${i}:00`;
+                        // hourTwo = `${i}:30`;
+                    }
+        
+                    hours.push(hourOne);
+                    // hours.push(hourTwo);
+                }
             }
         }
 
@@ -742,6 +764,7 @@ class HoursAvailable {
                     location_id: this.location.val() === undefined ? 0 : this.location.val(),
                     day: this.day.attr('disabled') === 'disabled' ? null : this.day.val(),
                     block_previous: this.blockPreviusHours,
+                    period: this.period.val()
                 },
                 success: function(response) {
                     resolve(response);

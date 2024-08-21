@@ -169,5 +169,6 @@
         </div>
 
         <?php loadHtml(__DIR__.'/partials/modal-prices', ['days' => isset($location) ? json_decode($location->prices, true) : null]) ?>
+        <?php loadHtml(__DIR__.'/partials/modal-prices-day', ['days' => isset($location) ? json_decode($location->prices, true) : null]) ?>
     </form>
 </section>
