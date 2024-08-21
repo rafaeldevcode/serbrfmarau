@@ -91,6 +91,7 @@
                     ],
                     'array' => [
                         '' => '----Selecione----',
+                        'Dia todo' => 'Dia todo',
                         'Manhã' => 'Manhã',
                         'Tarde' => 'Tarde',
                         'Noite' => 'Noite'
