@@ -73,6 +73,22 @@
 
             $('[name="opening_days[]"]').select2({placeholder: '----Selecione----'});
 
+            toggleButton($('[name=type]').val());
+
+            $('[name=type]').on('change', (event) => {
+                toggleButton($(event.target).val());
+            });
+
+            function toggleButton(value){
+                const button = $('[data-toggle=prices-day]');
+
+                if (value === 'period') {
+                    button.show();
+                } else {
+                    button.hide();
+                }
+            }
+
             // $('#save-location').on('submit', (event) => {
             //     let valid = false;
 
