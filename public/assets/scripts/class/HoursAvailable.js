@@ -108,13 +108,15 @@ class HoursAvailable {
                 Message.create(response.message, 'info');
                 this.createBlockMessage(response.message);
             } else {
+                const endHours = this.getEndHours(response.end_hour);
+
                 Object.keys(response.hours).forEach((key) => {
-                    this.createBlockHour(response.hours[key], key, response.hours[parseInt(key)+1], response.end_hour); 
+                    this.createBlockHour(response.hours[key], key, response.hours[parseInt(key)+1], endHours); 
                 });
 
                 if (this.countBlock === 0 && this.location.val() !== undefined) {
-                    Message.create('Sem horários disponíves!', 'info');
-                    this.createBlockMessage('Sem horários disponíves!');  
+                    Message.create('Sem horários disponíveis!', 'info');
+                    this.createBlockMessage('Sem horários disponíveis!');  
                 }
             }
 
@@ -189,7 +191,7 @@ class HoursAvailable {
      * @returns {void}
      */
     createBlockHour (date, key, nextDate, endHour) {
-        if(date.blocked && !date.checked || (endHour == date.hour)) return;
+        if(date.blocked && !date.checked || (endHour.includes(date.hour))) return;
         if (this.typeReservation === 'period' && !this.getHoursAllPeriods().includes(date.hour)) return;
 
         const hoursHidden = this.typeReservation == 'hour' ? [] : this.hoursHidden;
@@ -201,7 +203,7 @@ class HoursAvailable {
         const tr = $('<tr />');
         tr.attr('class', `${classChecked} border-b hover:bg-gray-100 text-gray-900${classHidden}`);
 
-        const badge = $('<span /></span>');
+        const badge = $('<span />');
         badge.attr('class', 'rounded text-xs text-light px-2 py-1 bg-color-main mb-1');
         badge.text('Reservado');
 
@@ -419,13 +421,15 @@ class HoursAvailable {
                 Message.create(response.message, 'info');
                 this.createBlockMessage(response.message);
             } else {
+                const endHours = this.getEndHours(response.end_hour);
+                
                 Object.keys(response.hours).forEach((key) => {
-                    this.createBlockHour(response.hours[key], key, response.hours[parseInt(key)+1], response.end_hour); 
+                    this.createBlockHour(response.hours[key], key, response.hours[parseInt(key)+1], endHours); 
                 });
 
                 if (this.countBlock === 0 && this.location.val() !== undefined) {
-                    Message.create('Sem horários disponíves!', 'info');
-                    this.createBlockMessage('Sem horários disponíves!'); 
+                    Message.create('Sem horários disponíveis!', 'info');
+                    this.createBlockMessage('Sem horários disponíveis!'); 
                 }
             }
 
@@ -744,6 +748,28 @@ class HoursAvailable {
         const month = months[date.getMonth()];
 
         return dayWeek + ', ' + day + '/' + month;
+    }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @param {String} endHour 
+     * @returns {*}
+     */
+    getEndHours (endHour) {
+        const endHours = [endHour];
+
+        if (this.typeReservation === 'period') {
+            const periods = this.getPeriods();
+
+            Object.keys(periods).forEach(key => {
+                const hour = periods[key].end-1;
+                
+                hour.length === 1 ? endHours.push(`0${hour}:00`) : endHours.push(`${hour}:00`);
+            })
+        }
+
+        return endHours;
     }
 
     /**
