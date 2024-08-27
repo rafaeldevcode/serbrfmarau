@@ -216,7 +216,7 @@ if (!function_exists('getHoursReservation')):
      * @param string $priod
      * @return array
      */
-    function getHoursReservation(?int $location_id = null, ?string $date = null, ?int $reservation_id = null, ?string $day = null, string $block_previous = 'true', string $period = ''): array
+    function getHoursReservation(?int $location_id = null, ?string $date = null, ?int $reservation_id = null, ?string $day = null, string $block_previous = 'true', ?string $period = null): array
     {
         if ($location_id === 0) {
             return [
@@ -579,17 +579,32 @@ if (!function_exists('getBtweenHours')):
      * @since 1.7.0
      * 
      * @param int $id
+     * @param stdClass $location
+     * @param string $locationId
      * @return ?string
      */
-    function getBtweenHours(int $id): ?string
+    function getBtweenHours(int $id, $locationId, $reservationPeriod): ?string
     {
         $reservations = new Reservation();
         $reservation = $reservations->find($id);
 
+        $location = new Location();
+        $location = $location->find($locationId)->data;
+
         $hours = addHour(getArraySelect($reservation->schedules()->data, 'id', 'hour'));
         $keys = array_keys($hours);
 
-        return "{$hours[$keys[0]]} Às {$hours[$keys[count($keys)-1]]}";
+        if ($location->type == 'period') {
+            if ($reservationPeriod == 'Manhã') {
+                return "08:00 Às 15:30";
+            } else if ($reservationPeriod == 'Noite') {
+                return "17:30 Às 01:45";
+            } else {
+                return "08:00 Às 01:45";
+            };
+        } else {
+            return "{$hours[$keys[0]]} Às {$hours[$keys[count($keys)-1]]}";
+        }
     }
 endif;
 
@@ -614,15 +629,21 @@ if (!function_exists('getPrice')):
      * @since 1.7.0
      * 
      * @param ?string $prices
+     * @param stdClass $reservation
+     * @param int $totalSchedules
+     * @param stdClass $location
      * @return float
      */
-    function getPrice(?string $prices, ?string $date, ?string $day, ?string $isPartner): float
+    function getPrice(?string $prices, stdClass $reservation, int $totalSchedules, $location): string
     {
+        $periodType = $reservation->period === 'Dia todo' ? 'full' : 'normal';
         $prices = json_decode($prices, true);
-        $day = is_null($day) ? date('l', strtotime($date)) : $day;
-        $price = $isPartner === 'on' ? $prices[translateDayWeek($day)][0] : $prices[translateDayWeek($day)][1];
+        $day = is_null($reservation->day) ? date('l', strtotime($reservation->date)) : $reservation->day;
+        $price = $reservation->is_partner === 'on' ? $prices[$periodType][translateDayWeek($day)][0] : $prices[$periodType][translateDayWeek($day)][1];
 
-        return floatval($price);
+        return $location->type == 'period' 
+            ? number_format(floatval($price), 2, ',', ',')
+            : number_format($totalSchedules * floatval($price), 2, ',', ',');
     }
 endif;
 
