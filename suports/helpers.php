@@ -341,6 +341,10 @@ if (!function_exists('generateTimeBlocks')):
      */
     function generateTimeBlocks(string $start, string $end): array
     {
+        if (strtotime($end) < strtotime($start)) {
+            $end = '23:00';
+        }
+        
         $blocks = [];
         $currentTime = $start;
 

@@ -212,7 +212,7 @@ class HoursAvailable {
             class: 'px-2 py-4 whitespace-nowrap text-secondary flex flex-col-reverse items-start',
             scope: 'row'
         });
-        tdTitle.text(`${dateFormat} - ${date.hour} às ${this.getLastHour(date.hour, nextDate.hour)}`);
+        tdTitle.text(`${dateFormat} - ${this.typeReservation == 'period' && date.hour == '17:00'  ? '17:30' : date.hour} às ${this.getLastHour(date.hour, nextDate.hour)}`);
 
         if (date.checked) {
             tdTitle.append(badge);
@@ -607,15 +607,18 @@ class HoursAvailable {
         const noite = this.getHoursByPeriod('Noite');
 
         if(manha.includes(hour) && !tarde.includes(hour)){
-            return manha[manha.length-1];
+            // return manha[manha.length-1];
+            return '15:30';
         }
 
         if(tarde.includes(hour) && !noite.includes(hour)){
-            return tarde[tarde.length-1];
+            // return tarde[tarde.length-1];
+            return '01:45';
         }
 
         if(noite.includes(hour)){
-            return noite[noite.length-1];
+            // return noite[noite.length-1];
+            return '01:45';
         }
     }
 
@@ -721,14 +724,14 @@ class HoursAvailable {
         return {
             Manhã: {
                 start: 8,
-                end: 13
+                end: 15
             },
             Tarde: {
-                start: 13,
-                end: 18
+                start: 23,
+                end: 23
             },
             Noite: {
-                start: 18,
+                start: 17,
                 end: 23
             }
         }
