@@ -86,7 +86,7 @@
                                 <?php echo $reservation->type == 'Fixo' ? translateDayWeek($reservation->day) : date('d/m/Y', strtotime($reservation->date)) ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
-                                <?php echo getBtweenHours($reservation->id) ?>
+                                <?php echo getBtweenHours($reservation->id, $reservation->location_id, $reservation->period) ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo getProtocol($reservation->id) ?>
