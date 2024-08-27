@@ -93,7 +93,7 @@
                         '' => '----Selecione----',
                         'Dia todo' => 'Dia todo',
                         'Manhã' => 'Manhã',
-                        'Tarde' => 'Tarde',
+                        // 'Tarde' => 'Tarde',
                         'Noite' => 'Noite'
                     ]
                 ]) ?>
