@@ -10,6 +10,8 @@
             <input type="hidden" name="location_id" id="location_id" value="<?php echo $location_id ?>">
         <?php endif ?>
 
+        <input type="hidden" name="is_admin" id="is_admin" value="<?php echo $is_admin ? 'on' : 'off' ?>">
+
         <div class='w-full md:w-6/12 px-4 mt-6'>
             <?php loadHtml(__DIR__.'/form/input-checkbox-switch', [
                 'name' => 'is_partner',
