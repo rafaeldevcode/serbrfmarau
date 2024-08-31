@@ -214,9 +214,10 @@ if (!function_exists('getHoursReservation')):
      * @param ?string $day
      * @param string $block_previous
      * @param string $priod
+     * @param string $isAdmin
      * @return array
      */
-    function getHoursReservation(?int $location_id = null, ?string $date = null, ?int $reservation_id = null, ?string $day = null, string $block_previous = 'true', ?string $period = null): array
+    function getHoursReservation(?int $location_id = null, ?string $date = null, ?int $reservation_id = null, ?string $day = null, string $block_previous = 'true', ?string $period = null, $isAdmin = 'off'): array
     {
         if ($location_id === 0) {
             return [
@@ -245,14 +246,22 @@ if (!function_exists('getHoursReservation')):
         if(empty($date)):
             $schedules = $schedules->where('location_id', '=', $location_id)->where('day', '=', $day)->where('status', '!=', 'Reprovado')->get(['id', 'hour']);
         else:
-            $schedules = $schedules->where('date', '=', $date)->where('location_id', '=', $location_id)->where('status', '!=', 'Reprovado')->orWhere('day', '=', date('l', strtotime($date)))->get(['id', 'hour', 'location_id']);
+            $query = $schedules->where('date', '=', $date)->where('location_id', '=', $location_id)->where('status', '!=', 'Reprovado');
+            
+            if ($location->data->type === 'hour'):
+                $query->orWhere('day', '=', date('l', strtotime($date)));
+            endif;
+
+            $schedules = $query->get(['id', 'hour', 'location_id']);
             $schedules = filterSchedules($schedules, $location_id);
         endif;
 
         $schedules = getArraySelect($schedules, 'id', 'hour');
 
         if ($location->data):
-            $opening_days = json_decode($location->data->opening_days, true);
+            $opening_days = $isAdmin === 'on' 
+                ? ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+                : json_decode($location->data->opening_days, true);
 
             if(in_array($day, $opening_days) || in_array(date('l', strtotime($date)), $opening_days)):
                 $opening_date = getOpeningDate($location->data->opening);
@@ -283,8 +292,12 @@ if (!function_exists('getHoursReservation')):
             elseif(empty($date) && in_array($day, $opening_days)):
                 $active_hours = array_diff($active_hours, $schedules);
             else:
-                $active_hours = [];
-                $data['message'] = 'Horários ainda não liberados pelo sistema, para mais informações entre em contato via WhatsApp!';
+                if ($isAdmin == 'on'):
+                    $active_hours = array_diff($active_hours, $schedules);
+                else:
+                    $active_hours = [];
+                    $data['message'] = 'Horários ainda não liberados pelo sistema, para mais informações entre em contato via WhatsApp!';
+                endif;
             endif;
         else:
             $active_hours = array_diff($active_hours, $schedules);

@@ -17,6 +17,7 @@ class HoursAvailable {
         this.period = $('#period');
         this.type = $('#type');
         this.isPartner = $('#is_partner');
+        this.isAdmin = $('#is_admin');
         this.price = 0;
         this.countBlock = 0;
         this.typeReservation = null;
@@ -212,7 +213,7 @@ class HoursAvailable {
             class: 'px-2 py-4 whitespace-nowrap text-secondary flex flex-col-reverse items-start',
             scope: 'row'
         });
-        tdTitle.text(`${dateFormat} - ${this.typeReservation == 'period' && date.hour == '17:00'  ? '17:30' : date.hour} às ${this.getLastHour(date.hour, nextDate.hour)}`);
+        tdTitle.text(`${dateFormat} - ${this.typeReservation == 'period' && date.hour == '17:00'  ? '17:30' : date.hour} às ${this.getLastHour(date.hour, nextDate?.hour)}`);
 
         if (date.checked) {
             tdTitle.append(badge);
@@ -600,7 +601,7 @@ class HoursAvailable {
      * @returns {String}
      */
     getLastHour(hour, nextHour){
-        if(this.typeReservation == 'hour') return nextHour;
+        if(this.typeReservation == 'hour') return nextHour ?? '00:00';
 
         const manha = this.getHoursByPeriod('Manhã');
         const tarde = this.getHoursByPeriod('Tarde');
@@ -793,7 +794,8 @@ class HoursAvailable {
                     location_id: this.location.val() === undefined ? 0 : this.location.val(),
                     day: this.day.attr('disabled') === 'disabled' ? null : this.day.val(),
                     block_previous: this.blockPreviusHours,
-                    period: this.period.val()
+                    period: this.period.val(),
+                    is_admin: this.isAdmin.val()
                 },
                 success: function(response) {
                     resolve(response);
