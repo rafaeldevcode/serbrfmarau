@@ -30,7 +30,7 @@
         <script type="text/javascript" src="<?php asset('assets/scripts/class/HoursAvailable.js') ?>"></script>
         <script type="text/javascript" src="<?php asset('assets/scripts/class/Clients.js') ?>"></script>
         <script type="text/javascript">
-            Clients.init('#identifier', '/api/clients', 'CPF');
+            Clients.init('#identifier', '/api/clients', 'CPF / CNPJ');
 
             $(document).ready(function(){
                 $('#carousel').slick({

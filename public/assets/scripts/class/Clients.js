@@ -34,8 +34,8 @@ class Clients {
                     } else {
                         const modifiedResults = response.data.map(item => {
                             return {
-                                id: item.cpf,
-                                cpf: item.cpf,
+                                id: item.cpf_cnpj,
+                                cpf: item.cpf_cnpj,
                                 email: item.email,
                                 phone: item.phone,
                                 amount_people: item.amount_people,

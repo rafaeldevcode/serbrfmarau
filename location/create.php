@@ -19,7 +19,7 @@
 
     $requests = requests();
     $identifier = isset($requests->identifier) ? $requests->identifier : null;
-    $client = isset($identifier) ? $client->where('cpf', '=', $identifier)->first() : null;
+    $client = isset($identifier) ? $client->where('cpf_cnpj', '=', $identifier)->first() : null;
     $location = $location->find($requests->location_id);
 
     $title = 'Horário reservado!';
@@ -68,7 +68,7 @@
             $new_client->find($client->id)->update([
                 'email' => $requests->email,
                 'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
-                'cpf' => $identifier,
+                'cpf_cnpj' => $identifier,
                 'payment_type' => $requests->payment_type,
                 'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
                 'event' => $requests->event
@@ -78,7 +78,7 @@
             $client->create([
                 'email' => $requests->email,
                 'phone' => preg_replace('/[^0-9]/', '', $requests->phone),
-                'cpf' => $identifier,
+                'cpf_cnpj' => $identifier,
                 'payment_type' => $requests->payment_type,
                 'amount_people' =>  empty($requests->amount_people) ? 0 : $requests->amount_people,
                 'event' => $requests->event
