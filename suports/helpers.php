@@ -526,14 +526,14 @@ endif;
 if (!function_exists('addHour')):
     function addHour(array $current_hours): array
     {
-        $last_hour = $current_hours[array_keys($current_hours)[0]+1];
+        $last_hour = empty($current_hours) ? '' : $current_hours[array_keys($current_hours)[0]+1];
 
         $hours = getHours();
         $filter = array_filter($hours, function ($hour) use($last_hour) {
             return $hour === $last_hour;
         });
 
-        array_push($current_hours, $hours[array_keys($filter)[0]+1]);
+        if(!empty($filter)) array_push($current_hours, $hours[array_keys($filter)[0]+1]);
 
         return $current_hours;
     }

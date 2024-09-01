@@ -63,7 +63,7 @@
         <script type="text/javascript" src="<?php asset('assets/scripts/class/Clients.js') ?>"></script>
         <script type="text/javascript" src="<?php asset('assets/scripts/class/UpdateReservation.js') ?>"></script>
         <script type="text/javascript">
-            Clients.init('#identifier', '/api/clients', 'CPF / Identificador do cliente');
+            Clients.init('#identifier', '/api/clients', 'CPF / CNPJ / Identificador do cliente');
 
             UpdateReservation.payment()
                 .status()

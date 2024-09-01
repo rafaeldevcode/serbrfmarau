@@ -17,7 +17,7 @@
                         <?php loadHtml(__DIR__.'/form/input-select', [
                             'icon' => 'bi bi-123',
                             'name' => 'identifier',
-                            'label' => $is_admin ? 'CPF / Identificador do cliente' : 'CPF',
+                            'label' => $is_admin ? 'CPF / CNPJ / Identificador do cliente' : 'CPF / CNPJ',
                             'value' => isset($reservation) ? $reservation->identifier : null,
                             'attributes' => [
                                 'required' => true,

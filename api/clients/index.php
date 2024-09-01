@@ -8,7 +8,7 @@
         $requests = requests();
         $client = new Client();
 
-        $clients = $client->where('cpf', 'LIKE', "%{$requests->search}%")->get();
+        $clients = $client->where('cpf_cnpj', 'LIKE', "%{$requests->search}%")->get();
 
         $data = ['success' => true, 'data' => $clients];
     else:

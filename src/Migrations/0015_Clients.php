@@ -17,7 +17,7 @@ class Clients extends ExecuteMigrations
     {
         $this->integer('id')->primaryKey();
 
-        $this->string('cpf', 11)->unique();
+        $this->string('cpf_cnpj', 14)->unique();
         $this->string('email', 50);
         $this->string('phone', 14);
         $this->integer('amount_people');
