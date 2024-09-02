@@ -119,9 +119,9 @@
                                         loadHtml(__DIR__.'/../../../resources/partials/form/input-checkbox-switch', [
                                             'name' => 'payment',
                                             'label' => '',
-                                            'value' => array_values($payments)[0],
+                                            'value' => array_values($payments)[0] ?? null,
                                             'attributes' => [
-                                                'data-reservation-payment' => array_keys($payments)[0]
+                                                'data-reservation-payment' => array_keys($payments)[0] ?? null
                                             ]
                                         ]) ?>
                                     <?php else: ?>
