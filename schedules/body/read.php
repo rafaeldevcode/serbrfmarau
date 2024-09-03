@@ -7,7 +7,6 @@
     <div class="container">
         <?php loadHtml(__DIR__ . '/../../resources/client/partials/title', [
             'title' => 'Nossos Locais',
-            'subtitle' => 'Conheça a Nossa História: Paixão, Compromisso e Excelência'
         ]) ?>
 
         <div class="flex flex-wrap items-center justify-center mt-12">
