@@ -835,20 +835,20 @@ video {
   width: 2.75rem;
 }
 
-.w-2\/12 {
-  width: 16.666667%;
+.w-3\/12 {
+  width: 25%;
 }
 
 .w-4 {
   width: 1rem;
 }
 
-.w-7\/12 {
-  width: 58.333333%;
+.w-6\/12 {
+  width: 50%;
 }
 
-.w-8\/12 {
-  width: 66.666667%;
+.w-7\/12 {
+  width: 58.333333%;
 }
 
 .w-\[100px\] {
@@ -885,14 +885,6 @@ video {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-3\/12 {
-  width: 25%;
-}
-
-.w-6\/12 {
-  width: 50%;
 }
 
 .max-w-\[1000px\] {
@@ -1271,6 +1263,10 @@ video {
 .text-7xl {
   font-size: 4.5rem;
   line-height: 1;
+}
+
+.text-\[\.6rem\] {
+  font-size: .6rem;
 }
 
 .text-lg {
