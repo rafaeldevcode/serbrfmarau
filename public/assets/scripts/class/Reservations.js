@@ -16,6 +16,7 @@ class Reservations extends HoursAvailable {
                     this.location = $(item).parent().find('[name="location_id"]');
                     this.typeReservation = $(item).parent().find('[name="type"]').val();
                     this.body = $(item).parent().find('[data-list="hours"]');
+                    this.isAdmin = $(item).parent().find('[name="is_admin"]');
 
                     this.loadContent();
                     this.changeDate(item);

@@ -103,7 +103,7 @@ class HoursAvailable {
 
             const response = await this.get();
 
-            this.price = this.isPartner.prop('checked') ? response.price[0] : response.price[1];
+            this.price = this.isPartner.prop('checked') ? response.price[0] : (response.price && response.price[1]);
 
             if (response.message) {
                 Message.create(response.message, 'info');
@@ -796,7 +796,7 @@ class HoursAvailable {
                     day: this.day.attr('disabled') === 'disabled' ? null : this.day.val(),
                     block_previous: this.blockPreviusHours,
                     period: this.period.val(),
-                    is_admin: this.isAdmin.val()
+                    is_admin: this.isAdmin.val() || 'off'
                 },
                 success: function(response) {
                     resolve(response);

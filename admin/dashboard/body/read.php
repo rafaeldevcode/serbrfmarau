@@ -27,6 +27,7 @@
         <?php foreach($location_reservations as $reservation): ?>
             <form class="mb-4">
                 <input type="hidden" name="location_id" value="<?php echo $reservation['id'] ?>">
+                <input type="hidden" name="is_admin" value="on">
                 <input type="hidden" name="type" value="<?php echo $reservation['type'] ?>">
 
                 <div data-reservation="false" class="bg-gray-200 p-2 rounded-t font-bold text-gray-800 flex justify-between items-center pointer">
