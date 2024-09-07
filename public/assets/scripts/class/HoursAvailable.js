@@ -103,7 +103,7 @@ class HoursAvailable {
 
             const response = await this.get();
 
-            this.price = this.isPartner.prop('checked') ? response.price[0] : response.price[1];
+            this.price = this.isPartner.prop('checked') ? response.price[0] : (response.price && response.price[1]);
 
             if (response.message) {
                 Message.create(response.message, 'info');
@@ -192,6 +192,7 @@ class HoursAvailable {
      * @returns {void}
      */
     createBlockHour (date, key, nextDate, endHour) {
+        if (date.checked) return;
         if(date.blocked && !date.checked || (endHour.includes(date.hour))) return;
         if (this.typeReservation === 'period' && !this.getHoursAllPeriods().includes(date.hour)) return;
 
@@ -205,7 +206,7 @@ class HoursAvailable {
         tr.attr('class', `${classChecked} border-b hover:bg-gray-100 text-gray-900${classHidden}`);
 
         const badge = $('<span />');
-        badge.attr('class', 'rounded text-xs text-light px-2 py-1 bg-color-main mb-1');
+        badge.attr('class', 'rounded text-[.6rem] text-light px-1 mb-1 bg-color-main mb-l');
         badge.text('Reservado');
 
         const tdTitle = $('<td />');
@@ -744,14 +745,14 @@ class HoursAvailable {
      * @returns {string}
      */
     getDateFormated() {
-        const date = new Date(this.date.val());
+        const date = new Date(this.date.val() + 'T00:00:00');
         const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
         const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
         const dayWeek = days[date.getDay()+1] === undefined ? days[0] : days[date.getDay()+1];
-        const day = date.getDate()+1;
+        const day = date.getDate();
         const month = months[date.getMonth()];
 
-        return dayWeek + ', ' + day + '/' + month;
+        return `${dayWeek}, ${day}/${month}`;
     }
 
     /**
@@ -795,7 +796,7 @@ class HoursAvailable {
                     day: this.day.attr('disabled') === 'disabled' ? null : this.day.val(),
                     block_previous: this.blockPreviusHours,
                     period: this.period.val(),
-                    is_admin: this.isAdmin.val()
+                    is_admin: this.isAdmin.val() || 'off'
                 },
                 success: function(response) {
                     resolve(response);
