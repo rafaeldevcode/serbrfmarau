@@ -45,7 +45,7 @@
                             'icon' => 'bi bi-envelope-fill',
                             'name' => 'email',
                             'label' => 'Email',
-                            'type' => 'text',
+                            'type' => 'email',
                             'value' => isset($reservation) ? $reservation->email : null,
                             'attributes' => 'required'
                         ]) ?>
