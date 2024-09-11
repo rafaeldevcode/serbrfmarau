@@ -20,7 +20,7 @@
     <main class='flex flex-nowrap justify-between w-screen'>
         <section class='w-full'>
             <section class='w-screen h-screen flex justify-center items-center' style="background: url(<?php asset($image) ?>)no-repeat; background-size: cover;">
-                <div class='container text-secondary flex p-4 border rounded border-color-main m-2 custom-construction-mirror flex flex-col justify-between'>
+                <div class='container text-secondary flex p-4 border rounded border-color-main m-2 custom-construction-mirror flex-col justify-between'>
                     <?php if(isset($reservation)): ?>
                         <div class='text-secondary'>
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Local:</strong> <?php echo $location->name ?></h2>

@@ -45,6 +45,12 @@ if (!function_exists('menusAdmin')):
                 'icon' => 'bi bi-images',
                 'count' => null
             ],
+            'reports' => [
+                'path' => '/admin/reports',
+                'title' => 'Relatórios',
+                'icon' => 'bi bi-file-text-fill',
+                'count' => null
+            ],
             'settings' => [
                 'path' => '/admin/settings',
                 'title' => 'Configurações',

@@ -38,7 +38,8 @@ if(!function_exists('routes')):
             '/admin/profile',
             '/admin/profile/update',
             '/admin/profile/update-avatar',
-
+            '/admin/reports',
+            '/admin/reports/generate-pdf',
             '/policies',
             '/login',
             '/login/create',
@@ -182,6 +183,7 @@ if(!function_exists('transBreadcrumps')):
             'reservations' => 'reservas',
             'gallery' => 'galeria',
             'settings' => 'configuracoes',
+            'reports' => 'relatórios',
             'profile' => 'perfil'
         ];
 

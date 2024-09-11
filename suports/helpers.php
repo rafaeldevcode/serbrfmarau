@@ -683,9 +683,9 @@ if (!function_exists('filterReservations')):
      * @since 1.7.0
      * 
      * @param Reservation $reservation
-     * @return string
+     * @return stdClass
      */
-    function filterReservations(Reservation $reservation)
+    function filterReservations(Reservation $reservation): stdClass
     {
         $requests = requests();
 
@@ -708,12 +708,68 @@ if (!function_exists('filterReservations')):
             $reservation = $reservation->where('type', '=', $requests->reservation_type);
         endif;
 
+        if(isset($requests->location) && !empty($requests->location)):
+            $reservation = $reservation->where('location_id', '=', $requests->location);
+        endif;
+
         if(isset($requests->date) && !empty($requests->date)):
             $reservation = $reservation->where('date', '>=', date('Y-m-d'), 'start_date');
             $reservation = $reservation->where('date', '<=', getOpeningDate($requests->date), 'end_date');
         endif;
     
         return $reservation->paginate(20);
+    }
+endif;
+
+if (!function_exists('reservationsByLocations')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param array $locations
+     * @return array
+     */
+    function reservationsByLocations(array $locations): array
+    {
+        $data = [];
+
+        foreach ($locations as $location):
+            $reservation = (new Reservation())->where('location_id', '=', $location->id)->count();
+
+            array_push($data, [
+                'location' => $location->name,
+                'responsible' => $location->email,
+                'total_reservation' => $reservation,
+            ]);
+        endforeach;
+
+        return $data;
+    }
+endif;
+
+if (!function_exists('getPriceOfTheReservation')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param int $reservation_id
+     * @return array
+     */
+    function getPriceOfTheReservation(int $reservation_id): string
+    {
+        $reservation = new Reservation();
+        $reservation->find($reservation_id);
+        
+        $location = $reservation->location()->data[0];
+        $schedules = $reservation->schedules()->data;
+        $totalSchedules = is_null($schedules) ? 0 : count($schedules);
+
+        $periodType = $reservation->data->period === 'Dia todo' ? 'full' : 'normal';
+        $prices = json_decode($location->prices, true);
+        $day = is_null($reservation->data->day) ? date('l', strtotime($reservation->data->date)) : $reservation->data->day;
+        $price = $reservation->data->is_partner === 'on' ? $prices[$periodType][translateDayWeek($day)][0] : $prices[$periodType][translateDayWeek($day)][1];
+
+        return $location->type == 'period' 
+            ? "R$" . number_format(floatval($price), 2, ',', ',')
+            : "R$" . number_format($totalSchedules * floatval($price), 2, ',', ',');
     }
 endif;
 
