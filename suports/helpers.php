@@ -765,7 +765,7 @@ if (!function_exists('filterReservationsReports')):
             $reservation = $reservation->where('date', '>=', date('Y-m-d'), 'start_date');
         endif;
 
-        if(isset($requests->start_date) && !empty($requests->start_date)):
+        if(isset($requests->end_date) && !empty($requests->end_date)):
             $reservation = $reservation->where('date', '<=', $requests->end_date, 'end_date');
         endif;
     
@@ -794,7 +794,7 @@ if (!function_exists('reservationsByLocations')):
                 $reservation = $reservation->where('date', '>=', date('Y-m-d'), 'start_date');
             endif;
     
-            if(isset($requests->start_date) && !empty($requests->start_date)):
+            if(isset($requests->end_date) && !empty($requests->end_date)):
                 $reservation = $reservation->where('date', '<=', $requests->end_date, 'end_date');
             endif;
 
