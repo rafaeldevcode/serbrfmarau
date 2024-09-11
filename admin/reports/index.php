@@ -6,7 +6,7 @@
     $reservation = new Reservation();
     $location = new Location();
 
-    $reservations = filterReservations($reservation);
+    $reservations = filterReservationsReports($reservation);
     $locations = $location->get();
 
     $reservationsByLocation = reservationsByLocations($locations);
@@ -64,7 +64,7 @@
                 } else if(button.attr('data-form-submit') === 'search') {
                     form.attr('method', 'POST');
                     form.removeAttr('target');
-                    form.attr('action', '/admin/reports');
+                    form.attr('action', '');
                     form.submit();
                 }
             });
