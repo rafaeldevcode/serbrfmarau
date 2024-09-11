@@ -390,6 +390,29 @@ if (!function_exists('getOpeningDate')):
     }
 endif;
 
+if (!function_exists('getOpeningDateReports')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param string $date
+     * @return string
+     */
+    function getOpeningDateReports(string $date): string
+    {
+        $current_date = new DateTime();
+
+        $new_date = match ($date) {
+            'P1D' => $current_date->format('Y-m-d'),
+            'P1W' => $current_date->modify('sunday this week')->format('Y-m-d'),
+            'P1M' => $current_date->modify('last day of this month')->format('Y-m-d'),
+            'P1D' => $current_date->modify('last day of this week')->format('Y-m-d'),
+            default => $current_date->modify('last day of december')->format('Y-m-d'),
+        };
+
+        return $new_date;
+    }
+endif;
+
 if (!function_exists('getBadgeReservationStatus')):
     /**
      * @since 1.7.0
@@ -717,7 +740,31 @@ if (!function_exists('filterReservations')):
             $reservation = $reservation->where('date', '<=', getOpeningDate($requests->date), 'end_date');
         endif;
     
-        return $reservation->paginate(20);
+        return $reservation->paginate(20, 'date');
+    }
+endif;
+
+if (!function_exists('filterReservationsReports')):
+    /**
+     * @since 1.7.0
+     * 
+     * @param Reservation $reservation
+     * @return stdClass
+     */
+    function filterReservationsReports(Reservation $reservation): stdClass
+    {
+        $requests = requests();
+
+        if(isset($requests->location) && !empty($requests->location)):
+            $reservation = $reservation->where('location_id', '=', $requests->location);
+        endif;
+
+        if(isset($requests->date) && !empty($requests->date)):
+            $reservation = $reservation->where('date', '>=', date('Y-m-d'), 'start_date');
+            $reservation = $reservation->where('date', '<=', getOpeningDateReports($requests->date), 'end_date');
+        endif;
+    
+        return $reservation->paginate(20, 'date', 'ASC');
     }
 endif;
 

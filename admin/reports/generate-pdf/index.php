@@ -8,7 +8,7 @@ use Src\Models\Reservation;
 $reservation = new Reservation();
 $location = new Location();
 
-$reservations = filterReservations($reservation);
+$reservations = filterReservationsReports($reservation);
 $locations = $location->get();
 
 $reservationsByLocation = reservationsByLocations($locations);
