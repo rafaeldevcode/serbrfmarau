@@ -394,10 +394,10 @@ if (!function_exists('getOpeningDateReports')):
     /**
      * @since 1.7.0
      * 
-     * @param string $date
+     * @param ?string $date
      * @return string
      */
-    function getOpeningDateReports(string $date): string
+    function getOpeningDateReports(?string $date): string
     {
         $current_date = new DateTime();
 
@@ -759,9 +759,14 @@ if (!function_exists('filterReservationsReports')):
             $reservation = $reservation->where('location_id', '=', $requests->location);
         endif;
 
-        if(isset($requests->date) && !empty($requests->date)):
+        if(isset($requests->start_date) && !empty($requests->start_date)):
+            $reservation = $reservation->where('date', '>=', $requests->start_date, 'start_date');
+        else:
             $reservation = $reservation->where('date', '>=', date('Y-m-d'), 'start_date');
-            $reservation = $reservation->where('date', '<=', getOpeningDateReports($requests->date), 'end_date');
+        endif;
+
+        if(isset($requests->start_date) && !empty($requests->start_date)):
+            $reservation = $reservation->where('date', '<=', $requests->end_date, 'end_date');
         endif;
     
         return $reservation->paginate(20, 'date', 'ASC');
@@ -778,9 +783,22 @@ if (!function_exists('reservationsByLocations')):
     function reservationsByLocations(array $locations): array
     {
         $data = [];
+        $requests = requests();
 
         foreach ($locations as $location):
-            $reservation = (new Reservation())->where('location_id', '=', $location->id)->count();
+            $reservation = (new Reservation())->where('location_id', '=', $location->id);
+
+            if(isset($requests->start_date) && !empty($requests->start_date)):
+                $reservation = $reservation->where('date', '>=', $requests->start_date, 'start_date');
+            else:
+                $reservation = $reservation->where('date', '>=', date('Y-m-d'), 'start_date');
+            endif;
+    
+            if(isset($requests->start_date) && !empty($requests->start_date)):
+                $reservation = $reservation->where('date', '<=', $requests->end_date, 'end_date');
+            endif;
+
+            $reservation = $reservation->count();
 
             array_push($data, [
                 'location' => $location->name,

@@ -2,23 +2,27 @@
     <section>
         <form action="" method="POST" class="flex flex-col items-end">
             <div class='w-full flex flex-wrap items-end'>
-                <div class="w-full md:w-4/12 lg:w-3/12 px-1">
-                    <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
-                        'icon' => 'bi bi-hash',
-                        'name' => 'date',
-                        'label' => 'Data da reserva',
-                        'value' => isset(requests()->date) ? requests()->date : null,
-                        'array' => [
-                            '' => '----',
-                            'P1D' => 'Hoje',
-                            'P1W' => 'Essa semana',
-                            'P1M' => 'Esse mês',
-                            'P1Y' => 'Esse ano'
-                        ]
+                <div class="w-full md:w-3/12 lg:w-2/12 px-1">
+                    <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
+                        'icon' => 'bi bi-calendar-event-fill',
+                        'name' => 'start_date',
+                        'label' => 'Data Inicial',
+                        'type' => 'date',
+                        'value' => isset(requests()->start_date) ? requests()->start_date : null,
                     ]) ?>
                 </div>
 
-                <div class="w-full md:w-4/12 lg:w-3/12 px-1">
+                <div class="w-full md:w-3/12 lg:w-2/12 px-1">
+                    <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
+                        'icon' => 'bi bi-calendar-event-fill',
+                        'name' => 'end_date',
+                        'label' => 'Data Final',
+                        'type' => 'date',
+                        'value' => isset(requests()->end_date) ? requests()->end_date : null,
+                    ]) ?>
+                </div>
+
+                <div class="w-full md:w-3/12 lg:w-2/12 px-1">
                     <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
                         'icon' => 'bi bi-hash',
                         'name' => 'location',
@@ -28,12 +32,12 @@
                     ]) ?>
                 </div>
 
-                <div class="w-full md:w-4/12 lg:w-6/12 flex justify-end gap-2">
-                    <button data-form-submit="pdf" title="Filtrar" class="btn btn-color-main font-bold my-3">
+                <div class="w-full md:w-3/12 lg:w-6/12 flex justify-end gap-2">
+                    <button data-form-submit="pdf" title="Filtrar" class="btn text-[.7rem] btn-color-main font-bold my-3">
                         Gerar PDF
                     </button>
 
-                    <button data-form-submit="search" title="Filtrar" class="btn btn-color-main font-bold my-3">
+                    <button data-form-submit="search" title="Filtrar" class="btn text-[.7rem] btn-color-main font-bold my-3">
                         Buscar
                     </button>
                 </div>
@@ -42,7 +46,7 @@
 
         <div>
             <div class="relative overflow-x-auto max-w-[2000px] mx-auto mb-4 rounded border p-4">
-                <table class="w-full md:w-5/12 text-xs text-left">
+                <table class="w-full md:w-9/12 lg:w-5/12 text-xs text-left">
                     <thead class="text-white uppercase bg-color-main">
                         <tr>
                             <th scope="col" class="p-2">
