@@ -748,7 +748,7 @@ class HoursAvailable {
         const date = new Date(this.date.val() + 'T00:00:00');
         const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
         const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-        const dayWeek = days[date.getDay()+1] === undefined ? days[0] : days[date.getDay()+1];
+        const dayWeek = days[date.getDay()];
         const day = date.getDate();
         const month = months[date.getMonth()];
 
