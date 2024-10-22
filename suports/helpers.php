@@ -634,9 +634,9 @@ if (!function_exists('getBtweenHours')):
             if ($reservationPeriod == 'Manhã') {
                 return "08:00 Às 15:30";
             } else if ($reservationPeriod == 'Noite') {
-                return "17:30 Às 01:45";
+                return "17:30 Às {$location->end_hour}";
             } else {
-                return "08:00 Às 01:45";
+                return "08:00 Às {$location->end_hour}";
             };
         } else {
             return "{$hours[$keys[0]]} Às {$hours[$keys[count($keys)-1]]}";
