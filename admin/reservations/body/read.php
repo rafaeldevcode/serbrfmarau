@@ -41,6 +41,9 @@
                             Nome
                         </th>
                         <th scope="col" class="p-2">
+                            Telefone
+                        </th>
+                        <th scope="col" class="p-2">
                             Tipo
                         </th>
                         <th scope="col" class="p-2">
@@ -93,6 +96,9 @@
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $reservation->name ?>
+                            </td>
+                            <td scope="row" class="p-2 whitespace-nowrap">
+                                <?php echo $reservation->phone ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $reservation->type ?>
