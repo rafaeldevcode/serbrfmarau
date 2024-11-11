@@ -98,7 +98,7 @@
                                 <?php echo $reservation->name ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
-                                <?php echo $reservation->phone ?>
+                                <?php echo formatPhoneNumberByCountry($reservation->phone) ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $reservation->type ?>

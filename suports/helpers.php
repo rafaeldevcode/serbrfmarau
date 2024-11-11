@@ -1008,4 +1008,34 @@ if (!function_exists('mountPrices')) {
     }
 }
 
+if (!function_exists('formatPhoneNumberByCountry')) {
+    function formatPhoneNumberByCountry(string $phoneNumber, string $country = "BR") {
+        if (empty($phoneNumber)) {
+            return null;
+        }
+
+        // Remove qualquer caractere que não seja número ou '+'
+        $cleaned = preg_replace('/[^\d+]/', '', $phoneNumber);
+
+        if ($country === 'US') {
+            // Formato para os EUA: +1 (XXX) XXX-XXXX
+            if (!strpos($cleaned, '+1') === 0) {
+                $cleaned = '+1' . $cleaned;
+            }
+
+            // Expressão regular para o formato de telefone dos EUA
+            if (preg_match('/^(\+?\d{1,3})(\d{3})(\d{3})(\d{4})$/', $cleaned, $matches)) {
+                return "{$matches[1]} ({$matches[2]}) {$matches[3]}-{$matches[4]}";
+            }
+        } elseif ($country === 'BR') {
+            // Formato para o Brasil: +55 (XX) XXXXX-XXXX
+            if (preg_match('/^(\d{2})(\d{5})(\d{4})$/', $cleaned, $matches)) {
+                return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
+            }
+        }
+
+        return null;
+    }
+}
+
 !defined('SETTINGS') && define('SETTINGS', (array)getSiteSettings());
