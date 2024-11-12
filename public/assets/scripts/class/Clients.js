@@ -85,4 +85,32 @@ class Clients {
         $('#event_type').val(eventType);
         $('#payment_type').val(paymentType);
     }
+
+    formatPhoneNumberByCountry(phoneNumber) {
+        if (!phoneNumber) {
+            return null;
+        }
+    
+        // Remove qualquer caractere que não seja número ou '+'
+        const cleaned = phoneNumber.replace(/[^\d+]/g, '');
+    
+        // Verifica formatos diferentes para números brasileiros
+        let match;
+        if ((match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/))) {
+            // Formato com código de área (XX) XXXXX-XXXX
+            return `(${match[1]}) ${match[2]}-${match[3]}`;
+        } else if ((match = cleaned.match(/^(\d{2})(\d{4})(\d{4})$/))) {
+            // Novo formato com código de área XX XXXX-XXXX
+            return `${match[1]} ${match[2]}-${match[3]}`;
+        } else if ((match = cleaned.match(/^(\d{5})(\d{4})$/))) {
+            // Formato sem código de área XXXXX-XXXX
+            return `${match[1]}-${match[2]}`;
+        } else if ((match = cleaned.match(/^(\d{4})(\d{4})$/))) {
+            // Formato com 8 dígitos (sem código de área) XXXX-XXXX
+            return `${match[1]}-${match[2]}`;
+        }
+    
+        return phoneNumber;
+    }
+    
 }
