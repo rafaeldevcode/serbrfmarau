@@ -27,10 +27,13 @@
 
     function loadInFooter() 
     { ?>
+        <script type="text/javascript" src="<?php asset('libs/jquery/jquery.mask.min.js?ver='.APP_VERSION)?>"></script>
         <script type="text/javascript" src="<?php asset('assets/scripts/class/HoursAvailable.js') ?>"></script>
         <script type="text/javascript" src="<?php asset('assets/scripts/class/Clients.js') ?>"></script>
         <script type="text/javascript">
             Clients.init('#identifier', '/api/clients', 'CPF / CNPJ');
+
+            $('#phone').mask('(00) 00000-0000');
 
             $(document).ready(function(){
                 $('#carousel').slick({
