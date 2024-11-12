@@ -1021,6 +1021,9 @@ if (!function_exists('formatPhoneNumberByCountry')) {
         if (preg_match('/^(\d{2})(\d{5})(\d{4})$/', $cleaned, $matches)) {
             // Formato com código de área (XX) XXXXX-XXXX
             return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
+        } elseif (preg_match('/^(\d{2})(\d{4})(\d{4})$/', $cleaned, $matches)) {
+            // Novo formato com código de área XX XXXX-XXXX
+            return "{$matches[1]} {$matches[2]}-{$matches[3]}";
         } elseif (preg_match('/^(\d{5})(\d{4})$/', $cleaned, $matches)) {
             // Formato sem código de área XXXXX-XXXX
             return "{$matches[1]}-{$matches[2]}";
@@ -1029,8 +1032,9 @@ if (!function_exists('formatPhoneNumberByCountry')) {
             return "{$matches[1]}-{$matches[2]}";
         }
 
-        return null; // Retorna null se o número não estiver em um dos formatos reconhecidos
+        return $phoneNumber;
     }
 }
+
 
 !defined('SETTINGS') && define('SETTINGS', (array)getSiteSettings());
