@@ -1009,7 +1009,7 @@ if (!function_exists('mountPrices')) {
 }
 
 if (!function_exists('formatPhoneNumberByCountry')) {
-    function formatPhoneNumberByCountry(string $phoneNumber, string $country = "BR") {
+    function formatPhoneNumberByCountry(string $phoneNumber) {
         if (empty($phoneNumber)) {
             return null;
         }
@@ -1017,24 +1017,19 @@ if (!function_exists('formatPhoneNumberByCountry')) {
         // Remove qualquer caractere que não seja número ou '+'
         $cleaned = preg_replace('/[^\d+]/', '', $phoneNumber);
 
-        if ($country === 'US') {
-            // Formato para os EUA: +1 (XXX) XXX-XXXX
-            if (!strpos($cleaned, '+1') === 0) {
-                $cleaned = '+1' . $cleaned;
-            }
-
-            // Expressão regular para o formato de telefone dos EUA
-            if (preg_match('/^(\+?\d{1,3})(\d{3})(\d{3})(\d{4})$/', $cleaned, $matches)) {
-                return "{$matches[1]} ({$matches[2]}) {$matches[3]}-{$matches[4]}";
-            }
-        } elseif ($country === 'BR') {
-            // Formato para o Brasil: +55 (XX) XXXXX-XXXX
-            if (preg_match('/^(\d{2})(\d{5})(\d{4})$/', $cleaned, $matches)) {
-                return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
-            }
+        // Verifica formatos diferentes para números brasileiros
+        if (preg_match('/^(\d{2})(\d{5})(\d{4})$/', $cleaned, $matches)) {
+            // Formato com código de área (XX) XXXXX-XXXX
+            return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
+        } elseif (preg_match('/^(\d{5})(\d{4})$/', $cleaned, $matches)) {
+            // Formato sem código de área XXXXX-XXXX
+            return "{$matches[1]}-{$matches[2]}";
+        } elseif (preg_match('/^(\d{4})(\d{4})$/', $cleaned, $matches)) {
+            // Formato com 8 dígitos (sem código de área) XXXX-XXXX
+            return "{$matches[1]}-{$matches[2]}";
         }
 
-        return null;
+        return null; // Retorna null se o número não estiver em um dos formatos reconhecidos
     }
 }
 
