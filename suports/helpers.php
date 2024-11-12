@@ -1022,8 +1022,8 @@ if (!function_exists('formatPhoneNumberByCountry')) {
             // Formato com código de área (XX) XXXXX-XXXX
             return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
         } elseif (preg_match('/^(\d{2})(\d{4})(\d{4})$/', $cleaned, $matches)) {
-            // Novo formato com código de área XX XXXX-XXXX
-            return "{$matches[1]} {$matches[2]}-{$matches[3]}";
+            // Novo formato com código de área (XX) XXXX-XXXX
+            return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
         } elseif (preg_match('/^(\d{5})(\d{4})$/', $cleaned, $matches)) {
             // Formato sem código de área XXXXX-XXXX
             return "{$matches[1]}-{$matches[2]}";
