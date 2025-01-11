@@ -5,7 +5,7 @@
     verifyMethod(405, 'GET');
 
     $category = new Category();
-    $categories = $category->get();
+    $categories = $category->where('type', '=', 'Locais')->get();
 
     loadHtml(__DIR__.'/resources/client/layout', [
         'title' => 'Inicio',

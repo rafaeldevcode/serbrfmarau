@@ -20,7 +20,7 @@
         $category = new Category();
         $location = new Location();
         $location = $location->find(querys('id'));
-        $categories = getArraySelect($category->get(['id', 'name']), 'id', 'name');
+        $categories = getArraySelect($category->where('type', '=', 'Locais')->get(['id', 'name']), 'id', 'name');
 
         $background = 'bg-success';
         $text  = 'Editar';

@@ -18,6 +18,9 @@
                         <th scope="col" class="p-2">
                             Nome
                         </th>
+                        <th scope="col" class="p-2">
+                            Tipo
+                        </th>
                         <th scope="col" class="p-2 text-right">
                             Ações
                         </th>
@@ -41,6 +44,9 @@
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $category->name ?>
+                            </td>
+                            <td scope="row" class="p-2 whitespace-nowrap">
+                                <?php echo $category->type ?>
                             </td>
                             <td class="flex items-center justify-end p-2 space-x-2 right">
                                 <a href="<?php route("/admin/categories/?method=edit&id={$category->id}") ?>" title='Editar catagoria <?php echo $category->name ?>' class='text-xs p-2 rounded btn-primary text-light fw-bold'>

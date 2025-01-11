@@ -18,6 +18,7 @@ class Categories extends ExecuteMigrations
         $this->integer('id')->primaryKey();
         $this->string('name', 50);
         $this->text('description', 255)->nullable();
+        $this->string('type', 10)->default('location');
         $this->integer('thumbnail')->nullable();
 
         $this->foreignKey('thumbnail')->references('id')->on('gallery');
