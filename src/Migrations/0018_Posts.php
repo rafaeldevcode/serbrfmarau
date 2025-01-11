@@ -22,7 +22,6 @@ class Posts extends ExecuteMigrations
         $this->text('excerpt')->nullable();
         $this->char('status', 9)->default('published');
         $this->char('show_home', 3)->default('on');
-        $this->integer('count_views')->default(0);
         $this->integer('user_id');
         $this->integer('category_id');
         $this->integer('thumbnail')->nullable();

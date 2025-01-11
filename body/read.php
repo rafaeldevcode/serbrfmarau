@@ -6,6 +6,41 @@
 ]) ?>
 
 <section class="px-4 py-8">
+    <div class="container flex flex-wrap">
+        <?php foreach($posts->data as $post) { ?>
+            <div class="w-full md:w-6/12 p-2 flex">
+                <di class="w-6/12 pr-2">
+                    <?php loadHtml(__DIR__.'/../resources/client/partials/thumbnail', [
+                        'id' => $post->thumbnail, 
+                        'alt' => $post->title,
+                        'class' => 'w-full h-[200px] object-cover object-center'
+                    ])?>
+                </di>
+
+                <div class="w-6/12 pl-2">
+                    <span class="font-bold text-xl"><?php echo getCategoryName($post->category_id) ?></span>
+                    <h2 class="text-color-main text-2xl font-bold"><?php echo $post->title ?></h2>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+</section>
+
+<section class="px-4 py-8 bg-gray-200">
+    <div class="container">
+        <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
+            'title' => 'Nossos Locais',
+        ]) ?>
+
+        <div class="flex flex-wrap items-center justify-center mt-12">
+            <?php loadHtml(__DIR__ . '/../resources/client/partials/card-categories', [
+                'categories' => $categories
+            ]) ?>
+        </div>
+    </div>
+</section>
+
+<section class="px-4 py-8">
     <div class="container">
         <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
             'title' => 'Quem Somos',
@@ -31,20 +66,6 @@
                     <?php endforeach ?>
                 </ul>
             </div>
-        </div>
-    </div>
-</section>
-
-<section class="px-4 py-8 bg-gray-200">
-    <div class="container">
-        <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
-            'title' => 'Nossos Locais',
-        ]) ?>
-
-        <div class="flex flex-wrap items-center justify-center mt-12">
-            <?php loadHtml(__DIR__ . '/../resources/client/partials/card-categories', [
-                'categories' => $categories
-            ]) ?>
         </div>
     </div>
 </section>

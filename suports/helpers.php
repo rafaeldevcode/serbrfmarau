@@ -1,5 +1,6 @@
 <?php
 
+use Src\Models\Category;
 use Src\Models\Gallery;
 use Src\Models\Location;
 use Src\Models\Payment;
@@ -1033,6 +1034,15 @@ if (!function_exists('formatPhoneNumberByCountry')) {
         }
 
         return $phoneNumber;
+    }
+}
+
+if (!function_exists('getCategoryName')) {
+    function getCategoryName(int $id) {
+        $category = new Category();
+        $category = $category->find($id);
+
+        return $category->data->name;
     }
 }
 
