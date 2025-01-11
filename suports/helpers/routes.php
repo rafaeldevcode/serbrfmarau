@@ -53,8 +53,8 @@ if(!function_exists('routes')):
             "/location/{$slug_one}",
             "/location/create",
             "/schedules",
-            "/noticias",
-            "/noticias/{$slug_one}",
+            "/news",
+            "/news/{$slug_one}",
 
             '/api/gallery',
             '/api/gallery/create',

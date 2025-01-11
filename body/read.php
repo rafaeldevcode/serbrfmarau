@@ -19,7 +19,7 @@
 
                 <div class="w-6/12 pl-2">
                     <span class="font-bold text-xl"><?php echo getCategoryName($post->category_id) ?></span>
-                    <h2 class="text-color-main text-2xl font-bold"><?php echo $post->title ?></h2>
+                    <a class="text-color-main text-2xl font-bold block" href="<?php route("/news/{$post->slug}") ?>"><?php echo $post->title ?></a>
                 </div>
             </div>
         <?php } ?>

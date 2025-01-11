@@ -15,6 +15,7 @@ module.exports = {
         "./location/**/*.php",
         "./events/**/*.php",
         "./schedules/**/*.php",
+        "./news/**/*.php",
         "./*.php"
     ],
     theme: {

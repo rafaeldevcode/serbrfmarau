@@ -663,10 +663,6 @@ video {
   z-index: 99999;
 }
 
-.m-1 {
-  margin: 0.25rem;
-}
-
 .m-2 {
   margin: 0.5rem;
 }
@@ -814,8 +810,8 @@ video {
   height: 200px;
 }
 
-.h-\[350px\] {
-  height: 350px;
+.h-\[300px\] {
+  height: 300px;
 }
 
 .h-\[400px\] {
@@ -838,10 +834,6 @@ video {
   height: 100vh;
 }
 
-.h-\[300px\] {
-  height: 300px;
-}
-
 .min-h-\[200px\] {
   min-height: 200px;
 }
@@ -852,6 +844,10 @@ video {
 
 .w-4 {
   width: 1rem;
+}
+
+.w-6\/12 {
+  width: 50%;
 }
 
 .w-8\/12 {
@@ -880,10 +876,6 @@ video {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-6\/12 {
-  width: 50%;
 }
 
 .max-w-\[300px\] {
@@ -936,6 +928,10 @@ video {
 
 .items-center {
   align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
 }
 
 .justify-end {
@@ -1044,11 +1040,6 @@ video {
 .border-secondary {
   --tw-border-opacity: 1;
   border-color: rgb(108 117 125 / var(--tw-border-opacity));
-}
-
-.border-white {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 
 .bg-\[\#00000085\] {
@@ -1346,15 +1337,15 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.shadow-sm {
-  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
 .shadow-md {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -1411,18 +1402,6 @@ video {
 .btn-color-main:hover {
   background-color: #fff;
   color: #1E3E87;
-}
-
-.btn-secondary {
-  background-color: #6C757D;
-  border: 1px solid #6C757D;
-  color: #fff;
-  transition: .4s all;
-}
-
-.btn-secondary:hover {
-  background-color: #fff;
-  color: #6C757D;
 }
 
 .placeholder\:italic::-moz-placeholder {

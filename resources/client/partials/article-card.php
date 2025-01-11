@@ -13,7 +13,7 @@
 
             <p class="max-lenght max-lenght-4"><?php echo $excerpt ?></p>
         
-            <a class="block w-8/12 mx-auto py-2 px-4 text-lg btn-color-main text-center rounded-md" href="<?php route("/noticias/{$slug}") ?>" title="Ler mais">
+            <a class="block w-8/12 mx-auto py-2 px-4 text-lg btn-color-main text-center rounded-md" href="<?php route("/news/{$slug}") ?>" title="Ler mais">
                 CONTINUE LENDO
             </a>
         </div>
