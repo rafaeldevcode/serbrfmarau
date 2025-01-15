@@ -15,6 +15,7 @@
         'subtitle' => $requests->subtitle,
         'desktop' => $requests->desktop,
         'mobile' => $requests->mobile,
+        'link' => $requests->link,
         'status' => $status
     ]);
 
@@ -23,4 +24,4 @@
         'type' => 'success'
     ]);
 
-    return header(route('/admin/categories', true), true, 302);
+    return header(route('/admin/banners', true), true, 302);

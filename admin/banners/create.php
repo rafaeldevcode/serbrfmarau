@@ -14,6 +14,7 @@
         'subtitle' => $requests->subtitle,
         'desktop' => $requests->desktop,
         'mobile' => $requests->mobile,
+        'link' => $requests->link,
         'status' => $status
     ]);
 

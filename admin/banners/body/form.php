@@ -5,7 +5,7 @@
         <?php endif ?>
 
         <div class='flex justify-between flex-wrap'>
-            <div class='w-full md:w-6/12 px-4'>
+            <div class='w-full md:w-4/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-alphabet-uppercase',
                     'name' => 'title',
@@ -16,13 +16,23 @@
                 ]) ?>
             </div>
 
-            <div class='w-full md:w-6/12 px-4'>
+            <div class='w-full md:w-4/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
                     'icon' => 'bi bi-alphabet-uppercase',
                     'name' => 'subtitle',
                     'label' => 'Subtítulo',
                     'type' => 'text',
                     'value' => isset($banner) ? $banner->subtitle : null
+                ]) ?>
+            </div>
+
+            <div class='w-full md:w-4/12 px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-default', [
+                    'icon' => 'bi bi-link',
+                    'name' => 'link',
+                    'label' => 'Link',
+                    'type' => 'text',
+                    'value' => isset($banner) ? $banner->link : null
                 ]) ?>
             </div>
         </div>

@@ -19,6 +19,9 @@
                             Título
                         </th>
                         <th scope="col" class="p-2">
+                            Link
+                        </th>
+                        <th scope="col" class="p-2">
                             Status
                         </th>
                         <th scope="col" class="p-2 text-right">
@@ -44,6 +47,9 @@
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $banner->title ?>
+                            </td>
+                            <td scope="row" class="p-2 whitespace-nowrap">
+                                <?php echo $banner->link ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <span class="rounded text-xs text-light px-2 py-1 bg-<?php echo (is_null($banner->status) || $banner->status == 'off') ? 'danger' : 'primary' ?>">
