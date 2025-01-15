@@ -1,9 +1,14 @@
-<?php loadHtml(__DIR__ . '/../resources/client/partials/block-one', [
-    'image' => !is_null(SETTINGS) && !empty(SETTINGS['site_bg_login']) ? SETTINGS['site_bg_login'] : 'login_bg.jpg',
-    'title' => !is_null(SETTINGS) && !empty(SETTINGS['site_description']) ? SETTINGS['site_description'] : '',
-    'text' => 'Agendamentos',
-    'link' => '/schedules'
-]) ?>
+<section class="p-4" id="carousel">
+    <?php foreach($banners as $banner): 
+        loadHtml(__DIR__ . '/../resources/client/partials/banner', [
+            'desktop' => getImagePath($banner->desktop),
+            'mobile' => getImagePath($banner->mobile),
+            'title' => $banner->title,
+            'subtitle' => $banner->subtitle,
+            'link' => $banner->link
+        ]);
+    endforeach?>
+</section>
 
 <section class="px-4 py-8">
     <div class="container flex flex-wrap">
