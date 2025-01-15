@@ -549,7 +549,9 @@ endif;
 if (!function_exists('addHour')):
     function addHour(array $current_hours): array
     {
-        $last_hour = empty($current_hours) ? '' : $current_hours[array_keys($current_hours)[0]+1];
+        $last_hour = empty($current_hours) || !isset($current_hours[array_keys($current_hours)[0]+1]) 
+            ? '' 
+            : $current_hours[array_keys($current_hours)[0]+1];
 
         $hours = getHours();
         $filter = array_filter($hours, function ($hour) use($last_hour) {
