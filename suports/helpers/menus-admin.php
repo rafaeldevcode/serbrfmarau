@@ -51,6 +51,12 @@ if (!function_exists('menusAdmin')):
                 'icon' => 'bi bi-images',
                 'count' => null
             ],
+            'banners' => [
+                'path' => '/admin/banners',
+                'title' => 'Banners',
+                'icon' => 'bi bi-images',
+                'count' => null
+            ],
             'reports' => [
                 'path' => '/admin/reports',
                 'title' => 'Relatórios',

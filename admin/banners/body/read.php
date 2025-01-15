@@ -16,10 +16,10 @@
                             </div>
                         </th>
                         <th scope="col" class="p-2">
-                            Nome
+                            Título
                         </th>
                         <th scope="col" class="p-2">
-                            Tipo
+                            Status
                         </th>
                         <th scope="col" class="p-2 text-right">
                             Ações
@@ -27,39 +27,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($categories->data as $category): ?>
+                    <?php foreach($banners->data as $banner): ?>
                         <tr class="bg-white border-b hover:bg-gray-100 text-gray-900">
                             <td class="w-4 p-2">
                                 <div class="flex items-center">
                                     <input 
-                                        value='<?php echo $category->id ?>' 
-                                        data-message-delete='Esta ação irá remover todos os categorias selecionados!'
+                                        value='<?php echo $banner->id ?>' 
+                                        data-message-delete='Esta ação irá remover todos os baners selecionados!'
                                         type='checkbox'
                                         data-button="delete-enable"
-                                        id="checkbox-table-search-<?php echo $category->id ?>" 
+                                        id="checkbox-table-search-<?php echo $banner->id ?>" 
                                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                                     >
-                                    <label for="checkbox-table-search-<?php echo $category->id ?>" class="sr-only">checkbox</label>
+                                    <label for="checkbox-table-search-<?php echo $banner->id ?>" class="sr-only">checkbox</label>
                                 </div>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
-                                <?php echo $category->name ?>
+                                <?php echo $banner->title ?>
                             </td>
                             <td scope="row" class="p-2 whitespace-nowrap">
-                                <?php echo $category->type ?>
+                                <span class="rounded text-xs text-light px-2 py-1 bg-<?php echo (is_null($banner->status) || $banner->status == 'off') ? 'danger' : 'primary' ?>">
+                                    <?php echo (is_null($banner->status) || $banner->status == 'off') ? 'Inativo' : 'Ativo' ?>
+                                </span>
                             </td>
                             <td class="flex items-center justify-end p-2 space-x-2 right">
-                                <a href="<?php route("/admin/categories/?method=edit&id={$category->id}") ?>" title='Editar categoria <?php echo $category->name ?>' class='text-xs p-2 rounded btn-primary text-light fw-bold'>
+                                <a href="<?php route("/admin/banners/?method=edit&id={$banner->id}") ?>" title='Editar banner <?php echo $banner->title ?>' class='text-xs p-2 rounded btn-primary text-light fw-bold'>
                                     <i class='bi bi-pencil-square'></i>
                                 </a>
 
                                 <button
                                     data-button="delete"
-                                    data-route='<?php route('/admin/categories/delete') ?>'
-                                    data-delete-id='<?php echo $category->id ?>'
-                                    data-message-delete='Esta ação irá remover o categoria "<?php echo $category->name ?>"!'
+                                    data-route='<?php route('/admin/banners/delete') ?>'
+                                    data-delete-id='<?php echo $banner->id ?>'
+                                    data-message-delete='Esta ação irá remover o banner "<?php echo $banner->title ?>"!'
                                     type='button'
-                                    title='Remover categoria <?php echo $category->name ?>'
+                                    title='Remover banner <?php echo $banner->title ?>'
                                     class='p-2 rounded btn-danger text-light fw-bold'
                                 >
                                     <i class='bi bi-trash-fill'></i>
@@ -71,20 +73,20 @@
             </table>
         </div>
 
-        <?php if(count($categories->data) == 0): ?>
+        <?php if(count($banners->data) == 0): ?>
             <div class="p-2 empty-collections flex justify-center items-center">
                 <img class="h-full" src="<?php asset('assets/images/empty.svg') ?>" alt="Nenhum dado encontrado">
             </div>
         <?php endif; ?>
     </section>
 
-    <?php if(isset($categories->page)):
+    <?php if(isset($banners->page)):
         loadHtml(__DIR__.'/../../../resources/admin/partials/pagination', [
-            'page' => $categories->page,
-            'count' => $categories->count,
-            'next' => $categories->next,
-            'prev' => $categories->prev,
-            'search' => $categories->search
+            'page' => $banners->page,
+            'count' => $banners->count,
+            'next' => $banners->next,
+            'prev' => $banners->prev,
+            'search' => $banners->search
         ]);
     endif; ?>
 </section>
