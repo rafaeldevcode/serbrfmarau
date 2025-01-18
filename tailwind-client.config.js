@@ -50,6 +50,7 @@ module.exports = {
                 "danger": "#FF0000",
                 "light": '#FFFFFF',
                 "dark": '#000000',
+                "orange": "#FFA500",
             },
             boxShadow: {
                 input: "0px 7px 20px rgba(0, 0, 0, 0.03)",
@@ -78,6 +79,16 @@ module.exports = {
                     '&:hover': {
                         backgroundColor: '#fff',
                         color: '#FF0000',
+                    },
+                },
+                '.btn-orange': {
+                    backgroundColor: '#FFA500',
+                    border: '1px solid #FFA500',
+                    color: '#fff',
+                    transition: '.4s all',
+                    '&:hover': {
+                        backgroundColor: '#fff',
+                        color: '#FFA500',
                     },
                 },
                 '.btn-primary': {
