@@ -1,11 +1,64 @@
-<?php loadHtml(__DIR__ . '/../resources/client/partials/block-one', [
-    'image' => !is_null(SETTINGS) && !empty(SETTINGS['site_bg_login']) ? SETTINGS['site_bg_login'] : 'login_bg.jpg',
-    'title' => !is_null(SETTINGS) && !empty(SETTINGS['site_description']) ? SETTINGS['site_description'] : '',
-    'text' => 'Agendamentos',
-    'link' => '/schedules'
-]) ?>
+<section class="p-4 flex flex-wrap">
+    <div class="w-full lg:w-8/12" id="carousel">
+        <?php foreach($banners as $banner): 
+            loadHtml(__DIR__ . '/../resources/client/partials/banner', [
+                'desktop' => getImagePath($banner->desktop),
+                'mobile' => getImagePath($banner->mobile),
+                'title' => $banner->title,
+                'subtitle' => $banner->subtitle,
+                'link' => $banner->link
+            ]);
+        endforeach?>
+    </div>
+
+    <div class="w-full lg:w-4/12 flex flex-col justify-between px-2">
+        <div class="mx-auto">
+            <div id="mrwid0a5d34eb88dcfff9013013bf876b86cd"><script type="text/javascript" async src="https://api.meteored.com/widget/loader/0a5d34eb88dcfff9013013bf876b86cd"></script></div>
+        </div>
+        <div class="mb-0 md:mb-7">
+            <a href="<?php route('/schedules') ?>" class="btn-danger text-center py-3 rounded mt-4 px-6 text-2xl font-bold block mx-auto" title="Agendamentos">Agendamentos</a>
+            <a href="<?php route('/#abount') ?>" class="btn-color-main text-center py-3 rounded mt-4 px-6 text-2xl font-bold block mx-auto" title="Quem Somoss">Quem Somos</a>
+            <a href="<?php route('/#localization') ?>" class="btn-orange text-center py-3 rounded mt-4 px-6 text-2xl font-bold block mx-auto" title="Localização">Localização</a>
+        </div>
+    </div>
+</section>
 
 <section class="px-4 py-8">
+    <div class="container flex flex-wrap">
+        <?php foreach($posts->data as $post) { ?>
+            <div class="w-full md:w-6/12 p-2 flex">
+                <di class="w-6/12 pr-2">
+                    <?php loadHtml(__DIR__.'/../resources/client/partials/thumbnail', [
+                        'id' => $post->thumbnail, 
+                        'alt' => $post->title,
+                        'class' => 'w-full h-[200px] object-cover object-center'
+                    ])?>
+                </di>
+
+                <div class="w-6/12 pl-2">
+                    <span class="font-bold text-xl"><?php echo getCategoryName($post->category_id) ?></span>
+                    <a class="text-color-main text-2xl font-bold block" href="<?php route("/news/{$post->slug}") ?>"><?php echo $post->title ?></a>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+</section>
+
+<section class="px-4 py-8 bg-gray-200">
+    <div class="container">
+        <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
+            'title' => 'Nossos Locais',
+        ]) ?>
+
+        <div class="flex flex-wrap items-center justify-center mt-12">
+            <?php loadHtml(__DIR__ . '/../resources/client/partials/card-categories', [
+                'categories' => $categories
+            ]) ?>
+        </div>
+    </div>
+</section>
+
+<section class="px-4 py-8" id="abount">
     <div class="container">
         <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
             'title' => 'Quem Somos',
@@ -31,20 +84,6 @@
                     <?php endforeach ?>
                 </ul>
             </div>
-        </div>
-    </div>
-</section>
-
-<section class="px-4 py-8 bg-gray-200">
-    <div class="container">
-        <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
-            'title' => 'Nossos Locais',
-        ]) ?>
-
-        <div class="flex flex-wrap items-center justify-center mt-12">
-            <?php loadHtml(__DIR__ . '/../resources/client/partials/card-categories', [
-                'categories' => $categories
-            ]) ?>
         </div>
     </div>
 </section>
@@ -103,7 +142,7 @@
 </section>
 
 <?php if(!is_null(SETTINGS) && !empty(SETTINGS['map_location'])): ?>
-    <section class="px-4 py-8 bg-gray-200">
+    <section class="px-4 py-8 bg-gray-200" id="localization">
         <div class="container">
             <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
                 'title' => 'Onde Estamos',

@@ -18,6 +18,9 @@
                         <th scope="col" class="p-2">
                             Nome
                         </th>
+                        <th scope="col" class="p-2">
+                            Tipo
+                        </th>
                         <th scope="col" class="p-2 text-right">
                             Ações
                         </th>
@@ -30,7 +33,7 @@
                                 <div class="flex items-center">
                                     <input 
                                         value='<?php echo $category->id ?>' 
-                                        data-message-delete='Esta ação irá remover todos os catagorias selecionados!'
+                                        data-message-delete='Esta ação irá remover todos os categorias selecionados!'
                                         type='checkbox'
                                         data-button="delete-enable"
                                         id="checkbox-table-search-<?php echo $category->id ?>" 
@@ -42,8 +45,11 @@
                             <td scope="row" class="p-2 whitespace-nowrap">
                                 <?php echo $category->name ?>
                             </td>
+                            <td scope="row" class="p-2 whitespace-nowrap">
+                                <?php echo $category->type ?>
+                            </td>
                             <td class="flex items-center justify-end p-2 space-x-2 right">
-                                <a href="<?php route("/admin/categories/?method=edit&id={$category->id}") ?>" title='Editar catagoria <?php echo $category->name ?>' class='text-xs p-2 rounded btn-primary text-light fw-bold'>
+                                <a href="<?php route("/admin/categories/?method=edit&id={$category->id}") ?>" title='Editar categoria <?php echo $category->name ?>' class='text-xs p-2 rounded btn-primary text-light fw-bold'>
                                     <i class='bi bi-pencil-square'></i>
                                 </a>
 
@@ -51,9 +57,9 @@
                                     data-button="delete"
                                     data-route='<?php route('/admin/categories/delete') ?>'
                                     data-delete-id='<?php echo $category->id ?>'
-                                    data-message-delete='Esta ação irá remover o catagoria "<?php echo $category->name ?>"!'
+                                    data-message-delete='Esta ação irá remover o categoria "<?php echo $category->name ?>"!'
                                     type='button'
-                                    title='Remover catagoria <?php echo $category->name ?>'
+                                    title='Remover categoria <?php echo $category->name ?>'
                                     class='p-2 rounded btn-danger text-light fw-bold'
                                 >
                                     <i class='bi bi-trash-fill'></i>

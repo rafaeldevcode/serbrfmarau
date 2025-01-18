@@ -11,6 +11,7 @@
     $category->update([
         'name' => $requests->name,
         'description' => $requests->description,
+        'type' => $requests->type,
         'thumbnail' => $requests->thumbnail
     ]);
 

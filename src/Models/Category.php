@@ -22,6 +22,16 @@ class Category extends Model
     /**
      * @since 1.7.0
      * 
+     * @return Posts
+     */
+    public function posts(): Posts
+    {
+        return $this->hasMany(Posts::class, 'posts', 'category_id');
+    }
+
+    /**
+     * @since 1.7.0
+     * 
      * @return Gallery
      */
     public function thumbnail(): Gallery

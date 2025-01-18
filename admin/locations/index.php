@@ -20,7 +20,7 @@
         $category = new Category();
         $location = new Location();
         $location = $location->find(querys('id'));
-        $categories = getArraySelect($category->get(['id', 'name']), 'id', 'name');
+        $categories = getArraySelect($category->where('type', '=', 'Locais')->get(['id', 'name']), 'id', 'name');
 
         $background = 'bg-success';
         $text  = 'Editar';
@@ -36,7 +36,7 @@
         if(redirectIfTotalEqualsZero('Src\Models\Category', '/admin/categories', 'Para adicionar um local, primeiro adicione uma categoria!')) die;
  
         $category = new Category();
-        $categories = getArraySelect($category->get(['id', 'name']), 'id', 'name');
+        $categories = getArraySelect($category->where('type', '=', 'Locais')->get(['id', 'name']), 'id', 'name');
 
         $background = 'bg-primary';
         $text  = 'Adicionar';

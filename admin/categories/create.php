@@ -10,6 +10,7 @@
     $category->create([
         'name' => $requests->name,
         'description' => $requests->description,
+        'type' => $requests->type,
         'thumbnail' => $requests->thumbnail
     ]);
 

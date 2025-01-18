@@ -60,7 +60,6 @@ class Gallery{
                             processData: false,
                             contentType: false,
                             success: function(response) {
-                                console.log(response)
                                 resolve(response);
                             },
                             error: function(xhr, status, error) {
@@ -471,10 +470,37 @@ class Gallery{
             $('#name').text(image.attr('alt'));
             $('#url').text(image.attr('src'));
 
+            gallery.next($('#image-preview'));
+            gallery.previous($('#image-preview'));
+
             Modal.open('preview');
+        });
+    }
+
+    /**
+     * @since 1.2.0
+     *
+     * @returns {void}
+     */
+    oneClickPreview() {
+        $('[data-gallery="preview"]').on('click', (event) => {
+            this.images = this.extractInfoImage($('#gallery').find('img'));
+
+            const image = $(event.target);
+            const imagePreview = $('#image-preview');
+
+            this.setCurrentPosition(image.attr('src'));
+
+            imagePreview.attr('src', image.attr('src'));
+            imagePreview.attr('alt', image.attr('alt'));
+
+            $('#name').parent().remove();
+            $('#url').parent().remove();
 
             gallery.next($('#image-preview'));
             gallery.previous($('#image-preview'));
+
+            Modal.open('preview');
         });
     }
 

@@ -1,11 +1,5 @@
 {
-    "/public/libs/tinymce/skins/ui/oxide/content.min.css": "/public/libs/tinymce/skins/ui/oxide/content.min.css",
-    "/public/libs/tinymce/skins/ui/oxide/skin.min.css": "/public/libs/tinymce/skins/ui/oxide/skin.min.css",
-    "/public/libs/select2/select2.min.css": "/public/libs/select2/select2.min.css",
-    "/public/libs/bootstrap-icons/bootstrap-icons.min.css": "/public/libs/bootstrap-icons/bootstrap-icons.min.css",
-    "/public/assets/css/globals.css": "/public/assets/css/globals.css",
-    "/public/libs/bootstrap/bootstrap.min.css": "/public/libs/bootstrap/bootstrap.min.css",
-    "/public/libs/tinymce/skins/content/default/content.css": "/public/libs/tinymce/skins/content/default/content.css",
+    "/main.js": "/main.js",
     "/public/fonts/vendor/bootstrap-icons/bootstrap-icons.woff": "/public/fonts/vendor/bootstrap-icons/bootstrap-icons.woff",
     "/public/fonts/vendor/bootstrap-icons/bootstrap-icons.woff2": "/public/fonts/vendor/bootstrap-icons/bootstrap-icons.woff2",
     "/public/libs/jquery/jquery.js": "/public/libs/jquery/jquery.js",
