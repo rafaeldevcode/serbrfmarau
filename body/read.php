@@ -12,11 +12,12 @@
     </div>
 
     <div class="w-full lg:w-4/12 flex flex-col justify-between px-2">
+        <h2 class="text-color-main text-4xl font-bold text-center">Tempo em <br> Marau</h2>
         <div class="mx-auto">
-            <div id="mrwid0a5d34eb88dcfff9013013bf876b86cd"><script type="text/javascript" async src="https://api.meteored.com/widget/loader/0a5d34eb88dcfff9013013bf876b86cd"></script></div>
+            <iframe src="https://api.wo-cloud.com/content/widget/?geoObjectKey=6008219&language=pt&region=BR&timeFormat=HH:mm&windUnit=kmh&systemOfMeasurement=metric&temperatureUnit=celsius" name="CW2" scrolling="no" width="290" height="318" frameborder="0" style="border-radius: 14px"></iframe>
         </div>
         <div class="mb-0 md:mb-7">
-            <a href="<?php route('/schedules') ?>" class="btn-danger text-center py-3 rounded mt-4 px-6 text-2xl font-bold block mx-auto" title="Agendamentos">Agendamentos</a>
+            <a href="<?php route('/#schedules') ?>" class="btn-danger text-center py-3 rounded mt-4 px-6 text-2xl font-bold block mx-auto" title="Agendamentos">Agendamentos</a>
             <a href="<?php route('/#abount') ?>" class="btn-color-main text-center py-3 rounded mt-4 px-6 text-2xl font-bold block mx-auto" title="Quem Somoss">Quem Somos</a>
             <a href="<?php route('/#localization') ?>" class="btn-orange text-center py-3 rounded mt-4 px-6 text-2xl font-bold block mx-auto" title="Localização">Localização</a>
         </div>
@@ -44,7 +45,7 @@
     </div>
 </section>
 
-<section class="px-4 py-8 bg-gray-200">
+<section class="px-4 py-8 bg-gray-200" id="schedules">
     <div class="container">
         <?php loadHtml(__DIR__ . '/../resources/client/partials/title', [
             'title' => 'Nossos Locais',
