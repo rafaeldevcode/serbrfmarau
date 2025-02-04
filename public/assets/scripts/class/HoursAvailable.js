@@ -157,13 +157,15 @@ class HoursAvailable {
                 }
             });
 
-            if(count > 0){
+            const minimum = this.typeReservation === 'period' && this.period.val() === 'Dia todo' ? 6 : 0;
+
+            if(count > minimum){
                 $('#schedule').removeClass('hidden');
                 $('#schedule').addClass('flex');
     
                 $('#schedule').attr('data-cookies-show', true);
             } else {
-                // $('#schedule').attr('data-cookies-show', false);
+                $('#schedule').attr('data-cookies-show', false);
 
                 // setInterval(() => {
                 //     $('#schedule').addClass('hidden');
