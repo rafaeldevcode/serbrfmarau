@@ -46,7 +46,7 @@
                                 <p class="font-bold">Envie comprovante para <span class="text-color-main"><?php echo SETTINGS['whatsapp'] ?></span> juntamente com seu protocolo <span class="text-color-main"><?php echo $protocol->token ?></span>.</p>
                             <?php endif ?>
 
-                            <p class="font-bold">Este protocolo também está em seu email. Um novo email será enviado toda vez que o status do seu agendamento for alterado.</p>
+                            <p class="font-bold">Seu pedido de reserva de horário foi recebido e está em processo de aprovação. Um novo email será enviado toda vez que o status do seu agendamento for alterado.</p>
                         </div>
                     <?php else: ?>
                         <form action="?" class="flex flex-col justify-center items-center">
