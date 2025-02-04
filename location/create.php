@@ -22,7 +22,7 @@
     $client = isset($identifier) ? $client->where('cpf_cnpj', '=', $identifier)->first() : null;
     $location = $location->find($requests->location_id);
 
-    $title = 'Horário reservado!';
+    $title = 'Reserva Iniciada!';
     $status = 'Pendente';
     $payments = generatePayments(isset($requests->type) ? $requests->type : null, isset($requests->date) ? $requests->date : null);
     $isPartner = isset($requests->is_partner) ? $requests->is_partner : 'off';
