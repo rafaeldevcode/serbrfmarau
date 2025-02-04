@@ -23,7 +23,7 @@
     $location = $location->find($requests->location_id);
     $isPartner = isset($requests->is_partner) ? $requests->is_partner : 'off';
 
-    $title = 'Horário reservado!';
+    $title = 'Reserva Iniciada!';
     $payments = generatePayments(isset($requests->type) ? $requests->type : null, isset($requests->date) ? $requests->date : null);
 
     $reservation = $reservation->create([
