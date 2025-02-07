@@ -19,7 +19,6 @@
             'excerpt' => getExcerpt($requests->content),
             'title' => $requests->title,
             'status' => $requests->status,
-            'category_id' => $requests->category_id,
             'slug' => $slug,
             'show_home' => $show_home,
             'user_id' => $_SESSION['user_id'],

@@ -30,16 +30,6 @@
                         'value' => isset($post) ? $post->slug : null
                     ]) ?>
                 </div>
-                <div class='w-full pt-1'>
-                    <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
-                        'icon' => 'bi bi-hash',
-                        'name' => 'category_id',
-                        'label' => 'Categoria',
-                        'value' => isset($post) ? $post->category_id : null,
-                        'array' => $categories,
-                        'attributes' => 'required'
-                    ]) ?>
-                </div>
 
                 <div class='w-full'>
                     <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-select', [
