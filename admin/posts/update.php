@@ -7,7 +7,6 @@
     $post = new Posts;
 
     $slug = normalizeSlug($requests->title, $requests->slug);
-    dd($slug);
     $post_slug = $post->where('slug', '=', $slug)->first();
     $thumbnail = isset($requests->thumbnail) ? $requests->thumbnail : null;
     $collection = isset($requests->collection) ? $requests->collection : null;
