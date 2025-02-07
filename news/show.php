@@ -11,7 +11,7 @@
     $post = $post_model->where('status', '=', 'published')->where('slug', '=', $slug)->first();
 
     if(isset($post)):
-        $image = $gallery->find($post->thumbnail)->data;
+        $image = isset($post->thumbnail) ? $gallery->find($post->thumbnail)->data : null;
         $image = isset($image->file) ? asset("assets/images/{$image->file}", true) : SETTINGS['site_logo_main'];
         $images = $post_model->find($post->id)->images();
         

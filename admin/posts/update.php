@@ -19,7 +19,6 @@
             'content' => $requests->content,
             'excerpt' => getExcerpt($requests->content),
             'title' => $requests->title,
-            'category_id' => $requests->category_id,
             'status' => $requests->status,
             'slug' => $slug,
             'show_home' => $show_home,
