@@ -9,6 +9,7 @@
     $gallery = new Gallery();
 
     $status = isset($requests->status) ? $requests->status : 'off';
+    $allow_all_day_only = isset($requests->allow_all_day_only) ? $requests->allow_all_day_only : 'off';
     $images = isset($requests->images) ? $requests->images : null;
 
     $new_location = $location->create([
@@ -17,6 +18,7 @@
         'end_hour' => $requests->end_hour,
         'opening' => $requests->opening,
         'status' => $status,
+        'allow_all_day_only' => $allow_all_day_only,
         'user_id' => $_SESSION['user_id'],
         'category_id' => $requests->category_id,
         'type' => $requests->type,

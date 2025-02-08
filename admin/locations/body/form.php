@@ -120,6 +120,14 @@
                 ]) ?>
             </div>
 
+            <div class='w-full px-4'>
+                <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-checkbox-switch', [
+                    'name' => 'allow_all_day_only',
+                    'label' => 'Permitir somente o dia too (Não | Sim)',
+                    'value' => isset($location) ? $location->allow_all_day_only : null
+                ]) ?>
+            </div>
+
             <div class='w-full md:w-6/12 px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/text-area', [
                     'icon' => 'bi bi-card-text',

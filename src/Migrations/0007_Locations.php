@@ -26,6 +26,7 @@ class Locations extends ExecuteMigrations
         $this->string('opening_days', 255);
         $this->char('type', 6)->nullable();
         $this->char('status', 3)->default('on');
+        $this->char('allow_all_day_only', 3)->default('off');
 
         $this->integer('user_id');
         $this->integer('category_id');

@@ -1,3 +1,24 @@
+<?php
+    use Src\Models\Location;
+    $location = new Location();
+    $location = $location->find($location_id)?->data;
+
+    if ($location->allow_all_day_only === 'on') {
+        $periods = [
+            '' => '----Selecione----',
+            'Dia todo' => 'Dia todo'
+        ];
+    } else {
+        $periods = [
+            '' => '----Selecione----',
+            'Dia todo' => 'Dia todo',
+            'Manhã' => 'Manhã',
+            // 'Tarde' => 'Tarde',
+            'Noite' => 'Noite'
+        ];
+    }
+?>
+
 <div class="mt-12">
     <h2 class="font-bold text-xl text-secondary">Horários disponiveis</h2>
 
@@ -91,13 +112,7 @@
                         'data-change' => 'selects',
                         'required' => true
                     ],
-                    'array' => [
-                        '' => '----Selecione----',
-                        'Dia todo' => 'Dia todo',
-                        'Manhã' => 'Manhã',
-                        // 'Tarde' => 'Tarde',
-                        'Noite' => 'Noite'
-                    ]
+                    'array' => $periods,
                 ]) ?>
             </div>
         </div>
