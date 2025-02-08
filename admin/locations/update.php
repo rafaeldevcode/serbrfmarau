@@ -7,6 +7,7 @@
     $requests = requests();
 
     $status = empty($requests->status) ? 'off' : $requests->status;
+    $allow_all_day_only = isset($requests->allow_all_day_only) ? $requests->allow_all_day_only : 'off';
     $images = isset($requests->images) ? $requests->images : null;
 
     $location->find($requests->id)->update([
@@ -15,6 +16,7 @@
         'end_hour' => $requests->end_hour,
         'opening' => $requests->opening,
         'status' => $status,
+        'allow_all_day_only' => $allow_all_day_only,
         'category_id' => $requests->category_id,
         'type' => $requests->type,
         'description' => $requests->description,
