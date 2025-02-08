@@ -201,8 +201,8 @@ class HoursAvailable {
 
         const hoursHidden = this.typeReservation == 'hour' ? [] : this.hoursHidden;
 
-        if (this.period.val() === 'Dia todo' && !this.hoursHidden.includes('17:00')) {
-            this.hoursHidden = [...this.hoursHidden, '17:00'];
+        if (this.period.val() === 'Dia todo') {
+            if (!this.hoursHidden.includes('17:00')) this.hoursHidden = [...this.hoursHidden, '17:00'];
         } else {
             this.hoursHidden = this.hoursHidden.filter(hour => hour !== '17:00');
         }
