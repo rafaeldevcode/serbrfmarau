@@ -203,6 +203,8 @@ class HoursAvailable {
 
         if (this.period.val() === 'Dia todo' && !this.hoursHidden.includes('17:00')) {
             this.hoursHidden = [...this.hoursHidden, '17:00'];
+        } else {
+            this.hoursHidden = this.hoursHidden.filter(hour => hour !== '17:00');
         }
 
         const classHidden = hoursHidden.includes(date.hour) ? ' hidden' : '';
