@@ -25,6 +25,7 @@ class HoursAvailable {
         this.currentHour = '09:00';
         this.body = $('[data-list="hours"]');
         this.blockPreviusHours = true;
+        this.locationHours = {};
     }
 
     /**
@@ -199,6 +200,11 @@ class HoursAvailable {
         if (this.typeReservation === 'period' && !this.getHoursAllPeriods().includes(date.hour)) return;
 
         const hoursHidden = this.typeReservation == 'hour' ? [] : this.hoursHidden;
+
+        if (this.period.val() === 'Dia todo' && !this.hoursHidden.includes('17:00')) {
+            this.hoursHidden = [...this.hoursHidden, '17:00'];
+        }
+
         const classHidden = hoursHidden.includes(date.hour) ? ' hidden' : '';
         const classBlock = date.blocked ? 'border-color-main bg-color-main text-white opacity-50' : 'border-color-main';
         const classChecked = date.checked ? 'bg-gray-100' : 'bg-white';
@@ -216,8 +222,13 @@ class HoursAvailable {
             class: 'px-2 py-4 whitespace-nowrap text-secondary flex flex-col-reverse items-start',
             scope: 'row'
         });
-        tdTitle.text(`${dateFormat} - ${this.typeReservation == 'period' && date.hour == '17:00'  ? '17:30' : date.hour} às ${this.getLastHour(date.hour, nextDate?.hour)}`);
 
+        if (this.period.val() === 'Dia todo') {
+            tdTitle.text(`${dateFormat} - ${this.locationHours.start_hour} às ${this.locationHours.end_hour}`);
+        } else {
+            tdTitle.text(`${dateFormat} - ${this.typeReservation == 'period' && date.hour == '17:00'  ? '17:30' : date.hour} às ${this.getLastHour(date.hour, nextDate?.hour)}`);
+        }
+        
         if (date.checked) {
             tdTitle.append(badge);
         }
@@ -369,6 +380,11 @@ class HoursAvailable {
             }
         }
 
+        this.locationHours = {
+            start_hour: response.data.start_hour,
+            end_hour: response.data.end_hour,
+        }
+
         this.typeReservation = response.data.type;
     }
 
@@ -426,7 +442,7 @@ class HoursAvailable {
                 this.createBlockMessage(response.message);
             } else {
                 const endHours = this.getEndHours(response.end_hour);
-                
+
                 Object.keys(response.hours).forEach((key) => {
                     this.createBlockHour(response.hours[key], key, response.hours[parseInt(key)+1], endHours); 
                 });
@@ -810,29 +826,29 @@ class HoursAvailable {
         });
     }
 
-        /**
-         * @since 1.7.0
-         * 
-         * @param {*}
-         * @returns {Promise}
-         */
-        getLocationType(id) {
-            return new Promise((resolve, reject) => {
-                $.ajax({
-                    url: route('/api/locations'),
-                    type: 'GET',
-                    processData: true,
-                    contentType: false,
-                    data: {
-                        id: id
-                    },
-                    success: function(response) {
-                        resolve(response);
-                    },
-                    error: function(xhr, status, error) {
-                        reject(error);
-                    }
-                });
+    /**
+     * @since 1.7.0
+     * 
+     * @param {*}
+     * @returns {Promise}
+     */
+    getLocationType(id) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: route('/api/locations'),
+                type: 'GET',
+                processData: true,
+                contentType: false,
+                data: {
+                    id: id
+                },
+                success: function(response) {
+                    resolve(response);
+                },
+                error: function(xhr, status, error) {
+                    reject(error);
+                }
             });
-        }
+        });
+    }
 }

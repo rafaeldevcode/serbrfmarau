@@ -18,6 +18,8 @@
                 'data' => [
                     'id' => $locacation->data->id,
                     'type' => $locacation->data->type,
+                    'start_hour' => $locacation->data->start_hour,
+                    'end_hour' => $locacation->data->end_hour,
                 ]
             ];
         else:
