@@ -21,11 +21,14 @@ class HoursAvailable {
         this.price = 0;
         this.countBlock = 0;
         this.typeReservation = null;
+        this.allowAllDayOnly = 'off';
         this.hoursHidden = this.getHoursHidden();
         this.currentHour = '09:00';
         this.body = $('[data-list="hours"]');
         this.blockPreviusHours = true;
         this.locationHours = {};
+
+        if (this.allowAllDayOnly === 'on') this.period.val('Dia todo').trigger('change');
     }
 
     /**
@@ -201,7 +204,7 @@ class HoursAvailable {
 
         const hoursHidden = this.typeReservation == 'hour' ? [] : this.hoursHidden;
 
-        if (this.period.val() === 'Dia todo') {
+        if (this.period.val() === 'Dia todo' || this.allowAllDayOnly === 'on') {
             if (!this.hoursHidden.includes('17:00')) this.hoursHidden = [...this.hoursHidden, '17:00'];
         } else {
             this.hoursHidden = this.hoursHidden.filter(hour => hour !== '17:00');
@@ -225,7 +228,7 @@ class HoursAvailable {
             scope: 'row'
         });
 
-        if (this.period.val() === 'Dia todo') {
+        if (this.period.val() === 'Dia todo' || this.allowAllDayOnly === 'on') {
             tdTitle.text(`${dateFormat} - ${this.locationHours.start_hour} às ${this.locationHours.end_hour}`);
         } else {
             tdTitle.text(`${dateFormat} - ${this.typeReservation == 'period' && date.hour == '17:00'  ? '17:30' : date.hour} às ${this.getLastHour(date.hour, nextDate?.hour)}`);
@@ -388,6 +391,7 @@ class HoursAvailable {
         }
 
         this.typeReservation = response.data.type;
+        this.allowAllDayOnly = response.data.allow_all_day_only;
     }
 
     /**
