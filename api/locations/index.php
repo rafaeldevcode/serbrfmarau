@@ -20,6 +20,7 @@
                     'type' => $locacation->data->type,
                     'start_hour' => $locacation->data->start_hour,
                     'end_hour' => $locacation->data->end_hour,
+                    'allow_all_day_only' => $locacation->data->allow_all_day_only,
                 ]
             ];
         else:
