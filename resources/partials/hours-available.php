@@ -1,9 +1,9 @@
 <?php
     use Src\Models\Location;
     $location = new Location();
-    $location = $location->find($location_id)?->data;
+    $location = isset($location_id) ? $location->find($location_id)?->data : null;
 
-    if ($location->allow_all_day_only === 'on') {
+    if (isset($location_id) && $location->allow_all_day_only === 'on') {
         $periods = [
             '' => '----Selecione----',
             'Dia todo' => 'Dia todo'
