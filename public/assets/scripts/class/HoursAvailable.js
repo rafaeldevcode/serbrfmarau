@@ -392,6 +392,20 @@ class HoursAvailable {
 
         this.typeReservation = response.data.type;
         this.allowAllDayOnly = response.data.allow_all_day_only;
+
+        if (this.allowAllDayOnly === 'on') {
+            this.period.find('option').each((index, option) => {
+                if (option.value !== 'Dia todo' && option.value !== '') {
+                    option.hidden = true;
+                }
+            });
+        } else {
+            this.period.find('option').each((index, option) => {
+                if (option.value !== 'Dia todo' &&  option.value !== '') {
+                    option.hidden = false;
+                }
+            });
+        }
     }
 
     /**
