@@ -13,6 +13,7 @@ class Model
     public $data = null;
     private $wheres = [];
     private $orWheres = [];
+    private $whereIns = [];
     private $connection;
     private $foreign_pivot_key = null;
     private $related_pivot_key = null;
@@ -56,6 +57,23 @@ class Model
             'operator' => $operator,
             'value' => $value,
             'bind' => $bind
+        ];
+
+        return $this;
+    }
+
+    /**
+     * @since 1.8.0
+     *
+     * @param string $column
+     * @param array $values
+     * @return self
+     */
+    public function whereIn(string $column, array $values): self
+    {
+        $this->whereIns[] = [
+            'column' => $column,
+            'values' => $values
         ];
 
         return $this;
@@ -570,32 +588,48 @@ class Model
      * 
      * @return stdClass
      */
-    private function whereClausure(): stdClass
+    private function whereClausure(): object
     {
-        $where_clause = '';
+        $clauses = [];
         $bindings = [];
 
-        foreach ($this->wheres as $index => $where):
-            $bind = !is_null($where['bind']) ? $where['bind'] : $where['column'];
+        // WHEREs padrão
+        foreach ($this->wheres as $index => $where) {
+            $bindName = $where['bind'] ?? "{$where['column']}_{$index}";
+            $clauses[] = "{$where['column']} {$where['operator']} :{$bindName}";
+            $bindings[$bindName] = $where['value'];
+        }
 
-            $where_clause .= ($index === 0 ? ' WHERE ' : ' AND ');
-            $where_clause .= "{$where['column']} {$where['operator']} :{$bind}";
-            $bindings[$bind] = $where['value'];
-        endforeach;
+        // OR WHEREs
+        foreach ($this->orWheres as $index => $where) {
+            $bindName = $where['bind'] ?? "or_{$where['column']}_{$index}";
+            $clauses[] = "OR {$where['column']} {$where['operator']} :{$bindName}";
+            $bindings[$bindName] = $where['value'];
+        }
 
-        foreach ($this->orWheres as $index => $where):
-            $bind = !is_null($where['bind']) ? $where['bind'] : $where['column'];
+        // WHERE INs
+        foreach ($this->whereIns as $index => $whereIn) {
+            $placeholders = [];
+            foreach ($whereIn['values'] as $i => $val) {
+                $bindName = "in_{$whereIn['column']}_{$index}_{$i}";
+                $placeholders[] = ":{$bindName}";
+                $bindings[$bindName] = $val;
+            }
+            $clause = "{$whereIn['column']} IN (" . implode(', ', $placeholders) . ")";
+            $clauses[] = $clause;
+        }
 
-            $where_clause .= ' OR ';
-            $where_clause .= "{$where['column']} {$where['operator']} :{$bind}";
-            $bindings[$bind] = $where['value'];
-        endforeach;
+        $clausure = '';
+        if (!empty($clauses)) {
+            $clausure = ' WHERE ' . implode(' AND ', $clauses);
+        }
 
-        return json_decode(json_encode([
-            'clausure' => $where_clause,
+        return (object)[
+            'clausure' => $clausure,
             'bindings' => $bindings
-        ]));
+        ];
     }
+
 
     /**
      * @since 1.3.0
