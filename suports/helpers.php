@@ -715,7 +715,8 @@ if (!function_exists('filterReservations')):
 
         if(!empty($requests->protocol)):
             $protocol = new Protocol();
-            $protocol = $protocol->where('token', 'LIKE', "%{$requests->protocol}%")->get();
+            $cleanProtocol = preg_replace('/\s+/', '', $requests->protocol);
+            $protocol = $protocol->where('token', 'LIKE', "%{$cleanProtocol}%")->get();
             
             if (!is_null($protocol)):
                 $ids = [];
