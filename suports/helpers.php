@@ -717,9 +717,11 @@ if (!function_exists('filterReservations')):
 
         if(!empty($requests->protocol)):
             $protocol = new Protocol();
-            $protocol = $protocol->where('token', '=', $requests->protocol)->first();
+            $protocol = $protocol->where('token', 'LIKE', "%{$requests->protocol}%")->first();
             
-            $reservation = $reservation->where('id', '=', $protocol->reservation_id);
+            if (!is_null($protocol)):
+                $reservation = $reservation->where('id', '=', $protocol->reservation_id);
+            endif;
         endif;
 
         if(isset($requests->search)):
