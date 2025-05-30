@@ -123,7 +123,7 @@
             <div class='w-full px-4'>
                 <?php loadHtml(__DIR__.'/../../../resources/partials/form/input-checkbox-switch', [
                     'name' => 'allow_all_day_only',
-                    'label' => 'Permitir somente o dia too (Não | Sim)',
+                    'label' => 'Permitir somente o dia todo (Não | Sim)',
                     'value' => isset($location) ? $location->allow_all_day_only : null
                 ]) ?>
             </div>
