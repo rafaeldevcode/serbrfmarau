@@ -18,6 +18,8 @@ class HoursAvailable {
         this.type = $('#type');
         this.isPartner = $('#is_partner');
         this.isAdmin = $('#is_admin');
+        this.startHour = parseInt($('#start_hour').val().replace(":", "."));
+        this.endHour = parseInt($('#end_hour').val().replace(":", "."));
         this.price = 0;
         this.countBlock = 0;
         this.typeReservation = null;
@@ -120,7 +122,7 @@ class HoursAvailable {
                 });
 
                 if (this.countBlock === 0 && this.location.val() !== undefined) {
-                    Message.create('Sem horários disponíveis!', 'info');
+                    // Message.create('Sem horários disponíveis!', 'info');
                     this.createBlockMessage('Sem horários disponíveis!');  
                 }
             }
@@ -198,16 +200,20 @@ class HoursAvailable {
      * @returns {void}
      */
     createBlockHour (date, key, nextDate, endHour) {
-        if (date.checked) return;
+        // if (date.checked) return;
         if(date.blocked && !date.checked || (endHour.includes(date.hour))) return;
-        if (this.typeReservation === 'period' && !this.getHoursAllPeriods().includes(date.hour)) return;
+        // if (this.typeReservation === 'period' && !this.getHoursAllPeriods().includes(date.hour)) return;
+        if (nextDate?.hour === undefined) return;
 
         const hoursHidden = this.typeReservation == 'hour' ? [] : this.hoursHidden;
-
+        const { start, end, quite } = this.getHoursRange();
+        const finalQuite = quite+1
+        const includesHour = finalQuite < 10 ? `0${finalQuite}:00` : `${finalQuite}:00`;
+        
         if (this.period.val() === 'Dia todo' || this.allowAllDayOnly === 'on') {
-            if (!this.hoursHidden.includes('17:00')) this.hoursHidden = [...this.hoursHidden, '17:00'];
+            this.hoursHidden = [...this.hoursHidden, includesHour];
         } else {
-            this.hoursHidden = this.hoursHidden.filter(hour => hour !== '17:00');
+            this.hoursHidden = this.hoursHidden.filter(hour => hour !== includesHour);
         }
 
         const classHidden = hoursHidden.includes(date.hour) ? ' hidden' : '';
@@ -228,11 +234,17 @@ class HoursAvailable {
             scope: 'row'
         });
 
-        if (this.period.val() === 'Dia todo' || this.allowAllDayOnly === 'on') {
-            tdTitle.text(`${dateFormat} - ${this.locationHours.start_hour} às ${this.locationHours.end_hour}`);
-        } else {
-            tdTitle.text(`${dateFormat} - ${this.typeReservation == 'period' && date.hour == '17:00'  ? '17:30' : date.hour} às ${this.getLastHour(date.hour, nextDate?.hour)}`);
-        }
+        // if (this.period.val() === 'Dia todo' || this.allowAllDayOnly === 'on') {
+        //     tdTitle.text(`${dateFormat} - ${this.locationHours.start_hour} às ${this.locationHours.end_hour}`);
+        // } else {
+            if (this.typeReservation == 'period') {
+                const titleText = this.getLastHour(date.hour, nextDate?.hour)
+                if (titleText === undefined) return;
+                tdTitle.text(`${dateFormat} - ${titleText}`);
+            } else {
+                tdTitle.text(`${dateFormat} - ${date.hour} às ${this.getLastHour(date.hour, nextDate?.hour)}`);
+            }
+        // }
         
         if (date.checked) {
             tdTitle.append(badge);
@@ -278,7 +290,7 @@ class HoursAvailable {
         });
 
         const span = $('<span />');
-        span.text('Reservar');
+        span.text(this.getTextTitle(date));
 
         label.append(span);
         block.append(input);
@@ -293,6 +305,27 @@ class HoursAvailable {
         if(classHidden === '') this.countBlock = this.countBlock + 1;
 
         this.calculateTotalHourlyValue(input);
+    }
+
+    /**
+     * @since 1.7.0
+     * @param {Object} date
+     * @returns {string}
+     */
+    getTextTitle(date) {
+        if (this.typeReservation == 'period') {
+            if (date.checked) {
+                return 'Selecionado';
+            } else {
+                return 'Selecionar';
+            }
+        } else {
+            if (date.blocked) {
+                return 'Reservado';
+            } else {
+                return 'Reservar';
+            }
+        }
     }
 
     /**
@@ -468,7 +501,7 @@ class HoursAvailable {
                 });
 
                 if (this.countBlock === 0 && this.location.val() !== undefined) {
-                    Message.create('Sem horários disponíveis!', 'info');
+                    // Message.create('Sem horários disponíveis!', 'info');
                     this.createBlockMessage('Sem horários disponíveis!'); 
                 }
             }
@@ -648,18 +681,23 @@ class HoursAvailable {
 
         if(manha.includes(hour) && !tarde.includes(hour)){
             // return manha[manha.length-1];
-            return '15:30';
+            // return '15:30';
+            return this.period.val() == 'Dia todo' ? 'Dia todo' : 'Manhã';
         }
 
         if(tarde.includes(hour) && !noite.includes(hour)){
             // return tarde[tarde.length-1];
-            return '01:45';
+            // return '01:45';
+            return this.period.val() == 'Dia todo' ? 'Dia todo' : 'Tarde';
         }
 
         if(noite.includes(hour)){
             // return noite[noite.length-1];
-            return '01:45';
+            // return '01:45';
+            return this.period.val() == 'Dia todo' ? 'Dia todo' : 'Noite';
         }
+
+        return undefined
     }
 
     /**
@@ -673,14 +711,14 @@ class HoursAvailable {
         const noite = this.getHoursByPeriod('Noite');
 
         manha.shift();
-        manha.pop();
+        // manha.pop();
 
         tarde.shift();
-        tarde.pop();
+        // tarde.pop();
 
         noite.shift();
-        noite.pop();
-        
+        // noite.pop();
+
         return [...manha, ...tarde, ...noite];
     }
 
@@ -732,7 +770,7 @@ class HoursAvailable {
             });
         } else {
             for (let i = 0; i < 24; i++) {
-                if(i >= periods[period].start && i <= periods[period].end){
+                if(periods[period] && i >= periods[period].start && i <= periods[period].end){
                     let hourOne;
                     // let hourTwo;
         
@@ -760,19 +798,33 @@ class HoursAvailable {
      * 
      * @returns {Object}
      */
+    getHoursRange() {
+        const start = this.startHour;
+        const end = this.endHour < this.startHour ? 23 : this.endHour;
+        const quite = parseInt((start + end) / 2);
+
+        return { start: start, end: end, quite: quite };
+    }
+
+    /**
+     * @since 1.7.0
+     * 
+     * @returns {Object}
+     */
     getPeriods(){
+        const { start, end, quite } = this.getHoursRange();
         return {
             Manhã: {
-                start: 8,
-                end: 15
+                start: start,
+                end: quite - 1
             },
-            Tarde: {
-                start: 23,
-                end: 23
-            },
+            // Tarde: {
+            //     start: 23,
+            //     end: 23
+            // },
             Noite: {
-                start: 17,
-                end: 23
+                start: quite + 1,
+                end: end
             }
         }
     }
