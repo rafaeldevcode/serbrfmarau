@@ -89,6 +89,10 @@ class Model
      */
     public function orWhere(string $column, string $operator, string $value, ?string $bind = null): self
     {
+        if ($value === null || $value === '') {
+            return $this;
+        }
+
         $this->orWheres[] = [
             'column' => $column,
             'operator' => $operator,
@@ -590,24 +594,25 @@ class Model
      */
     private function whereClausure(): object
     {
-        $clauses = [];
-        $bindings = [];
+        $andClauses = [];
+        $orClauses  = [];
+        $bindings   = [];
 
-        // WHEREs padrão
+        // WHEREs padrão (AND)
         foreach ($this->wheres as $index => $where) {
             $bindName = $where['bind'] ?? "{$where['column']}_{$index}";
-            $clauses[] = "{$where['column']} {$where['operator']} :{$bindName}";
+            $andClauses[] = "{$where['column']} {$where['operator']} :{$bindName}";
             $bindings[$bindName] = $where['value'];
         }
 
-        // OR WHEREs
+        // OR WHEREs (OR)
         foreach ($this->orWheres as $index => $where) {
             $bindName = $where['bind'] ?? "or_{$where['column']}_{$index}";
-            $clauses[] = "OR {$where['column']} {$where['operator']} :{$bindName}";
+            $orClauses[] = "{$where['column']} {$where['operator']} :{$bindName}";
             $bindings[$bindName] = $where['value'];
         }
 
-        // WHERE INs
+        // WHERE INs (também são AND)
         foreach ($this->whereIns as $index => $whereIn) {
             $placeholders = [];
             foreach ($whereIn['values'] as $i => $val) {
@@ -615,13 +620,29 @@ class Model
                 $placeholders[] = ":{$bindName}";
                 $bindings[$bindName] = $val;
             }
-            $clause = "{$whereIn['column']} IN (" . implode(', ', $placeholders) . ")";
-            $clauses[] = $clause;
+            $andClauses[] = "{$whereIn['column']} IN (" . implode(', ', $placeholders) . ")";
         }
 
+        // Montagem final
         $clausure = '';
-        if (!empty($clauses)) {
-            $clausure = ' WHERE ' . implode(' AND ', $clauses);
+
+        if (!empty($andClauses) || !empty($orClauses)) {
+            $clausure = ' WHERE ';
+
+            if (!empty($andClauses)) {
+                // AND aparece primeiro
+                $clausure .= '(' . implode(' AND ', $andClauses) . ')';
+            }
+
+            if (!empty($orClauses)) {
+                // Se já temos AND, adiciona OR
+                if (!empty($andClauses)) {
+                    $clausure .= ' OR ';
+                }
+
+                // ORs agrupados
+                $clausure .= '(' . implode(' OR ', $orClauses) . ')';
+            }
         }
 
         return (object)[
@@ -629,7 +650,6 @@ class Model
             'bindings' => $bindings
         ];
     }
-
 
     /**
      * @since 1.3.0
