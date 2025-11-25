@@ -158,7 +158,7 @@ class HoursAvailable {
 
         setTimeout(() => {
             checkboxes.each(function (index, checkbox) {
-                if (checkbox.checked && !checkbox.disabled) {
+                if (checkbox.checked && !checkbox.disabled && !checkbox.parentNode.parentNode.parentNode.classList.contains('hidden')) {
                     count++;
                 }
             });
