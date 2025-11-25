@@ -297,7 +297,7 @@ if (!function_exists('getHoursReservation')):
                     $active_hours = array_diff($active_hours, $schedules);
                 else:
                     $active_hours = [];
-                    $data['message'] = 'Horários ainda não liberados pelo sistema, para mais informações entre em contato via WhatsApp!';
+                    $data['message'] = 'Esta data não está disponível! Escolha outra ou entre em contato para mais informações via WhatsApp.';
                 endif;
             endif;
         else:
