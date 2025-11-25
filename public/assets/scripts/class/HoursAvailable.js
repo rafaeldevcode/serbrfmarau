@@ -122,8 +122,8 @@ class HoursAvailable {
                 });
 
                 if (this.countBlock === 0 && this.location.val() !== undefined) {
-                    // Message.create('Sem horários disponíveis!', 'info');
-                    this.createBlockMessage('Sem horários disponíveis!');  
+                    // Message.create('Horários indisponíveis para esta data. Para mais informações entre em contato via WhatsApp.', 'info');
+                    this.createBlockMessage('Horários indisponíveis para esta data. Para mais informações entre em contato via WhatsApp.');  
                 }
             }
 
@@ -501,8 +501,8 @@ class HoursAvailable {
                 });
 
                 if (this.countBlock === 0 && this.location.val() !== undefined) {
-                    // Message.create('Sem horários disponíveis!', 'info');
-                    this.createBlockMessage('Sem horários disponíveis!'); 
+                    // Message.create('Horários indisponíveis para esta data. Para mais informações entre em contato via WhatsApp.', 'info');
+                    this.createBlockMessage('Horários indisponíveis para esta data. Para mais informações entre em contato via WhatsApp.'); 
                 }
             }
 
