@@ -163,9 +163,9 @@ class HoursAvailable {
                 }
             });
 
-            const minimum = this.typeReservation === 'period' && this.period.val() === 'Dia todo' ? 6 : 0;
+            const minimum = this.typeReservation === 'period' && this.period.val() === 'Dia todo' ? 1 : 1;
 
-            if(count > minimum){
+            if(minimum !== 0 && count >= minimum){
                 $('#schedule').removeClass('hidden');
                 $('#schedule').addClass('flex');
     
@@ -238,9 +238,13 @@ class HoursAvailable {
         //     tdTitle.text(`${dateFormat} - ${this.locationHours.start_hour} às ${this.locationHours.end_hour}`);
         // } else {
             if (this.typeReservation == 'period') {
-                const titleText = this.getLastHour(date.hour, nextDate?.hour)
-                if (titleText === undefined) return;
-                tdTitle.text(`${dateFormat} - ${titleText}`);
+                if (this.allowAllDayOnly === 'on') {
+                    tdTitle.text(`${dateFormat} - Dia todo`);
+                } else {
+                    const titleText = this.getLastHour(date.hour, nextDate?.hour)
+                    if (titleText === undefined) return;
+                    tdTitle.text(`${dateFormat} - ${titleText}`);
+                }
             } else {
                 tdTitle.text(`${dateFormat} - ${date.hour} às ${this.getLastHour(date.hour, nextDate?.hour)}`);
             }
@@ -816,14 +820,14 @@ class HoursAvailable {
         return {
             Manhã: {
                 start: start,
-                end: quite - 1
+                end: this.allowAllDayOnly === 'on' ? quite : quite - 1
             },
             // Tarde: {
             //     start: 23,
             //     end: 23
             // },
             Noite: {
-                start: quite + 1,
+                start: this.allowAllDayOnly === 'on' ? quite : quite + 1,
                 end: end
             }
         }
