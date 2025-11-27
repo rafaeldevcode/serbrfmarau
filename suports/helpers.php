@@ -243,6 +243,12 @@ if (!function_exists('getHoursReservation')):
         endif;
 
         $location = $location->find($location_id);
+        
+        if ($location->data->status === 'off'):
+            return [
+                'hours' => []
+            ];
+        endif;
 
         if(empty($date)):
             $schedules = $schedules->where('location_id', '=', $location_id)->where('day', '=', $day)->where('status', '!=', 'Reprovado')->get(['id', 'hour']);
