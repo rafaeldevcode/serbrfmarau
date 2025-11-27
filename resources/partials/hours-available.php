@@ -33,9 +33,9 @@
 
         <input type="hidden" name="is_admin" id="is_admin" value="<?php echo $is_admin ? 'on' : 'off' ?>">
 
-        <input type="hidden" name="start_hour" id="start_hour" value="<?php echo $location->start_hour ?>">
+        <input type="hidden" name="start_hour" id="start_hour" value="<?php echo $location->start_hour ?? "" ?>">
 
-        <input type="hidden" name="end_hour" id="end_hour" value="<?php echo $location->end_hour ?>">
+        <input type="hidden" name="end_hour" id="end_hour" value="<?php echo $location->end_hour ?? "" ?>">
 
         <div class='w-full md:w-6/12 px-4 mt-6'>
             <?php loadHtml(__DIR__.'/form/input-checkbox-switch', [
