@@ -429,6 +429,8 @@ class HoursAvailable {
 
         this.typeReservation = response.data.type;
         this.allowAllDayOnly = response.data.allow_all_day_only;
+        this.startHour = parseInt(response.data.start_hour.replace(":", "."));
+        this.endHour = parseInt(response.data.end_hour.replace(":", "."));
 
         if (this.allowAllDayOnly === 'on') {
             this.period.find('option').each((index, option) => {
