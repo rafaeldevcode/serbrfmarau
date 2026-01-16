@@ -32,22 +32,24 @@
                             <h2 class="text-3xl mb-2"><strong class="text-3xl">Protocolo:</strong> <?php echo $protocol->token ?></h2>
                         </div>
 
-                        <div class="flex justify-center">
-                            <a href="<?php echo route('/') ?>" title="Página inicial" class='text-center mt-4 btn btn-color-main text-light'>Página inicial</a>
+                        <div class="flex justify-center py-4">
+                            <a href="<?php echo route('/') ?>" title="Página inicial" class='text-center btn btn-color-main text-light'>Página inicial</a>
                         </div>
 
                         <div class="p-4 rounded border bg-blue-100 text-center border-blue-600">
+                            <p class="text-lg font-bold">Sua solicitação expira em 3 dias, efetue o pagamento de 50% do valor para confirmar a reserva.</p>
+
                             <?php if($reservation->payment_type === 'Pix' && !is_null(SETTINGS) && !empty(SETTINGS['pix_key'])): ?>
-                                <p class="font-bold">Seu pagamento pode ser feito através do pix <span class="text-color-main"><?php echo SETTINGS['pix_key'] ?>.</span></p>
+                                <p class="text-lg font-bold">Seu pagamento pode ser feito através do pix <span class="text-color-main"><?php echo SETTINGS['pix_key'] ?>.</span></p>
                             <?php elseif(!is_null(SETTINGS) && !empty(SETTINGS['pix_key'])): ?>   
-                                <p class="font-bold">Seu método de pagamento é <span class="text-color-main"><?php echo $reservation->payment_type ?></span>, mas se desejar pode efetuar o pagamento via pix: <span class="text-color-main"><?php echo SETTINGS['pix_key'] ?>.</p>
+                                <p class="text-lg font-bold">Seu método de pagamento é <span class="text-color-main"><?php echo $reservation->payment_type ?></span>, mas se desejar pode efetuar o pagamento via pix: <span class="text-color-main"><?php echo SETTINGS['pix_key'] ?>.</p>
                             <?php endif ?>
 
                             <?php if(!is_null(SETTINGS) && !empty(SETTINGS['whatsapp'])): ?>
-                                <p class="font-bold">Envie comprovante para <span class="text-color-main"><?php echo SETTINGS['whatsapp'] ?></span> juntamente com seu protocolo <span class="text-color-main"><?php echo $protocol->token ?></span>.</p>
+                                <p class="text-lg font-bold">Envie comprovante para <span class="text-color-main"><?php echo SETTINGS['whatsapp'] ?></span> juntamente com seu protocolo <span class="text-color-main"><?php echo $protocol->token ?></span>.</p>
                             <?php endif ?>
 
-                            <p class="font-bold">Seu pedido de reserva de horário foi recebido e está em processo de aprovação. Um novo email será enviado toda vez que o status do seu agendamento for alterado.</p>
+                            <p class="text-lg font-bold">Seu pedido de reserva de horário foi recebido e está em processo de aprovação. Um novo email será enviado toda vez que o status do seu agendamento for alterado.</p>
                         </div>
                     <?php else: ?>
                         <form action="?" class="flex flex-col justify-center items-center">

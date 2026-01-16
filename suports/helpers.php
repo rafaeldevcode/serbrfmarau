@@ -243,6 +243,12 @@ if (!function_exists('getHoursReservation')):
         endif;
 
         $location = $location->find($location_id);
+        
+        if ($location->data->status === 'off'):
+            return [
+                'hours' => []
+            ];
+        endif;
 
         if(empty($date)):
             $schedules = $schedules->where('location_id', '=', $location_id)->where('day', '=', $day)->where('status', '!=', 'Reprovado')->get(['id', 'hour']);
@@ -297,7 +303,7 @@ if (!function_exists('getHoursReservation')):
                     $active_hours = array_diff($active_hours, $schedules);
                 else:
                     $active_hours = [];
-                    $data['message'] = 'Horários ainda não liberados pelo sistema, para mais informações entre em contato via WhatsApp!';
+                    $data['message'] = 'Horários indisponíveis para esta data. Para mais informações entre em contato via WhatsApp.';
                 endif;
             endif;
         else:
